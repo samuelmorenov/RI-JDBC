@@ -2,8 +2,9 @@ package uo.ri.ui.administrator.action;
 
 import alb.util.console.Console;
 import alb.util.menu.Action;
-import uo.ri.business.administrator.AddMechanic;
+import uo.ri.business.MechanicCrudService;
 import uo.ri.business.dto.MechanicDto;
+import uo.ri.business.impl.MechanicCrudServiceImpl;
 import uo.ri.common.BusinessException;
 
 public class AddMechanicAction implements Action {
@@ -18,8 +19,8 @@ public class AddMechanicAction implements Action {
 		mechanic.name = Console.readString("Name");
 		mechanic.surname = Console.readString("Surname");
 
-		AddMechanic am = new AddMechanic(mechanic);
-		am.execute();
+		MechanicCrudService mcs = new MechanicCrudServiceImpl();
+		mcs.addMechanic(mechanic);
 
 		// Print result
 		Console.println("Mechanic added");

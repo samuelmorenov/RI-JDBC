@@ -4,8 +4,8 @@ import java.util.List;
 
 import alb.util.console.Console;
 import alb.util.menu.Action;
-import uo.ri.business.administrator.ListMechanics;
 import uo.ri.business.dto.MechanicDto;
+import uo.ri.business.impl.administrator.ListMechanics;
 import uo.ri.common.BusinessException;
 import uo.ri.ui.util.Printer;
 
