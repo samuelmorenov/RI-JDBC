@@ -1,49 +1,26 @@
 package uo.ri.ui.administrator.action;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import alb.util.console.Console;
-import alb.util.jdbc.Jdbc;
 import alb.util.menu.Action;
+import uo.ri.business.administrator.AddMechanic;
+import uo.ri.business.dto.MechanicDto;
 import uo.ri.common.BusinessException;
 
 public class AddMechanicAction implements Action {
 
-	private static String SQL = "insert into TMechanics(dni, name, surname) values (?, ?, ?)";
-
 	@Override
 	public void execute() throws BusinessException {
-		
-		// Get info
-		String dni = Console.readString("Dni"); 
-		String name = Console.readString("Name"); 
-		String surname = Console.readString("Surname");
-		
-		// Process
-		Connection c = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
 
-		try {
-			c = Jdbc.getConnection();
-			
-			pst = c.prepareStatement(SQL);
-			pst.setString(1, dni);
-			pst.setString(2, name);
-			pst.setString(3, surname);
-			
-			pst.executeUpdate();
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			Jdbc.close(rs, pst, c);
-		}
-		
+		MechanicDto mechanic = new MechanicDto();
+
+		// Get info
+		mechanic.dni = Console.readString("Dni");
+		mechanic.name = Console.readString("Name");
+		mechanic.surname = Console.readString("Surname");
+
+		AddMechanic am = new AddMechanic(mechanic);
+		am.execute();
+
 		// Print result
 		Console.println("Mechanic added");
 	}
