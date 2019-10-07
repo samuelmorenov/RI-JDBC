@@ -1,2 +1,6 @@
 .metadata
 .recommenders
+.DS_Store
+.DS_Store?
+/CWS/bin/
+/CWS/database/carworkshop-hsqldb
