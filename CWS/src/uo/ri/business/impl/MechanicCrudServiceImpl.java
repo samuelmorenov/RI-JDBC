@@ -5,6 +5,8 @@ import java.util.List;
 import uo.ri.business.MechanicCrudService;
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.impl.administrator.AddMechanic;
+import uo.ri.business.impl.administrator.DeleteMechanic;
+import uo.ri.business.impl.administrator.UpdateMechanic;
 import uo.ri.common.BusinessException;
 
 public class MechanicCrudServiceImpl implements MechanicCrudService {
@@ -16,14 +18,16 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 	}
 
 	@Override
-	public void deleteMechanic(Long idMechani) throws BusinessException {
-		// TODO Auto-generated method stub
+	public void deleteMechanic(Long idMechanic) throws BusinessException {
+		DeleteMechanic dm = new DeleteMechanic(idMechanic);
+		dm.execute();
 
 	}
 
 	@Override
 	public void updateMechanic(MechanicDto mechanic) throws BusinessException {
-		// TODO Auto-generated method stub
+		UpdateMechanic um = new UpdateMechanic(mechanic);
+		um.execute();
 
 	}
 
