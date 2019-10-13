@@ -6,9 +6,7 @@ import java.util.List;
 
 import alb.util.console.Console;
 import alb.util.menu.Action;
-import uo.ri.business.MechanicCrudService;
 import uo.ri.business.dto.InvoiceDto;
-import uo.ri.business.impl.MechanicCrudServiceImpl;
 import uo.ri.business.impl.cashier.WorkOrderBilling;
 import uo.ri.common.BusinessException;
 
