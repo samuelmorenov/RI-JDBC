@@ -11,6 +11,7 @@ import java.util.List;
 import alb.util.date.Dates;
 import alb.util.jdbc.Jdbc;
 import alb.util.math.Round;
+import uo.ri.business.dto.InvoiceDto;
 import uo.ri.common.BusinessException;
 
 public class WorkOrderBilling {
@@ -33,7 +34,9 @@ public class WorkOrderBilling {
 
 	List<Long> workOrderIds = new ArrayList<Long>();
 
-	public void execute() {
+	public InvoiceDto execute() throws BusinessException {
+		InvoiceDto invoice = new InvoiceDto();
+
 		try {
 			connection = Jdbc.getConnection();
 			connection.setAutoCommit(false);
@@ -51,9 +54,11 @@ public class WorkOrderBilling {
 			linkWorkorderInvoice(idInvoice, workOrderIds);
 			updateWorkOrderStatus(workOrderIds, "INVOICED");
 
-			
-			return ;//TODO devolver el Dto de invoice (displayInvoice(numberInvoice, dateInvoice, amount, vat, total);)
-			
+			invoice.number = numberInvoice;
+			invoice.date = dateInvoice;
+			invoice. amount = amount;
+			invoice.vat = vat;
+			invoice.total = total;
 
 			connection.commit();
 		} catch (SQLException e) {
@@ -73,6 +78,8 @@ public class WorkOrderBilling {
 		} finally {
 			Jdbc.close(connection);
 		}
+		return invoice;
+
 	}
 
 	private void testRepairs(List<Long> workOrderIDS) throws SQLException, BusinessException {

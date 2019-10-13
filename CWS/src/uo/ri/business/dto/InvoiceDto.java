@@ -10,5 +10,6 @@ public class InvoiceDto {
 	public long number;		// the invoice identity, a sequential number
 	public Date date;		// of the invoice
 	public String status;	// the status as in FacturaStatus
+	public double amount;	//TODO Añadido por mi, necesario para imprimir workorder
 
 }
