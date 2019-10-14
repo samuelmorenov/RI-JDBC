@@ -6,15 +6,15 @@ import java.util.List;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.MechanicDto;
+import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.MechanicGateway;
-import uo.ri.persistence.impl.MechanicGatewayImpl;
 
 public class ListMechanics {
 
 	public List<MechanicDto> execute() {
 
 		try (Connection c = Jdbc.getConnection();) {
-			MechanicGateway mg = new MechanicGatewayImpl();
+			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
 			mg.setConnection(c);
 			return mg.findAll();
 		} catch (SQLException e) {

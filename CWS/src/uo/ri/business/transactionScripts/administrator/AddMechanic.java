@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.common.BusinessException;
+import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.MechanicGateway;
-import uo.ri.persistence.impl.MechanicGatewayImpl;
 
 public class AddMechanic {
 
@@ -21,7 +21,7 @@ public class AddMechanic {
 
 		try (Connection c = Jdbc.getConnection();) {
 
-			MechanicGateway mg = new MechanicGatewayImpl();
+			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
 			c.setAutoCommit(false);
 			mg.setConnection(c);
 			if (mg.findByDNI(mechanic.dni) != null) {
