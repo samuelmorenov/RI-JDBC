@@ -4,8 +4,8 @@ import alb.util.console.Console;
 import alb.util.menu.Action;
 import uo.ri.business.MechanicCrudService;
 import uo.ri.business.dto.MechanicDto;
-import uo.ri.business.impl.MechanicCrudServiceImpl;
 import uo.ri.common.BusinessException;
+import uo.ri.conf.ServiceFactory;
 
 public class UpdateMechanicAction implements Action {
 
@@ -19,7 +19,7 @@ public class UpdateMechanicAction implements Action {
 		mechanic.name = Console.readString("Name"); 
 		mechanic.surname = Console.readString("Surname");
 		
-		MechanicCrudService mcs = new MechanicCrudServiceImpl();
+		MechanicCrudService mcs = ServiceFactory.getMechanicCrudService();
 		mcs.updateMechanic(mechanic);
 		
 		// Print result
