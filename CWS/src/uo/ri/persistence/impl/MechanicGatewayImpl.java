@@ -25,22 +25,19 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 		try {
 			c = Jdbc.getConnection();
-			
+
 			pst = c.prepareStatement(SQL);
 			pst.setString(1, mechanic.dni);
 			pst.setString(2, mechanic.name);
 			pst.setString(3, mechanic.surname);
-			
+
 			pst.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		}
-		finally {
+		} finally {
 			Jdbc.close(rs, pst, c);
 		}
-		
-	
 
 	}
 
@@ -64,9 +61,8 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_ALL_MECHANICS");
-		
 
 		try {
 			c = Jdbc.getConnection();
@@ -96,8 +92,37 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public MechanicDto findByDNI(String dni) {
-		// TODO Auto-generated method stub
-		return null;
+
+		MechanicDto mechanic = null;
+
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_MECHANIC_BY_DNI");
+
+		try {
+			c = Jdbc.getConnection();
+			pst = c.prepareStatement(SQL);
+			pst.setString(1, dni);
+			rs = pst.executeQuery();
+
+			if (rs.next() == false) {
+				return mechanic;
+			}
+
+			mechanic = new MechanicDto();
+			mechanic.id = rs.getLong("id");
+			mechanic.dni = rs.getString("dni");
+			mechanic.name = rs.getString("name");
+			mechanic.surname = rs.getString("surname");
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst, c);
+		}
+		return mechanic;
 	}
 
 	@Override
