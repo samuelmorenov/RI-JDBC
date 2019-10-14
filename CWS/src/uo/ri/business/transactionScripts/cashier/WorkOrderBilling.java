@@ -15,13 +15,24 @@ import uo.ri.business.dto.InvoiceDto;
 import uo.ri.common.BusinessException;
 
 public class WorkOrderBilling {
-	private static final String SQL_PARTS_TOTAL = "select sum(s.quantity * r.price) "
-			+ "	from  TSubstitutions s, TSpareParts r " + "	where s.sparepart_id = r.id " + "		and s.labor_id = ?";
-	private static final String SQL_LABOR_TOTAL = "select sum(i.minutes * tv.pricePerHour / 60) "
-			+ "	from TWorkOrders a, TLabors i, TVehicles v, TVehicleTypes tv" + "	where i.workorder_id = a.id "
-			+ "		and a.vehicle_id = v.id" + "		and v.vehicletype_id = tv.id" + "		and a.id = ?"
-			+ "		and a.status = ''";
+	private static final String SQL_PARTS_TOTAL = 
+			"select sum(s.quantity * r.price) "
+			+ "	from  TSubstitutions s, TSpareParts r, TWorkorders w "
+			+ "	where s.sparepart_id = r.id "
+			+ "		and s.labor_id = l.id and w.id = ?"; //TODO Cambiado
+
+	private static final String SQL_LABOR_TOTAL = 
+			"select sum(i.minutes * tv.pricePerHour / 60) "
+			+ "	from TWorkOrders a, TLabors i, TVehicles v, TVehicleTypes tv" 
+			+ "	where i.workorder_id = a.id "
+			+ "		and a.vehicle_id = v.id" 
+			+ "		and v.vehicletype_id = tv.id" 
+			+ "		and a.id = ?"; // TODO Cambiado
+	
+	
 	private static final String SQL_UPDATE_WORKORDER_AMOUNT = "update TWorkOrders set amount = ? where id = ?";
+	
+	
 	private static final String SQL_LAST_INVOICE_NUMBER = "select max(invoice_number) from TInvoices";
 	private static final String SQL_INSERT_INVOICE = "insert into TInvoices(invoice_number, invoice_date, vat, amount, status) "
 			+ "	values(?, ?, ?, ?, ?)";
@@ -56,7 +67,7 @@ public class WorkOrderBilling {
 
 			invoice.number = numberInvoice;
 			invoice.date = dateInvoice;
-			invoice. amount = amount;
+			invoice.amount = amount;
 			invoice.vat = vat;
 			invoice.total = total;
 
