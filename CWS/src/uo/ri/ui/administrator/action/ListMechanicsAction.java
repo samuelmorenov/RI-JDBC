@@ -4,9 +4,9 @@ import java.util.List;
 
 import alb.util.console.Console;
 import alb.util.menu.Action;
-import uo.ri.business.MechanicCrudService;
 import uo.ri.business.dto.MechanicDto;
-import uo.ri.business.impl.administrator.ListMechanics;
+import uo.ri.business.serviceLayer.MechanicCrudService;
+import uo.ri.business.transactionScripts.administrator.ListMechanics;
 import uo.ri.common.BusinessException;
 import uo.ri.conf.ServiceFactory;
 import uo.ri.ui.util.Printer;

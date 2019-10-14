@@ -1,4 +1,4 @@
-package uo.ri.business.impl.cashier;
+package uo.ri.business.transactionScripts.cashier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

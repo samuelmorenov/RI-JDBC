@@ -1,7 +1,7 @@
 package uo.ri.conf;
 
-import uo.ri.business.MechanicCrudService;
-import uo.ri.business.impl.MechanicCrudServiceImpl;
+import uo.ri.business.serviceLayer.MechanicCrudService;
+import uo.ri.business.serviceLayer.impl.MechanicCrudServiceImpl;
 
 public class ServiceFactory {
 	

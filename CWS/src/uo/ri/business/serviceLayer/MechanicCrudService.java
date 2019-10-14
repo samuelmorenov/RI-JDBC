@@ -1,4 +1,4 @@
-package uo.ri.business;
+package uo.ri.business.serviceLayer;
 
 import java.util.List;
 

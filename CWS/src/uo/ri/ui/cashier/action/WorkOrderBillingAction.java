@@ -7,7 +7,7 @@ import java.util.List;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 import uo.ri.business.dto.InvoiceDto;
-import uo.ri.business.impl.cashier.WorkOrderBilling;
+import uo.ri.business.transactionScripts.cashier.WorkOrderBilling;
 import uo.ri.common.BusinessException;
 
 public class WorkOrderBillingAction implements Action {

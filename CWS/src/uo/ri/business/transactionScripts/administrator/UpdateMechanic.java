@@ -1,4 +1,4 @@
-package uo.ri.business.impl.administrator;
+package uo.ri.business.transactionScripts.administrator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
