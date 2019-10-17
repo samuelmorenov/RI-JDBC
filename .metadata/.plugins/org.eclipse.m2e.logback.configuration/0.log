@@ -18,3 +18,9 @@
 2019-10-17 19:42:56,441 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Dropbox\Uniovi\3_Curso\RI_I2\Proyecto_JDBC\Workspace\AlbUtil\src\main\resources
 2019-10-17 19:42:56,442 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2019-10-17 19:42:56,443 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Dropbox\Uniovi\3_Curso\RI_I2\Proyecto_JDBC\Workspace\AlbUtil\src\test\resources
+2019-10-17 19:45:24,649 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2019-10-17 19:45:31,332 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: uo.alb:AlbUtil:1.0.0-SNAPSHOT @ E:\Dropbox\Uniovi\3_Curso\RI_I2\Proyecto_JDBC\Workspace\AlbUtil\pom.xml.
+2019-10-17 19:45:32,123 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-10-17 19:45:32,124 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Dropbox\Uniovi\3_Curso\RI_I2\Proyecto_JDBC\Workspace\AlbUtil\src\main\resources
+2019-10-17 19:45:32,126 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-10-17 19:45:32,126 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Dropbox\Uniovi\3_Curso\RI_I2\Proyecto_JDBC\Workspace\AlbUtil\src\test\resources
