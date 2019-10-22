@@ -18,7 +18,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public void setConnection(Connection c) throws SQLException {
-		c = Jdbc.getConnection();
+		this.c = c;
 	}
 
 	@Override
