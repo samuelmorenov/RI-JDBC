@@ -11,6 +11,9 @@ import uo.ri.persistence.MechanicGateway;
 
 public class ListMechanics {
 
+	public ListMechanics() {
+	}
+
 	public List<MechanicDto> execute() {
 
 		try (Connection c = Jdbc.getConnection();) {

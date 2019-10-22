@@ -60,7 +60,22 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public void update(MechanicDto mechanic) {
-		// TODO Auto-generated method stub
+		// Process
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String SQL = Conf.getInstance().getProperty("SQL_UPDATE_MECHANIC");
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setString(1, mechanic.name);
+			pst.setString(2, mechanic.surname);
+			pst.setLong(3, mechanic.id);
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst, c);
+		}
 
 	}
 
@@ -68,17 +83,13 @@ public class MechanicGatewayImpl implements MechanicGateway {
 	public List<MechanicDto> findAll() {
 		List<MechanicDto> mechanics = null;
 		MechanicDto mechanic = null;
-
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_ALL_MECHANICS");
 
 		try {
-
 			pst = c.prepareStatement(SQL);
 			rs = pst.executeQuery();
-
 			mechanics = new ArrayList<MechanicDto>();
 			while (rs.next()) {
 				mechanic = new MechanicDto();
@@ -86,11 +97,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 				mechanic.dni = rs.getString("dni");
 				mechanic.name = rs.getString("name");
 				mechanic.surname = rs.getString("surname");
-
 				mechanics.add(mechanic);
-
-				// Console.printf("\t%d %s %s %s\n", rs.getLong(1);, rs.getString(2),
-				// rs.getString(3), rs.getString(4));
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

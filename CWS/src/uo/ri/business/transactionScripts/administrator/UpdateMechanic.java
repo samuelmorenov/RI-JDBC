@@ -1,41 +1,37 @@
 package uo.ri.business.transactionScripts.administrator;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.MechanicDto;
+import uo.ri.common.BusinessException;
+import uo.ri.conf.PersistenceFactory;
+import uo.ri.persistence.MechanicGateway;
 
 public class UpdateMechanic {
 	private MechanicDto mechanic;
-	private static String SQL = "update TMechanics " + "set name = ?, surname = ? " + "where id = ?";
 
 	public UpdateMechanic(MechanicDto mechanic) {
 		this.mechanic = mechanic;
 	}
 
-	public void execute() {
-		// Process
-		Connection c = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
+	public void execute() throws BusinessException {
+		
+		
+		try (Connection c = Jdbc.getConnection();) {
 
-		try {
-			c = Jdbc.getConnection();
-
-			pst = c.prepareStatement(SQL);
-			pst.setString(1, mechanic.name);
-			pst.setString(2, mechanic.surname);
-			pst.setLong(3, mechanic.id);
-
-			pst.executeUpdate();
-
+			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); //Factoria
+			c.setAutoCommit(false);
+			mg.setConnection(c);
+			if (mg.findById(mechanic.id) == null) { // Llamada al findById de la persistencia
+				c.rollback();
+				throw new BusinessException("No existe un mecanico con ese ID");
+			}
+			mg.update(mechanic); //Llamada al add mecanico de la persistencia
+			c.commit();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			Jdbc.close(rs, pst, c);
+			throw new RuntimeException("Error de conexion");
 		}
 	}
 }
