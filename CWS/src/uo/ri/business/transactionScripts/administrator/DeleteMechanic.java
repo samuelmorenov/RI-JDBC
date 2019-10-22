@@ -20,14 +20,14 @@ public class DeleteMechanic {
 		try (Connection c = Jdbc.getConnection();) {
 
 			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); // Factoria
-			c.setAutoCommit(false);
+			//c.setAutoCommit(false);
 			mg.setConnection(c);
 			if (mg.findById(idMechanic) == null) { // Llamada al findById de la persistencia
-				c.rollback();
+				//c.rollback();
 				throw new BusinessException("No existe un mecanico con ese ID");
 			}
 			mg.delete(idMechanic); // Llamada al add mecanico de la persistencia
-			c.commit();
+			//c.commit();
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}
