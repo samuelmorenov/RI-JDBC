@@ -13,10 +13,9 @@ import uo.ri.conf.Conf;
 import uo.ri.persistence.MechanicGateway;
 
 public class MechanicGatewayImpl implements MechanicGateway {
-	
+
 	private Connection c;
-	
-	
+
 	@Override
 	public void setConnection(Connection c) throws SQLException {
 		c = Jdbc.getConnection();
@@ -24,34 +23,39 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public void add(MechanicDto mechanic) {
-
 		// Process
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_INSERT_MECHANIC");
-
 		try {
-
-
 			pst = c.prepareStatement(SQL);
 			pst.setString(1, mechanic.dni);
 			pst.setString(2, mechanic.name);
 			pst.setString(3, mechanic.surname);
-
 			pst.executeUpdate();
-
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(rs, pst, c);
 		}
-
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-
+	public void delete(Long idMechanic) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String SQL = Conf.getInstance().getProperty("SQL_DELETE_MECHANIC");
+		
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, idMechanic);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			Jdbc.close(rs, pst, c);
+		}
 	}
 
 	@Override
@@ -64,7 +68,6 @@ public class MechanicGatewayImpl implements MechanicGateway {
 	public List<MechanicDto> findAll() {
 		List<MechanicDto> mechanics = null;
 		MechanicDto mechanic = null;
-
 
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -134,10 +137,36 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public MechanicDto findById(Long idMechanic) {
-		// TODO Auto-generated method stub
-		return null;
+		MechanicDto mechanic = null;
+
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_MECHANIC_BY_ID");
+
+		try {
+			c = Jdbc.getConnection();
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, idMechanic);
+			rs = pst.executeQuery();
+
+			if (rs.next() == false) {
+				return mechanic;
+			}
+
+			mechanic = new MechanicDto();
+			mechanic.id = rs.getLong("id");
+			mechanic.dni = rs.getString("dni");
+			mechanic.name = rs.getString("name");
+			mechanic.surname = rs.getString("surname");
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst, c);
+		}
+		return mechanic;
 	}
-
-
 
 }

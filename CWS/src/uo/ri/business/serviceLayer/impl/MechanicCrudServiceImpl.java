@@ -6,6 +6,7 @@ import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.serviceLayer.MechanicCrudService;
 import uo.ri.business.transactionScripts.administrator.AddMechanic;
 import uo.ri.business.transactionScripts.administrator.DeleteMechanic;
+import uo.ri.business.transactionScripts.administrator.ListMechanics;
 import uo.ri.business.transactionScripts.administrator.UpdateMechanic;
 import uo.ri.common.BusinessException;
 
@@ -39,8 +40,10 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 
 	@Override
 	public List<MechanicDto> findAllMechanics() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		List<MechanicDto> mechanics = null;
+		ListMechanics lm = new ListMechanics();
+		mechanics = lm.execute();
+		return mechanics;
 	}
 
 	@Override

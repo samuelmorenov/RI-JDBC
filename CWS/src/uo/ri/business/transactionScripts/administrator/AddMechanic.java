@@ -21,14 +21,14 @@ public class AddMechanic {
 
 		try (Connection c = Jdbc.getConnection();) {
 
-			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
+			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); //Factoria
 			c.setAutoCommit(false);
 			mg.setConnection(c);
-			if (mg.findByDNI(mechanic.dni) != null) {
+			if (mg.findByDNI(mechanic.dni) != null) { //Llamada al findByDNI de la persistencia
 				c.rollback();
 				throw new BusinessException("Ya existe un mecanico con ese DNI");
 			}
-			mg.add(mechanic);
+			mg.add(mechanic); //Llamada al add mecanico de la persistencia
 			c.commit();
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
