@@ -34,7 +34,7 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 
 	@Override
 	public MechanicDto findMechanicById(Long id) throws BusinessException {
-		// TODO Auto-generated method stub
+		// TO-DO Auto-generated method stub
 		return null;
 	}
 
@@ -48,7 +48,7 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 
 	@Override
 	public List<MechanicDto> findActiveMechanics() throws BusinessException {
-		// TODO Auto-generated method stub
+		// TO-DO Auto-generated method stub
 		return null;
 	}
 
