@@ -4,6 +4,7 @@ import uo.ri.business.serviceLayer.CertificateService;
 import uo.ri.business.serviceLayer.CourseReportService;
 import uo.ri.business.serviceLayer.MechanicCrudService;
 import uo.ri.business.serviceLayer.impl.CertificateServiceImpl;
+import uo.ri.business.serviceLayer.impl.CourseReportServiceImpl;
 import uo.ri.business.serviceLayer.impl.MechanicCrudServiceImpl;
 
 public class ServiceFactory {
@@ -17,7 +18,7 @@ public class ServiceFactory {
 	}
 
 	public static CourseReportService forCourseReportService() {
-		return null; //TODO new CourseReportServiceImpl();
+		return new CourseReportServiceImpl();
 	}
 
 }

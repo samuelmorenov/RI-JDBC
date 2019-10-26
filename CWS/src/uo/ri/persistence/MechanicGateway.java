@@ -1,14 +1,10 @@
 package uo.ri.persistence;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import uo.ri.business.dto.MechanicDto;
 
-public interface MechanicGateway {
-
-	void setConnection(Connection c) throws SQLException;
+public interface MechanicGateway extends Gateway{
 
 	void add(MechanicDto mechanic);
 

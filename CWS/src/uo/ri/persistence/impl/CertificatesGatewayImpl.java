@@ -12,13 +12,7 @@ import uo.ri.business.dto.CertificateDto;
 import uo.ri.conf.Conf;
 import uo.ri.persistence.CertificatesGateway;
 
-public class CertificatesGatewayImpl implements CertificatesGateway {
-	private Connection c;
-
-	@Override
-	public void setConnection(Connection c) throws SQLException {
-		this.c = c;
-	}
+public class CertificatesGatewayImpl extends GatewayImpl implements CertificatesGateway {
 
 	@Override
 	public List<CertificateDto> getAllPossibleCertificates() {

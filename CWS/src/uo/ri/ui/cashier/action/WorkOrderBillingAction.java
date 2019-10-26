@@ -25,7 +25,7 @@ public class WorkOrderBillingAction implements Action {
 		WorkOrderBilling wob = new WorkOrderBilling();
 		InvoiceDto invoice = wob.execute();
 		
-		//TODO Hacer la implemementacion del curdservice
+		//TODO WorkOrderBilling Hacer la implemementacion del curdservice
 		//MechanicCrudService mcs = new MechanicCrudServiceImpl();
 		//mcs.addMechanic(mechanic);
 		

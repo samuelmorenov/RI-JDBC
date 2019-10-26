@@ -12,14 +12,7 @@ import uo.ri.business.dto.MechanicDto;
 import uo.ri.conf.Conf;
 import uo.ri.persistence.MechanicGateway;
 
-public class MechanicGatewayImpl implements MechanicGateway {
-
-	private Connection c;
-
-	@Override
-	public void setConnection(Connection c) throws SQLException {
-		this.c = c;
-	}
+public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway {
 
 	@Override
 	public void add(MechanicDto mechanic) {

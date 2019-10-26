@@ -19,7 +19,7 @@ public class WorkOrderBilling {
 			"select sum(s.quantity * r.price) "
 			+ "	from  TSubstitutions s, TSpareParts r, TWorkorders w "
 			+ "	where s.sparepart_id = r.id "
-			+ "		and s.labor_id = l.id and w.id = ?"; //TODO Cambiado
+			+ "		and s.labor_id = l.id and w.id = ?"; //TODO WorkOrderBilling Cambiado
 
 	private static final String SQL_LABOR_TOTAL = 
 			"select sum(i.minutes * tv.pricePerHour / 60) "
@@ -27,7 +27,7 @@ public class WorkOrderBilling {
 			+ "	where i.workorder_id = a.id "
 			+ "		and a.vehicle_id = v.id" 
 			+ "		and v.vehicletype_id = tv.id" 
-			+ "		and a.id = ?"; // TODO Cambiado
+			+ "		and a.id = ?"; // TODO WorkOrderBilling Cambiado
 	
 	
 	private static final String SQL_UPDATE_WORKORDER_AMOUNT = "update TWorkOrders set amount = ? where id = ?";
