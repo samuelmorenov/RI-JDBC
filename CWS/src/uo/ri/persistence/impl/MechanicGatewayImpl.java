@@ -25,7 +25,6 @@ public class MechanicGatewayImpl implements MechanicGateway {
 	public void add(MechanicDto mechanic) {
 		// Process
 		PreparedStatement pst = null;
-		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_INSERT_MECHANIC");
 		try {
 			pst = c.prepareStatement(SQL);
@@ -35,15 +34,12 @@ public class MechanicGatewayImpl implements MechanicGateway {
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			Jdbc.close(rs, pst, c);
-		}
+		} 
 	}
 
 	@Override
 	public void delete(Long idMechanic) {
 		PreparedStatement pst = null;
-		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_DELETE_MECHANIC");
 		
 		try {
@@ -53,16 +49,12 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		finally {
-			Jdbc.close(rs, pst, c);
-		}
 	}
 
 	@Override
 	public void update(MechanicDto mechanic) {
 		// Process
 		PreparedStatement pst = null;
-		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_UPDATE_MECHANIC");
 		try {
 			pst = c.prepareStatement(SQL);
@@ -73,8 +65,6 @@ public class MechanicGatewayImpl implements MechanicGateway {
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			Jdbc.close(rs, pst, c);
 		}
 
 	}
@@ -101,8 +91,6 @@ public class MechanicGatewayImpl implements MechanicGateway {
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-
 		}
 		return mechanics;
 	}
@@ -136,8 +124,6 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			Jdbc.close(rs, pst, c);
 		}
 		return mechanic;
 	}
@@ -170,8 +156,6 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			Jdbc.close(rs, pst, c);
 		}
 		return mechanic;
 	}
