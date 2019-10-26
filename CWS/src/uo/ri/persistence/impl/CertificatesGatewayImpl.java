@@ -26,18 +26,18 @@ public class CertificatesGatewayImpl implements CertificatesGateway {
 		CertificateDto certificate = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		String SQL = Conf.getInstance().getProperty("SQL_HOURS_PER_VEHICLETYPE");
+		String SQL = Conf.getInstance().getProperty("SQL_ALL_POSSIBLE_CERTIFICATES");
 		try {
 			pst = c.prepareStatement(SQL);
 			rs = pst.executeQuery();
 			list = new ArrayList<CertificateDto>();
 			while (rs.next()) {
-				if (rs.getLong("HOURS_P") >= (long) rs.getInt("Min_H")) {
-					certificate = new CertificateDto();
-					certificate.mechanic = rs.getLong("M_ID");
-					certificate.vehicleType = rs.getLong("V_ID");
-					list.add(certificate);
-				}
+
+				certificate = new CertificateDto();
+				certificate.mechanic = rs.getLong("M_ID");
+				certificate.vehicleType = rs.getLong("V_ID");
+				list.add(certificate);
+
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
