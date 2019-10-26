@@ -10,6 +10,7 @@ import uo.ri.business.dto.InvoiceDto;
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.dto.PaymentMeanDto;
 import uo.ri.business.dto.PayrollDto;
+import uo.ri.business.dto.TrainingHoursRow;
 
 public class Printer {
 
@@ -131,6 +132,14 @@ public class Printer {
 		Console.printf("Descuentos");
 		Console.printf("/t         IRPF: %7.2f%n", p.irpf);
 		Console.printf("/t    S. social: %7.2f%n", p.socialSecurity);
+	}
+	
+	public static void printTrainingHoursRow(TrainingHoursRow r) {
+
+		Console.printf("%-20.20s\t%-30.30s\t%d hours\n"
+				, r.vehicleTypeName
+				, r.mechanicFullName
+				, r.enrolledHours);
 	}
 
 }

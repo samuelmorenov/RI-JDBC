@@ -2,9 +2,9 @@ package uo.ri.ui.administrator;
 
 import alb.util.menu.BaseMenu;
 
-public class MainMenu extends BaseMenu {
+public class AdminMain extends BaseMenu {
 
-	public MainMenu() {
+	public AdminMain() {
 		menuOptions = new Object[][] { 
 			{ "Administrator", null },
 			{ "Mechanics management", 			MechanicsMenu.class }, 
@@ -15,7 +15,7 @@ public class MainMenu extends BaseMenu {
 	}
 
 	public static void main(String[] args) {
-		new MainMenu().execute();
+		new AdminMain().execute();
 	}
 
 }
