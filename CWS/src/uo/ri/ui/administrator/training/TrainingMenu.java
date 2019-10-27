@@ -1,8 +1,8 @@
-package uo.ri.ui.administrator;
+package uo.ri.ui.administrator.training;
 
 import alb.util.menu.BaseMenu;
 import alb.util.menu.NotYetImplementedAction;
-import uo.ri.ui.administrator.action.GenerateCertificatesAction;
+import uo.ri.ui.administrator.training.action.GenerateCertificatesAction;
 
 public class TrainingMenu extends BaseMenu {
 
