@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import alb.util.jdbc.Jdbc;
+import uo.ri.common.BusinessException;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.WorkOrderGateway;
 
@@ -16,14 +17,18 @@ public class AssignWorkOrder {
 		this.mechanicId = mechanicId;
 	}
 
-	public void execute() {
+	public void execute() throws BusinessException {
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
 
-			//TODO 
-			
+			if (!wog.mechanicAbleToWorkOrder(mechanicId, woId))
+				throw new BusinessException("El mecanico no esta certificado para ese tipo de vehiculo");
+			//TODO siempre salta esta excepcion, testear bien 
+
+			wog.AssignMechanic(mechanicId, woId);
+
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}

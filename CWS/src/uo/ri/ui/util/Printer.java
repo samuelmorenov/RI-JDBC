@@ -3,6 +3,7 @@ package uo.ri.ui.util;
 import java.util.List;
 import alb.util.console.Console;
 import uo.ri.business.dto.BreakdownDto;
+import uo.ri.business.dto.CertificateDto;
 import uo.ri.business.dto.ContractCategoryDto;
 import uo.ri.business.dto.ContractDto;
 import uo.ri.business.dto.ContractTypeDto;
@@ -152,5 +153,10 @@ public class Printer {
 				, v.model
 			);
 	}
+	public static void printCertifiedMechanic(CertificateDto c) {
 
+		Console.printf("%d\t%-10.10s %-25.25s %-25.25s\n",
+				c.mechanic
+			);
+	}
 }

@@ -16,5 +16,9 @@ public interface WorkOrderGateway extends Gateway {
 	WorkOrderDto findById(Long id);
 
 	void update(WorkOrderDto workOrderDto);
+
+	boolean mechanicAbleToWorkOrder(Long mechanicId, Long woId);
+
+	void AssignMechanic(Long mechanicId, Long woId);
 	
 }

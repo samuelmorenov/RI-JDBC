@@ -136,4 +136,50 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 		}
 	}
 
+	@Override
+	public boolean mechanicAbleToWorkOrder(Long mechanicId, Long woId) {
+
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		String SQL = Conf.getInstance().getProperty("SQL_MECHANIC_CERTIFICATE_IN_VEHICLETYPE");
+
+		try {
+			c = Jdbc.getConnection();
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, mechanicId);
+			pst.setLong(2, woId);
+
+			rs = pst.executeQuery();
+
+			return rs.next();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	@Override
+	public void AssignMechanic(Long mechanicId, Long woId) {
+		Connection c = null;
+		PreparedStatement pst = null;
+
+		String SQL = Conf.getInstance().getProperty("SQL_ASSIGN_MECHANIC");
+
+		try {
+			c = Jdbc.getConnection();
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, mechanicId);
+			pst.setLong(2, woId);
+
+			pst.executeQuery();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
 }
