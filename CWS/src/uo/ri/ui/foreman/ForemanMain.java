@@ -8,7 +8,7 @@ public class ForemanMain extends BaseMenu {
 	public ForemanMain() {
 		menuOptions = new Object[][] { 
 			{ "Foreman", null },
-			{ "Client reception ", 		NotYetImplementedAction.class }, 
+			{ "Client reception ", 		ReceptionMenu.class }, 
 			{ "Client management", 		NotYetImplementedAction.class },
 			{ "Vehicle management", 	NotYetImplementedAction.class },
 			{ "Client history review", 	NotYetImplementedAction.class }, 

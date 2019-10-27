@@ -17,17 +17,17 @@ public class GetVehicleByPlate {
 	}
 
 	public Optional<VehicleDto> execute() {
+		Optional<VehicleDto> vehicle = null;
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
+			vehicle = wog.findVehicleByPlate(plate);
 
-			//TODO 
-			
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}
-		return null;
+		return vehicle;
 	}
 
 }
