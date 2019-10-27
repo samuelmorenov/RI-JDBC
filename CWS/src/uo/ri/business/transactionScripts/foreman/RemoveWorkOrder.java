@@ -20,8 +20,7 @@ public class RemoveWorkOrder {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
-
-			//TODO 
+			wog.delete(id);
 			
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");

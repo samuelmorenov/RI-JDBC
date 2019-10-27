@@ -70,4 +70,18 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 		}
 	}
 
+	@Override
+	public void delete(Long id) {
+		PreparedStatement pst = null;
+		String SQL = Conf.getInstance().getProperty("SQL_DELETE_WORKORDER");
+		
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, id);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

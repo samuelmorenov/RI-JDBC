@@ -10,5 +10,7 @@ public interface WorkOrderGateway extends Gateway {
 	Optional<VehicleDto> findVehicleByPlate(String plate);
 
 	void AddWorkOrder(WorkOrderDto workOrderDto);
+
+	void delete(Long id);
 	
 }
