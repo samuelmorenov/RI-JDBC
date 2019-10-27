@@ -3,9 +3,11 @@ package uo.ri.conf;
 import uo.ri.persistence.CertificatesGateway;
 import uo.ri.persistence.MechanicGateway;
 import uo.ri.persistence.TrainingGateway;
+import uo.ri.persistence.WorkOrderGateway;
 import uo.ri.persistence.impl.CertificatesGatewayImpl;
 import uo.ri.persistence.impl.MechanicGatewayImpl;
 import uo.ri.persistence.impl.TrainingGatewayImpl;
+import uo.ri.persistence.impl.WorkOrderGatewayImpl;
 
 public class PersistenceFactory {
 
@@ -19,5 +21,9 @@ public class PersistenceFactory {
 
 	public static TrainingGateway getTrainingGateway() {
 		return new TrainingGatewayImpl();
+	}
+
+	public static WorkOrderGateway getWorkOrderGateway() {
+		return new WorkOrderGatewayImpl();
 	}
 }

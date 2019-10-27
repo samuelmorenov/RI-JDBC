@@ -29,10 +29,8 @@ public class AddMechanic {
 				throw new BusinessException("Ya existe un mecanico con ese DNI");
 			}
 			mg.add(mechanic); //Llamada al add mecanico de la persistencia
-			System.out.println(c == null);
 			//c.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new RuntimeException("Error de conexion");
 		}
 

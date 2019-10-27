@@ -29,7 +29,6 @@ public class GenerateCertificates {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new RuntimeException("Error de conexion");
 		}
 		return certificadosGenerados;
