@@ -74,10 +74,62 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 	public void delete(Long id) {
 		PreparedStatement pst = null;
 		String SQL = Conf.getInstance().getProperty("SQL_DELETE_WORKORDER");
-		
+
 		try {
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, id);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public WorkOrderDto findById(Long id) {
+		WorkOrderDto workOrder = null;
+
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_WORKORDER_BY_ID");
+
+		try {
+			c = Jdbc.getConnection();
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, id);
+			rs = pst.executeQuery();
+
+			if (rs.next() == false) {
+				return workOrder;
+			}
+
+			workOrder = new WorkOrderDto();
+			workOrder.id = rs.getLong("id");
+			workOrder.total = rs.getDouble("AMOUNT");
+			workOrder.date = rs.getDate("DATE");
+			workOrder.description = rs.getString("DESCRIPTION");
+			workOrder.status = rs.getString("STATUS");
+			workOrder.invoiceId = rs.getLong("INVOICE_ID");
+			workOrder.mechanicId = rs.getLong("MECHANIC_ID");
+			workOrder.vehicleId = rs.getLong("VEHICLE_ID");
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return workOrder;
+	}
+
+	@Override
+	public void update(WorkOrderDto workOrderDto) {
+		PreparedStatement pst = null;
+		String SQL = Conf.getInstance().getProperty("SQL_UPDATE_WORKORDER");
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setString(1, workOrderDto.description);
+			pst.setString(2, workOrderDto.status);
+			pst.setLong(3, workOrderDto.id);
+
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

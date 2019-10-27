@@ -12,5 +12,9 @@ public interface WorkOrderGateway extends Gateway {
 	void AddWorkOrder(WorkOrderDto workOrderDto);
 
 	void delete(Long id);
+
+	WorkOrderDto findById(Long id);
+
+	void update(WorkOrderDto workOrderDto);
 	
 }
