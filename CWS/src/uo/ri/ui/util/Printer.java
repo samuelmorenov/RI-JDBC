@@ -11,6 +11,7 @@ import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.dto.PaymentMeanDto;
 import uo.ri.business.dto.PayrollDto;
 import uo.ri.business.dto.TrainingHoursRow;
+import uo.ri.business.dto.VehicleDto;
 
 public class Printer {
 
@@ -140,6 +141,16 @@ public class Printer {
 				, r.vehicleTypeName
 				, r.mechanicFullName
 				, r.enrolledHours);
+	}
+	
+	public static void printVehicleDetail(VehicleDto v) {
+
+		Console.printf("%d\t%-8.8s\t%s\t%s\n",
+				v.id
+				, v.plate
+				, v.make
+				, v.model
+			);
 	}
 
 }

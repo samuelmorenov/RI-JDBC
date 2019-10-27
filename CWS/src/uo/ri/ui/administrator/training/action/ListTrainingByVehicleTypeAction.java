@@ -15,7 +15,7 @@ public class ListTrainingByVehicleTypeAction implements Action {
 	@Override
 	public void execute() throws Exception {
 
-		CourseReportService rs = ServiceFactory.forCourseReportService();
+		CourseReportService rs = ServiceFactory.getCourseReportService();
 		List<TrainingHoursRow> rows = rs.findTrainingByVehicleTypeAndMechanic();
 
 		Console.println("Training by vehicle type");

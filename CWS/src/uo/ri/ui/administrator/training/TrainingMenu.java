@@ -9,10 +9,11 @@ public class TrainingMenu extends BaseMenu {
 	public TrainingMenu() {
 		menuOptions = new Object[][] { { "Manager > Training management", null },
 
-				{ "Course management", NotYetImplementedAction.class }, // TO-DO CourseCrudMenu.class },
-				{ "Attendance registration", NotYetImplementedAction.class }, // TO-DO AttendanceMenu.class },
-				{ "Reports", ReportsMenu.class }, { "", null },
-				{ "Certificate generation", GenerateCertificatesAction.class },
+				{ "Course management", 			NotYetImplementedAction.class }, // TO-DO CourseCrudMenu.class },
+				{ "Attendance registration", 	NotYetImplementedAction.class }, // TO-DO AttendanceMenu.class },
+				{ "Reports", 					ReportsMenu.class }, 
+				{ "", null },
+				{ "Certificate generation", 	GenerateCertificatesAction.class },
 
 		};
 	}

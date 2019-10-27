@@ -40,10 +40,8 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 
 	@Override
 	public List<MechanicDto> findAllMechanics() throws BusinessException {
-		List<MechanicDto> mechanics = null;
 		ListMechanics lm = new ListMechanics();
-		mechanics = lm.execute();
-		return mechanics;
+		return lm.execute();
 	}
 
 	@Override
