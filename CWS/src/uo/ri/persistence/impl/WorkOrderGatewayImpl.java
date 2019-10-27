@@ -1,6 +1,7 @@
 package uo.ri.persistence.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.Optional;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.VehicleDto;
+import uo.ri.business.dto.WorkOrderDto;
 import uo.ri.conf.Conf;
 import uo.ri.persistence.WorkOrderGateway;
 
@@ -46,6 +48,26 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			throw new RuntimeException(e);
 		}
 
+	}
+
+	@Override
+	public void AddWorkOrder(WorkOrderDto workOrderDto) {
+
+		PreparedStatement pst = null;
+		String SQL = Conf.getInstance().getProperty("SQL_INSERT_WORKORDER");
+
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, workOrderDto.vehicleId);
+			pst.setString(2, workOrderDto.description);
+			java.sql.Date sqlDate = new Date(workOrderDto.date.getTime());
+			pst.setDate(3, sqlDate);
+			pst.setString(4, workOrderDto.status);
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

@@ -31,7 +31,7 @@ public interface WorkOrderService {
 	 * 		date and time (timestamp), or
 	 *  - the vehicle does not exist
 	 */
-	WorkOrderDto registerNew(WorkOrderDto dto) throws BusinessException;
+	void registerNew(WorkOrderDto dto) throws BusinessException;
 
 	/**
 	 * Updates the description of the work order specified by the id and

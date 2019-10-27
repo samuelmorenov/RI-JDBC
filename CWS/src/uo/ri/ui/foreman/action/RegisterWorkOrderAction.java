@@ -1,6 +1,5 @@
 package uo.ri.ui.foreman.action;
 
-import alb.util.console.Console;
 import alb.util.menu.Action;
 import uo.ri.business.dto.VehicleDto;
 import uo.ri.business.dto.WorkOrderDto;
@@ -24,7 +23,7 @@ public class RegisterWorkOrderAction implements Action {
 		WorkOrderService as = ServiceFactory.getWorkOrderService();
 		as.registerNew( wo );
 
-		Console.println("\nWork order registered: " + wo.id);
+		Console.println("\nWork order registered");
 	}
 
 }

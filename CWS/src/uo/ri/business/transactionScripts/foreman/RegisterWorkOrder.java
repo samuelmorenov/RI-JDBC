@@ -2,6 +2,7 @@ package uo.ri.business.transactionScripts.foreman;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.WorkOrderDto;
@@ -15,18 +16,18 @@ public class RegisterWorkOrder {
 		this.workOrderDto = dto;
 	}
 
-	public WorkOrderDto execute() {
+	public void execute() {
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
-
-			//TODO 
+			workOrderDto.date = new Date();
+			workOrderDto.status = "OPEN";
+			wog.AddWorkOrder(workOrderDto);
 			
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}
-		return null;
 	}
 
 }
