@@ -18,7 +18,7 @@ public class TrainingGatewayImpl extends GatewayImpl implements TrainingGateway 
 		TrainingHoursRow trainingHoursRow = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		String SQL = Conf.getInstance().getProperty("SQL_"); // TODO Sentencia SQL
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_TRAINING_HOURS_ROW");
 		try {
 			pst = c.prepareStatement(SQL);
 			rs = pst.executeQuery();
@@ -26,8 +26,9 @@ public class TrainingGatewayImpl extends GatewayImpl implements TrainingGateway 
 			while (rs.next()) {
 
 				trainingHoursRow = new TrainingHoursRow();
-				// trainingHoursRow.mechanic = rs.getLong("M_ID");
-				// trainingHoursRow.vehicleType = rs.getLong("V_ID");
+				trainingHoursRow.mechanicFullName = rs.getString("M_NAME") + rs.getString("M_SURNAME");
+				trainingHoursRow.vehicleTypeName = rs.getString("VT_NAME");
+				trainingHoursRow.enrolledHours = (int)rs.getLong("HOURS_P");
 				list.add(trainingHoursRow);
 
 			}
