@@ -155,7 +155,7 @@ public class Printer {
 	}
 	public static void printCertifiedMechanic(CertificateDto c) {
 
-		Console.printf("%d\t%-10.10s %-25.25s %-25.25s\n",
+		Console.printf("%d \n",
 				c.mechanic
 			);
 	}

@@ -25,7 +25,6 @@ public class AssignWorkOrder {
 
 			if (!wog.mechanicAbleToWorkOrder(mechanicId, woId))
 				throw new BusinessException("El mecanico no esta certificado para ese tipo de vehiculo");
-			//TODO siempre salta esta excepcion, testear bien 
 
 			wog.AssignMechanic(mechanicId, woId);
 

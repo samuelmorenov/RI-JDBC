@@ -87,4 +87,33 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 		}
 	}
 
+	@Override
+	public List<CertificateDto> getCertificatesByVehicleTypeId(Long id) {
+		List<CertificateDto> list = null;
+		CertificateDto certificate = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_CERTIFICATESSELECT_BY_VEHICLETYPE");
+
+		try {
+			c = Jdbc.getConnection();
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, id);
+			rs = pst.executeQuery();
+			list = new ArrayList<CertificateDto>();
+			while (rs.next()) {
+				certificate = new CertificateDto();
+				certificate.id = rs.getLong("ID");
+				certificate.obtainedAt = rs.getDate("DATE");
+				certificate.mechanic = rs.getLong("MECHANIC_ID");
+				certificate.vehicleType = rs.getLong("VEHICLETYPE_ID");
+				list.add(certificate);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return list;
+	}
+
 }

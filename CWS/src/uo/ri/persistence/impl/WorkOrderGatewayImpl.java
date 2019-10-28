@@ -148,11 +148,9 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 		try {
 			c = Jdbc.getConnection();
 			pst = c.prepareStatement(SQL);
-			pst.setLong(1, mechanicId);
-			pst.setLong(2, woId);
-
+			pst.setLong(1, woId);
+			pst.setLong(2, mechanicId);
 			rs = pst.executeQuery();
-
 			return rs.next();
 
 		} catch (SQLException e) {
@@ -173,11 +171,11 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, mechanicId);
 			pst.setLong(2, woId);
-
-			pst.executeQuery();
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
+			//throw new RuntimeException(e);
 		}
 
 	}

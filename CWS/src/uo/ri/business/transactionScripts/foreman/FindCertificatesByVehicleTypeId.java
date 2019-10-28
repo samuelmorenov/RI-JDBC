@@ -21,7 +21,7 @@ public class FindCertificatesByVehicleTypeId {
 		try (Connection c = Jdbc.getConnection();) {
 			CertificatesGateway cg = PersistenceFactory.getCertificatesGateway();
 			cg.setConnection(c);
-			return null; //TODO cg.getCertificatesByVehicleTypeId(id); 
+			return cg.getCertificatesByVehicleTypeId(id); 
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}
