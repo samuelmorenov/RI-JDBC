@@ -7,14 +7,18 @@ import java.util.List;
 import alb.util.console.Console;
 import alb.util.menu.Action;
 import uo.ri.business.dto.InvoiceDto;
-import uo.ri.business.transactionScripts.cashier.WorkOrderBilling;
+import uo.ri.business.serviceLayer.InvoiceService;
 import uo.ri.common.BusinessException;
+import uo.ri.conf.ServiceFactory;
 
 public class WorkOrderBillingAction implements Action {
 
 	@Override
 	public void execute() throws BusinessException {
+
+		InvoiceDto invoice = null;
 		List<Long> workOrderIds = new ArrayList<Long>();
+		
 
 		// type work order ids to be invoiced in the invoice
 		do {
@@ -22,13 +26,9 @@ public class WorkOrderBillingAction implements Action {
 			workOrderIds.add(id);
 		} while (nextWorkorder());
 
-		WorkOrderBilling wob = new WorkOrderBilling();
-		InvoiceDto invoice = wob.execute();
-		
-		//TODO WorkOrderBilling Hacer la implemementacion del curdservice
-		//MechanicCrudService mcs = new MechanicCrudServiceImpl();
-		//mcs.addMechanic(mechanic);
-		
+		InvoiceService is = ServiceFactory.getInvoiceService();
+		invoice = is.createInvoiceFor(workOrderIds);
+
 		displayInvoice(invoice.number, invoice.date, invoice.amount, invoice.vat, invoice.total);
 
 	}

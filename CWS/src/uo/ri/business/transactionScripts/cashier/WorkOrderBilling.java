@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,40 +12,20 @@ import alb.util.jdbc.Jdbc;
 import alb.util.math.Round;
 import uo.ri.business.dto.InvoiceDto;
 import uo.ri.common.BusinessException;
+import uo.ri.conf.Conf;
 
 public class WorkOrderBilling {
-	private static final String SQL_PARTS_TOTAL = 
-			"select sum(s.quantity * r.price) "
-			+ "	from  TSubstitutions s, TSpareParts r, TWorkorders w "
-			+ "	where s.sparepart_id = r.id "
-			+ "		and s.labor_id = l.id and w.id = ?"; //TODO WorkOrderBilling Cambiado
 
-	private static final String SQL_LABOR_TOTAL = 
-			"select sum(i.minutes * tv.pricePerHour / 60) "
-			+ "	from TWorkOrders a, TLabors i, TVehicles v, TVehicleTypes tv" 
-			+ "	where i.workorder_id = a.id "
-			+ "		and a.vehicle_id = v.id" 
-			+ "		and v.vehicletype_id = tv.id" 
-			+ "		and a.id = ?"; // TODO WorkOrderBilling Cambiado
-	
-	
-	private static final String SQL_UPDATE_WORKORDER_AMOUNT = "update TWorkOrders set amount = ? where id = ?";
-	
-	
-	private static final String SQL_LAST_INVOICE_NUMBER = "select max(invoice_number) from TInvoices";
-	private static final String SQL_INSERT_INVOICE = "insert into TInvoices(invoice_number, invoice_date, vat, amount, status) "
-			+ "	values(?, ?, ?, ?, ?)";
-	private static final String SQL_WORKORDER_INVOICE_ASSOC = "update TWorkOrders set invoice_id = ? where id = ?";
-	private static final String SQL_UPDATE_WORKORDER_STATUS = "update TWorkOrders set status = ? where id = ?";
-	private static final String SQL_CHECK_WORKORDER_STATUS = "select status from TWorkOrders where id = ?";
-	private static final String SQL_RETRIEVE_GENERATED_KEY = "select id from TInvoices where invoice_number = ?";
+	List<Long> workOrderIds;
+	Connection connection;
 
-	private Connection connection;
-
-	List<Long> workOrderIds = new ArrayList<Long>();
+	public WorkOrderBilling(List<Long> workOrderIds) {
+		this.workOrderIds = workOrderIds;
+	}
 
 	public InvoiceDto execute() throws BusinessException {
-		InvoiceDto invoice = new InvoiceDto();
+		
+		InvoiceDto invoice = null;
 
 		try {
 			connection = Jdbc.getConnection();
@@ -65,12 +44,14 @@ public class WorkOrderBilling {
 			linkWorkorderInvoice(idInvoice, workOrderIds);
 			updateWorkOrderStatus(workOrderIds, "INVOICED");
 
+			invoice = new InvoiceDto();
 			invoice.number = numberInvoice;
 			invoice.date = dateInvoice;
 			invoice.amount = amount;
 			invoice.vat = vat;
 			invoice.total = total;
 
+			
 			connection.commit();
 		} catch (SQLException e) {
 			try {
@@ -89,6 +70,7 @@ public class WorkOrderBilling {
 		} finally {
 			Jdbc.close(connection);
 		}
+		
 		return invoice;
 
 	}
@@ -98,7 +80,9 @@ public class WorkOrderBilling {
 		ResultSet rs = null;
 
 		try {
-			pst = connection.prepareStatement(SQL_CHECK_WORKORDER_STATUS);
+			String SQL = Conf.getInstance().getProperty("SQL_CHECK_WORKORDER_STATUS");
+			pst = connection.prepareStatement(SQL);
+			
 
 			for (Long workOrderID : workOrderIDS) {
 				pst.setLong(1, workOrderID);
@@ -124,7 +108,8 @@ public class WorkOrderBilling {
 
 		PreparedStatement pst = null;
 		try {
-			pst = connection.prepareStatement(SQL_UPDATE_WORKORDER_STATUS);
+			String SQL = Conf.getInstance().getProperty("SQL_UPDATE_WORKORDER_STATUS");
+			pst = connection.prepareStatement(SQL);
 
 			for (Long breakdownId : breakdownIds) {
 				pst.setString(1, status);
@@ -141,7 +126,8 @@ public class WorkOrderBilling {
 
 		PreparedStatement pst = null;
 		try {
-			pst = connection.prepareStatement(SQL_WORKORDER_INVOICE_ASSOC);
+			String SQL = Conf.getInstance().getProperty("SQL_WORKORDER_INVOICE_ASSOC");
+			pst = connection.prepareStatement(SQL);
 
 			for (Long breakdownId : workOrderIDS) {
 				pst.setLong(1, invoiceId);
@@ -159,7 +145,8 @@ public class WorkOrderBilling {
 		PreparedStatement pst = null;
 
 		try {
-			pst = connection.prepareStatement(SQL_INSERT_INVOICE);
+			String SQL = Conf.getInstance().getProperty("SQL_INSERT_INVOICE");
+			pst = connection.prepareStatement(SQL);
 			pst.setLong(1, numberInvoice);
 			pst.setDate(2, new java.sql.Date(dateInvoice.getTime()));
 			pst.setDouble(3, vat);
@@ -180,7 +167,8 @@ public class WorkOrderBilling {
 		ResultSet rs = null;
 
 		try {
-			pst = connection.prepareStatement(SQL_RETRIEVE_GENERATED_KEY);
+			String SQL = Conf.getInstance().getProperty("SQL_RETRIEVE_GENERATED_KEY");
+			pst = connection.prepareStatement(SQL);
 			pst.setLong(1, numberInvoice);
 			rs = pst.executeQuery();
 			rs.next();
@@ -197,7 +185,8 @@ public class WorkOrderBilling {
 		ResultSet rs = null;
 
 		try {
-			pst = connection.prepareStatement(SQL_LAST_INVOICE_NUMBER);
+			String SQL = Conf.getInstance().getProperty("SQL_LAST_INVOICE_NUMBER");
+			pst = connection.prepareStatement(SQL);
 			rs = pst.executeQuery();
 
 			if (rs.next()) {
@@ -214,7 +203,8 @@ public class WorkOrderBilling {
 		PreparedStatement pst = null;
 
 		try {
-			pst = connection.prepareStatement(SQL_UPDATE_WORKORDER_AMOUNT);
+			String SQL = Conf.getInstance().getProperty("SQL_UPDATE_WORKORDER_AMOUNT");
+			pst = connection.prepareStatement(SQL);
 			pst.setDouble(1, total);
 			pst.setLong(2, workOrderID);
 			pst.executeUpdate();
@@ -228,7 +218,8 @@ public class WorkOrderBilling {
 		ResultSet rs = null;
 
 		try {
-			pst = connection.prepareStatement(SQL_PARTS_TOTAL);
+			String SQL = Conf.getInstance().getProperty("SQL_PARTS_TOTAL");
+			pst = connection.prepareStatement(SQL);
 			pst.setLong(1, workOrderID);
 
 			rs = pst.executeQuery();
@@ -248,7 +239,8 @@ public class WorkOrderBilling {
 		ResultSet rs = null;
 
 		try {
-			pst = connection.prepareStatement(SQL_LABOR_TOTAL);
+			String SQL = Conf.getInstance().getProperty("SQL_LABOR_TOTAL");
+			pst = connection.prepareStatement(SQL);
 			pst.setLong(1, workOrderID);
 
 			rs = pst.executeQuery();
