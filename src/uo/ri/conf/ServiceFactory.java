@@ -8,6 +8,7 @@ import uo.ri.business.serviceLayer.MechanicCrudService;
 import uo.ri.business.serviceLayer.VehicleCrudService;
 import uo.ri.business.serviceLayer.WorkOrderService;
 import uo.ri.business.serviceLayer.impl.CertificateServiceImpl;
+import uo.ri.business.serviceLayer.impl.CourseCrudServiceImpl;
 import uo.ri.business.serviceLayer.impl.CourseReportServiceImpl;
 import uo.ri.business.serviceLayer.impl.InvoiceServiceImpl;
 import uo.ri.business.serviceLayer.impl.MechanicCrudServiceImpl;
@@ -41,7 +42,7 @@ public class ServiceFactory {
 	}
 
 	public static CourseCrudService forCourseCrudService() {
-		return new CourseCrudServiceImpl(); //TODO
+		return new CourseCrudServiceImpl();
 	}
 	
 	

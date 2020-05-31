@@ -1,6 +1,6 @@
 package uo.ri.business.dto;
 
-//TODO: Copiado de additional classes
+//TO-DO: Copiado de additional classes
 
 public class TrainingForMechanicRow {
 

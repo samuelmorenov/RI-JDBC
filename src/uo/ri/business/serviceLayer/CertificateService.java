@@ -2,7 +2,7 @@ package uo.ri.business.serviceLayer;
 
 import uo.ri.common.BusinessException;
 
-//TODO: Copiado de additional classes
+//TO-DO: Copiado de additional classes
 
 /**
  * This service is intended to be used by the Manager
