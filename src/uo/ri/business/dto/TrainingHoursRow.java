@@ -1,6 +1,6 @@
 package uo.ri.business.dto;
 
-//TO-DO: Copiado de additional classes
+//TODO: Copiado de additional classes
 
 public class TrainingHoursRow {
 

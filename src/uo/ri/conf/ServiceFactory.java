@@ -1,6 +1,7 @@
 package uo.ri.conf;
 
 import uo.ri.business.serviceLayer.CertificateService;
+import uo.ri.business.serviceLayer.CourseCrudService;
 import uo.ri.business.serviceLayer.CourseReportService;
 import uo.ri.business.serviceLayer.InvoiceService;
 import uo.ri.business.serviceLayer.MechanicCrudService;
@@ -37,6 +38,10 @@ public class ServiceFactory {
 
 	public static InvoiceService getInvoiceService() {
 		return new InvoiceServiceImpl();
+	}
+
+	public static CourseCrudService forCourseCrudService() {
+		return new CourseCrudServiceImpl(); //TODO
 	}
 	
 	

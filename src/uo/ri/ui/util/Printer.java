@@ -7,12 +7,14 @@ import uo.ri.business.dto.CertificateDto;
 import uo.ri.business.dto.ContractCategoryDto;
 import uo.ri.business.dto.ContractDto;
 import uo.ri.business.dto.ContractTypeDto;
+import uo.ri.business.dto.CourseDto;
 import uo.ri.business.dto.InvoiceDto;
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.dto.PaymentMeanDto;
 import uo.ri.business.dto.PayrollDto;
 import uo.ri.business.dto.TrainingHoursRow;
 import uo.ri.business.dto.VehicleDto;
+import uo.ri.business.dto.VehicleTypeDto;
 
 public class Printer {
 
@@ -158,5 +160,31 @@ public class Printer {
 		Console.printf("%d \n",
 				c.mechanic
 			);
+	}
+	
+	public static void printVehicleType(VehicleTypeDto vt) {
+
+		Console.printf("\t%d %-10.10s %5.2f %d\n"
+				, vt.id
+				, vt.name
+				, vt.pricePerHour
+				, vt.minTrainigHours
+			);
+	}
+	
+	public static void printCourse(CourseDto c) {
+
+		Console.printf("%d\t%s %s %-35.35s %td/%<tm/%<tY %td/%<tm/%<tY %d\n"
+				, c.id
+				, c.code
+				, c.name
+				, c.description
+				, c.startDate
+				, c.endDate
+				, c.hours
+			);
+		c.percentages.forEach((id, percent) ->
+			Console.printf("\t %d %d percent\n", id, percent)
+		);
 	}
 }
