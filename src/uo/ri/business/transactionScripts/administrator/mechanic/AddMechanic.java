@@ -1,4 +1,4 @@
-package uo.ri.business.transactionScripts.administrator;
+package uo.ri.business.transactionScripts.administrator.mechanic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,15 +21,18 @@ public class AddMechanic {
 
 		try (Connection c = Jdbc.getConnection();) {
 
-			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); //Factoria
-			//c.setAutoCommit(false);
+			//Factoria
+			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); 
+			c.setAutoCommit(false);
 			mg.setConnection(c);
-			if (mg.findByDNI(mechanic.dni) != null) { //Llamada al findByDNI de la persistencia
-				//c.rollback();
+			//Llamada al findByDNI de la persistencia
+			if (mg.findByDNI(mechanic.dni) != null) { 
+				c.rollback();
 				throw new BusinessException("Ya existe un mecanico con ese DNI");
 			}
-			mg.add(mechanic); //Llamada al add mecanico de la persistencia
-			//c.commit();
+			//Llamada al add mecanico de la persistencia
+			mg.add(mechanic); 
+			c.commit();
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}

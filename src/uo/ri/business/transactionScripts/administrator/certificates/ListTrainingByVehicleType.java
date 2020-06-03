@@ -1,4 +1,4 @@
-package uo.ri.business.transactionScripts.administrator;
+package uo.ri.business.transactionScripts.administrator.certificates;
 
 import java.sql.Connection;
 import java.sql.SQLException;

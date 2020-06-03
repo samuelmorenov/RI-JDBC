@@ -174,8 +174,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			//throw new RuntimeException(e);
+			//e.printStackTrace(); DONE [ ] Imprimes los errores SQL (AssignMechanic)
+			throw new RuntimeException(e);
 		}
 
 	}

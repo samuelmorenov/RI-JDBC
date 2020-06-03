@@ -6,7 +6,7 @@ import uo.ri.business.dto.CertificateDto;
 import uo.ri.business.dto.TrainingForMechanicRow;
 import uo.ri.business.dto.TrainingHoursRow;
 import uo.ri.business.serviceLayer.CourseReportService;
-import uo.ri.business.transactionScripts.administrator.ListTrainingByVehicleType;
+import uo.ri.business.transactionScripts.administrator.certificates.ListTrainingByVehicleType;
 import uo.ri.common.BusinessException;
 
 public class CourseReportServiceImpl implements CourseReportService {

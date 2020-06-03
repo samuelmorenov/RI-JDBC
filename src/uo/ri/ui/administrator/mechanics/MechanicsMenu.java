@@ -12,8 +12,8 @@ public class MechanicsMenu extends BaseMenu {
 		menuOptions = new Object[][] { 
 			{"Manager > Mechanics management", null},
 			
-			{ "Add mechanic", 				AddMechanicAction.class }, 
-			{ "Update mechanic", 	UpdateMechanicAction.class }, 
+			{ "Add mechanic", 					AddMechanicAction.class }, 
+			{ "Update mechanic", 				UpdateMechanicAction.class }, 
 			{ "Delete mechanic", 				DeleteMechanicAction.class }, 
 			{ "List mechanics", 				ListMechanicsAction.class },
 		};

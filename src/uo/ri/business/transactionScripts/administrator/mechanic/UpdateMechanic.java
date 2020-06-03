@@ -1,4 +1,4 @@
-package uo.ri.business.transactionScripts.administrator;
+package uo.ri.business.transactionScripts.administrator.mechanic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,15 +22,14 @@ public class UpdateMechanic {
 		try (Connection c = Jdbc.getConnection();) {
 
 			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); //Factoria
-			//c.setAutoCommit(false);
+			c.setAutoCommit(false);
 			mg.setConnection(c);
 			if (mg.findById(mechanic.id) == null) { // Llamada al findById de la persistencia
-				//1
 				c.rollback();
 				throw new BusinessException("No existe un mecanico con ese ID");
 			}
 			mg.update(mechanic); //Llamada al add mecanico de la persistencia
-			//c.commit();
+			c.commit();
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}

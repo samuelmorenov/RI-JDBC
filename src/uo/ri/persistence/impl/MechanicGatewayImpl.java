@@ -36,6 +36,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 		String SQL = Conf.getInstance().getProperty("SQL_DELETE_MECHANIC");
 		
 		try {
+			//TODO: Comprobar que existe???? pero en business
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, idMechanic);
 			pst.executeUpdate();

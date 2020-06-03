@@ -7,14 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import alb.util.jdbc.Jdbc;
-import uo.ri.common.BusinessException;
 import uo.ri.conf.Conf;
 import uo.ri.persistence.InvoiceGateway;
 
 public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 	@Override
-	public void testRepairs(List<Long> workOrderIDS) throws SQLException, BusinessException {
+	public void testRepairs(List<Long> workOrderIDS) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
@@ -27,15 +26,17 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 				rs = pst.executeQuery();
 				if (rs.next() == false) {
-					throw new BusinessException("Workorder " + workOrderID + " doesn't exist");
+					throw new RuntimeException("Workorder " + workOrderID + " doesn't exist");
 				}
 
 				String status = rs.getString(1);
 				if (!"FINISHED".equalsIgnoreCase(status)) {
-					throw new BusinessException("Workorder " + workOrderID + " is not finished yet");
+					throw new RuntimeException("Workorder " + workOrderID + " is not finished yet");
 				}
 
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -43,7 +44,7 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 	}
 
 	@Override
-	public void updateWorkOrderStatus(List<Long> breakdownIds, String status) throws SQLException {
+	public void updateWorkOrderStatus(List<Long> breakdownIds, String status) {
 
 		PreparedStatement pst = null;
 		try {
@@ -56,13 +57,15 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 				pst.executeUpdate();
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(pst);
 		}
 	}
 
 	@Override
-	public void linkWorkorderInvoice(long invoiceId, List<Long> workOrderIDS) throws SQLException {
+	public void linkWorkorderInvoice(long invoiceId, List<Long> workOrderIDS) {
 
 		PreparedStatement pst = null;
 		try {
@@ -75,13 +78,15 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 				pst.executeUpdate();
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e); //TODO: Comprobar si hay que hacer esto
 		} finally {
 			Jdbc.close(pst);
 		}
 	}
 
 	@Override
-	public long createInvoice(long numberInvoice, Date dateInvoice, double vat, double total) throws SQLException {
+	public long createInvoice(long numberInvoice, Date dateInvoice, double vat, double total) {
 
 		PreparedStatement pst = null;
 
@@ -96,15 +101,18 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 			pst.executeUpdate();
 
+			// TODO: Esto habria que hacerlo fuera de la parte de persistencia
+			// TODO: Ver si el numberInvoice es unico o no
 			return getGeneratedKey(numberInvoice); // New invoice id
 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(pst);
 		}
 	}
 
-
-	private long getGeneratedKey(long numberInvoice) throws SQLException {
+	private long getGeneratedKey(long numberInvoice) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
@@ -117,13 +125,15 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 			return rs.getLong(1);
 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
 	}
 
 	@Override
-	public long generateInvoiceNumber() throws SQLException {
+	public long generateInvoiceNumber() {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
@@ -137,13 +147,15 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 			} else { // there is none yet
 				return 1L;
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
 	}
 
 	@Override
-	public void updateWorkorderTotal(Long workOrderID, double total) throws SQLException {
+	public void updateWorkorderTotal(Long workOrderID, double total) {
 		PreparedStatement pst = null;
 
 		try {
@@ -152,13 +164,15 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 			pst.setDouble(1, total);
 			pst.setLong(2, workOrderID);
 			pst.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(pst);
 		}
 	}
 
 	@Override
-	public double checkTotalParts(Long workOrderID) throws SQLException {
+	public double checkTotalParts(Long workOrderID) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
@@ -174,13 +188,15 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 			return rs.getDouble(1);
 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
 	}
 
 	@Override
-	public double checkTotalLabor(Long workOrderID) throws BusinessException, SQLException {
+	public double checkTotalLabor(Long workOrderID) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
@@ -191,13 +207,14 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 			rs = pst.executeQuery();
 			if (rs.next() == false) {
-				throw new BusinessException("Workorder does not exist or it can not be charged");
+				// TODO_ Lanzas BusinessException en persistencia (testRepairs).
+				throw new RuntimeException("Workorder does not exist or it can not be charged");
 			}
 
 			return rs.getDouble(1);
 
-		} catch (BusinessException e) {
-			throw e;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}

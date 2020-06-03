@@ -4,10 +4,10 @@ import java.util.List;
 
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.serviceLayer.MechanicCrudService;
-import uo.ri.business.transactionScripts.administrator.AddMechanic;
-import uo.ri.business.transactionScripts.administrator.DeleteMechanic;
-import uo.ri.business.transactionScripts.administrator.ListMechanics;
-import uo.ri.business.transactionScripts.administrator.UpdateMechanic;
+import uo.ri.business.transactionScripts.administrator.mechanic.AddMechanic;
+import uo.ri.business.transactionScripts.administrator.mechanic.DeleteMechanic;
+import uo.ri.business.transactionScripts.administrator.mechanic.ListMechanics;
+import uo.ri.business.transactionScripts.administrator.mechanic.UpdateMechanic;
 import uo.ri.common.BusinessException;
 
 public class MechanicCrudServiceImpl implements MechanicCrudService {

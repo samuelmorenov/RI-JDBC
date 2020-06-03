@@ -1,27 +1,24 @@
 package uo.ri.persistence;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import uo.ri.common.BusinessException;
-
 public interface InvoiceGateway extends Gateway{
 
-	void testRepairs(List<Long> workOrderIds) throws SQLException, BusinessException;
+	void testRepairs(List<Long> workOrderIds);
 
-	long generateInvoiceNumber() throws SQLException;
+	long generateInvoiceNumber();
 
-	long createInvoice(long numberInvoice, Date dateInvoice, double vat, double total) throws SQLException;
+	long createInvoice(long numberInvoice, Date dateInvoice, double vat, double total);
 
-	void linkWorkorderInvoice(long idInvoice, List<Long> workOrderIds) throws SQLException;
+	void linkWorkorderInvoice(long idInvoice, List<Long> workOrderIds);
 
-	void updateWorkOrderStatus(List<Long> workOrderIds, String string) throws SQLException;
+	void updateWorkOrderStatus(List<Long> workOrderIds, String string);
 
-	double checkTotalLabor(Long workOrderID) throws BusinessException, SQLException;
+	double checkTotalLabor(Long workOrderID);
 
-	double checkTotalParts(Long workOrderID) throws SQLException;
+	double checkTotalParts(Long workOrderID);
 
-	void updateWorkorderTotal(Long workOrderID, double workTotal) throws SQLException;
+	void updateWorkorderTotal(Long workOrderID, double workTotal);
 
 }
