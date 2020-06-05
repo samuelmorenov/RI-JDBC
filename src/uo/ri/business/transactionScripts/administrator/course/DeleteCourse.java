@@ -17,7 +17,7 @@ public class DeleteCourse {
 	}
 
 	public void execute() throws BusinessException{
-		//TODO: Eliminar un curso. Solo si no tiene mecánicos registrados.
+		//TODO -> Eliminar un curso. Solo si no tiene mecánicos registrados.
 		try (Connection c = Jdbc.getConnection();) {
 
 			CourseGateway cg = PersistenceFactory.getCourseGateway(); 

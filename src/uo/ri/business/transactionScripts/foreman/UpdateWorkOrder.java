@@ -22,6 +22,7 @@ public class UpdateWorkOrder {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
+			c.setAutoCommit(false);
 
 			if (wog.findById(workOrderDto.id) == null) {
 				throw new BusinessException("No existe una workorder con ese ID");
@@ -32,6 +33,7 @@ public class UpdateWorkOrder {
 			}
 
 			wog.update(workOrderDto);
+			c.commit();
 
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");

@@ -16,6 +16,8 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 	public void testRepairs(List<Long> workOrderIDS) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		
+		//TODO -> Lógica de negocio en los TDG (testRepairs).
 
 		try {
 			String SQL = Conf.getInstance().getProperty("SQL_CHECK_WORKORDER_STATUS");
@@ -79,14 +81,14 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 				pst.executeUpdate();
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e); //TODO: Comprobar si hay que hacer esto
+			throw new RuntimeException(e);
 		} finally {
 			Jdbc.close(pst);
 		}
 	}
 
 	@Override
-	public long createInvoice(long numberInvoice, Date dateInvoice, double vat, double total) {
+	public void createInvoice(long numberInvoice, Date dateInvoice, double vat, double total) {
 
 		PreparedStatement pst = null;
 
@@ -101,10 +103,6 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 			pst.executeUpdate();
 
-			// TODO: Esto habria que hacerlo fuera de la parte de persistencia
-			// TODO: Ver si el numberInvoice es unico o no
-			return getGeneratedKey(numberInvoice); // New invoice id
-
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -112,7 +110,8 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 		}
 	}
 
-	private long getGeneratedKey(long numberInvoice) {
+	@Override
+	public long getGeneratedKey(long numberInvoice) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
@@ -207,7 +206,6 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 			rs = pst.executeQuery();
 			if (rs.next() == false) {
-				// TODO_ Lanzas BusinessException en persistencia (testRepairs).
 				throw new RuntimeException("Workorder does not exist or it can not be charged");
 			}
 

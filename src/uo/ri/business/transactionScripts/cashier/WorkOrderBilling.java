@@ -24,14 +24,14 @@ public class WorkOrderBilling {
 	}
 
 	public InvoiceDto execute() throws BusinessException {
-		
+
 		InvoiceDto invoice = null;
 
 		try {
 			connection = Jdbc.getConnection();
 			connection.setAutoCommit(false);
-			
-			ig = PersistenceFactory.getInvoiceGateway(); //Factoria
+
+			ig = PersistenceFactory.getInvoiceGateway(); // Factoria
 			ig.setConnection(connection);
 
 			ig.testRepairs(workOrderIds);
@@ -43,7 +43,9 @@ public class WorkOrderBilling {
 			double total = amount * (1 + vat / 100); // vat included
 			total = Round.twoCents(total);
 
-			long idInvoice = ig.createInvoice(numberInvoice, dateInvoice, vat, total);
+			ig.createInvoice(numberInvoice, dateInvoice, vat, total);
+			long idInvoice = ig.getGeneratedKey(numberInvoice);
+			
 			ig.linkWorkorderInvoice(idInvoice, workOrderIds);
 			ig.updateWorkOrderStatus(workOrderIds, "INVOICED");
 
@@ -54,31 +56,27 @@ public class WorkOrderBilling {
 			invoice.vat = vat;
 			invoice.total = total;
 
-			
 			connection.commit();
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
 			} catch (SQLException ex) {
 			}
-			;
 			throw new RuntimeException(e);
 		} catch (BusinessException e) {
 			try {
 				connection.rollback();
 			} catch (SQLException ex) {
 			}
-			;
 			throw e;
 		} finally {
 			Jdbc.close(connection);
 		}
-		
+
 		return invoice;
 
 	}
 
-	
 	private double vatPercentage(double totalInvoice, Date dateInvoice) {
 		return Dates.fromString("1/7/2012").before(dateInvoice) ? 21.0 : 18.0;
 	}

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.TrainingHoursRow;
 import uo.ri.conf.Conf;
 import uo.ri.persistence.TrainingGateway;
@@ -34,6 +35,8 @@ public class TrainingGatewayImpl extends GatewayImpl implements TrainingGateway 
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return list;
 	}

@@ -16,14 +16,18 @@ public class RegisterWorkOrder {
 		this.workOrderDto = dto;
 	}
 
-	public void execute() {
+	public WorkOrderDto execute() {
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
+			c.setAutoCommit(false);
 			workOrderDto.date = new Date();
 			workOrderDto.status = "OPEN";
+			//TODO -> Añadir id al workOrderDto
 			wog.AddWorkOrder(workOrderDto);
+			c.commit();
+			return workOrderDto;
 			
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");

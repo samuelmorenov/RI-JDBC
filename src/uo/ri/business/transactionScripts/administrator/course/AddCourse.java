@@ -18,7 +18,6 @@ public class AddCourse {
 
 	public CourseDto execute() {
 		try (Connection c = Jdbc.getConnection();) {
-
 			// Factoria
 			CourseGateway cg = PersistenceFactory.getCourseGateway();
 			c.setAutoCommit(false);

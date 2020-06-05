@@ -17,9 +17,9 @@ import uo.ri.common.BusinessException;
 public class WorkOrderServiceImpl implements WorkOrderService {
 
 	@Override
-	public void registerNew(WorkOrderDto dto) throws BusinessException {
+	public WorkOrderDto registerNew(WorkOrderDto dto) throws BusinessException {
 		RegisterWorkOrder rwo = new RegisterWorkOrder(dto);
-		rwo.execute();
+		return rwo.execute();
 	}
 
 	@Override

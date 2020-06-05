@@ -46,6 +46,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 
 	}
@@ -67,6 +69,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
 		}
 	}
 
@@ -81,6 +85,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
 		}
 	}
 
@@ -116,6 +122,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return workOrder;
 	}
@@ -155,6 +163,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 
 	}
@@ -174,8 +184,9 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			//e.printStackTrace(); DONE [ ] Imprimes los errores SQL (AssignMechanic)
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
 		}
 
 	}

@@ -20,13 +20,25 @@ public class AssignWorkOrder {
 	public void execute() throws BusinessException {
 		try (Connection c = Jdbc.getConnection();) {
 
+			// TODO -> Deberías haber controlado las validaciones que se
+			// especifican en la interfaz de servicio en el TS correspondiente
+			// (assignToMechanic).
+
+			// @throws BusinessException if:
+			// - the mechanic does not exist, or
+			// - the work order does not exist, or
+			// - the work order is not in OPEN status
+			//
+
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
+			c.setAutoCommit(false);
 
 			if (!wog.mechanicAbleToWorkOrder(mechanicId, woId))
 				throw new BusinessException("El mecanico no esta certificado para ese tipo de vehiculo");
 
 			wog.AssignMechanic(mechanicId, woId);
+			c.commit();
 
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");

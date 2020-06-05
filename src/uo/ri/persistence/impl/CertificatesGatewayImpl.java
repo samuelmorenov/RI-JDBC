@@ -35,6 +35,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return list;
 	}
@@ -66,6 +68,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return certificate;
 	}
@@ -84,6 +88,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
 		}
 	}
 
@@ -112,6 +118,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return list;
 	}

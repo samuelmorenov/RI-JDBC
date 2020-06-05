@@ -9,9 +9,9 @@ import uo.ri.business.serviceLayer.CourseCrudService;
 import uo.ri.business.transactionScripts.administrator.course.AddCourse;
 import uo.ri.business.transactionScripts.administrator.course.DeleteCourse;
 import uo.ri.business.transactionScripts.administrator.course.FindAllCourses;
-import uo.ri.business.transactionScripts.administrator.course.FindAllVehicleTypes;
 import uo.ri.business.transactionScripts.administrator.course.FindCourseById;
 import uo.ri.business.transactionScripts.administrator.course.UpdateCourse;
+import uo.ri.business.transactionScripts.administrator.vehicleTypes.FindAllVehicleTypes;
 import uo.ri.common.BusinessException;
 
 public class CourseCrudServiceImpl implements CourseCrudService {

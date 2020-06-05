@@ -18,9 +18,13 @@ public class RemoveWorkOrder {
 	public void execute() {
 		try (Connection c = Jdbc.getConnection();) {
 
+
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
+			c.setAutoCommit(false);
+			//TODO -> En borrar no realizas ninguna comprobación
 			wog.delete(id);
+			c.commit();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");

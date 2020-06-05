@@ -9,7 +9,7 @@ public interface InvoiceGateway extends Gateway{
 
 	long generateInvoiceNumber();
 
-	long createInvoice(long numberInvoice, Date dateInvoice, double vat, double total);
+	void createInvoice(long numberInvoice, Date dateInvoice, double vat, double total);
 
 	void linkWorkorderInvoice(long idInvoice, List<Long> workOrderIds);
 
@@ -20,5 +20,7 @@ public interface InvoiceGateway extends Gateway{
 	double checkTotalParts(Long workOrderID);
 
 	void updateWorkorderTotal(Long workOrderID, double workTotal);
+
+	long getGeneratedKey(long numberInvoice);
 
 }

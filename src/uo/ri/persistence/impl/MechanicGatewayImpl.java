@@ -27,7 +27,9 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} 
+		}  finally {
+			Jdbc.close(pst);
+		}
 	}
 
 	@Override
@@ -36,12 +38,13 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 		String SQL = Conf.getInstance().getProperty("SQL_DELETE_MECHANIC");
 		
 		try {
-			//TODO: Comprobar que existe???? pero en business
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, idMechanic);
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
 		}
 	}
 
@@ -59,6 +62,8 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
 		}
 
 	}
@@ -85,6 +90,8 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return mechanics;
 	}
@@ -118,6 +125,8 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return mechanic;
 	}
@@ -150,6 +159,8 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
 		}
 		return mechanic;
 	}
