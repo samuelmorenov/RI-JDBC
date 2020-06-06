@@ -1,4 +1,4 @@
-package uo.ri.ui.administrator.training.action;
+package uo.ri.ui.administrator.training.reports.action;
 
 import java.util.Comparator;
 import java.util.List;

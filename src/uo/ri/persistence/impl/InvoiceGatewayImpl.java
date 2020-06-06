@@ -13,39 +13,6 @@ import uo.ri.persistence.InvoiceGateway;
 public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 	@Override
-	public void testRepairs(List<Long> workOrderIDS) {
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		
-		//TODO -> Lógica de negocio en los TDG (testRepairs).
-
-		try {
-			String SQL = Conf.getInstance().getProperty("SQL_CHECK_WORKORDER_STATUS");
-			pst = c.prepareStatement(SQL);
-
-			for (Long workOrderID : workOrderIDS) {
-				pst.setLong(1, workOrderID);
-
-				rs = pst.executeQuery();
-				if (rs.next() == false) {
-					throw new RuntimeException("Workorder " + workOrderID + " doesn't exist");
-				}
-
-				String status = rs.getString(1);
-				if (!"FINISHED".equalsIgnoreCase(status)) {
-					throw new RuntimeException("Workorder " + workOrderID + " is not finished yet");
-				}
-
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			Jdbc.close(rs, pst);
-		}
-
-	}
-
-	@Override
 	public void updateWorkOrderStatus(List<Long> breakdownIds, String status) {
 
 		PreparedStatement pst = null;

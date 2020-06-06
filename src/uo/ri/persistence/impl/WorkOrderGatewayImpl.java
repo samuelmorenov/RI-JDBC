@@ -191,4 +191,60 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 	}
 
+	@Override
+	public Long getLastId() {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			String SQL = Conf.getInstance().getProperty("SQL_LAST_ID_WORKORDER");
+			pst = c.prepareStatement(SQL);
+			rs = pst.executeQuery();
+			rs.next();
+
+			return rs.getLong(1);
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
+	}
+
+	@Override
+	public int numberOfInterventios(Long woId) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String SQL = Conf.getInstance().getProperty("SQL_INTERVENTIONS_OF_WORKORDER");
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, woId);
+			rs = pst.executeQuery();
+			return rs.getInt(1);
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
+	}
+
+	@Override
+	public String getStatus(Long workOrderID) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			String SQL = Conf.getInstance().getProperty("SQL_CHECK_WORKORDER_STATUS");
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, workOrderID);
+			rs = pst.executeQuery();
+			return rs.getString(1);
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
+	}
+
 }

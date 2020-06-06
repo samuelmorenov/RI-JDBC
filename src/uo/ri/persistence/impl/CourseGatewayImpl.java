@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,26 +35,25 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			Jdbc.close(pst);
 		}
 	}
-	
-
 
 	@Override
 	public long findLastId() {
-		PreparedStatement pst = null;
+		Statement st = null;
+		//TODO: Revisar Statement
 		ResultSet rs = null;
 
 		try {
 			String SQL = Conf.getInstance().getProperty("SQL_LAST_ID_COURSES");
-			pst = c.prepareStatement(SQL);
-			rs = pst.executeQuery();
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
 			rs.next();
 
 			return rs.getLong(1);
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		}  finally {
-			Jdbc.close(rs, pst);
+		} finally {
+			Jdbc.close(rs, st);
 		}
 	}
 
@@ -165,6 +165,22 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 
 	}
 
-
+	@Override
+	public int getEnrolledMechanics(Long CourseId) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String SQL = Conf.getInstance().getProperty("SQL_ENROLLED_MECHANICS");
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, CourseId);
+			rs = pst.executeQuery();
+			return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
+	}
 
 }

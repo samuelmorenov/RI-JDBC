@@ -15,7 +15,7 @@ public class GenerateCertificates {
 	public int execute() throws BusinessException {
 		int certificadosGenerados = 0;
 
-		// TODO -> Has introducido parte de la lógica de negocio de la generación de
+		// TODO - Has introducido parte de la lógica de negocio de la generación de
 		// certificados, que debería estar en el TS, en una consulta SQL
 		// (SQL_ALL_POSSIBLE_CERTIFICATES especialmente). Esto genera problemas de
 		// escalabilidad, mantenibilidad y legibilidad. Si cambias de base de datos vas
@@ -24,7 +24,7 @@ public class GenerateCertificates {
 		// TDG. A veces es mejor sacrificar un poco de rendimiento para mejorar el
 		// diseño.
 
-		// TODO -> La generación debería ser atómica y al no usar una misma transacción
+		// TODO - La generación debería ser atómica y al no usar una misma transacción
 		// para todas las operaciones que la forman te expones a que se produzcan
 		// anomalías.
 

@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import alb.util.jdbc.Jdbc;
+import uo.ri.business.dto.WorkOrderDto;
 import uo.ri.common.BusinessException;
 import uo.ri.conf.PersistenceFactory;
+import uo.ri.persistence.MechanicGateway;
 import uo.ri.persistence.WorkOrderGateway;
 
 public class AssignWorkOrder {
@@ -20,23 +22,38 @@ public class AssignWorkOrder {
 	public void execute() throws BusinessException {
 		try (Connection c = Jdbc.getConnection();) {
 
-			// TODO -> Deberías haber controlado las validaciones que se
-			// especifican en la interfaz de servicio en el TS correspondiente
-			// (assignToMechanic).
+			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
+			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
+			wog.setConnection(c);
+			c.setAutoCommit(false);
 
 			// @throws BusinessException if:
 			// - the mechanic does not exist, or
 			// - the work order does not exist, or
 			// - the work order is not in OPEN status
 			//
+			if (mg.findById(mechanicId) == null) {
+				c.rollback();
+				throw new BusinessException("El mecanico no existe");
+			}
 
-			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
-			wog.setConnection(c);
-			c.setAutoCommit(false);
+			WorkOrderDto wod = wog.findById(woId);
 
-			if (!wog.mechanicAbleToWorkOrder(mechanicId, woId))
+			if (wod == null) {
+				c.rollback();
+				throw new BusinessException("La orden de trabajo no existe");
+			}
+
+			if (!wod.status.equals("OPEN")) {
+				c.rollback();
+				throw new BusinessException("La orden de trabajo no esta abierta");
+			}
+
+			if (!wog.mechanicAbleToWorkOrder(mechanicId, woId)) {
+				c.rollback();
+
 				throw new BusinessException("El mecanico no esta certificado para ese tipo de vehiculo");
-
+			}
 			wog.AssignMechanic(mechanicId, woId);
 			c.commit();
 

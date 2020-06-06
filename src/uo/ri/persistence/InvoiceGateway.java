@@ -5,8 +5,6 @@ import java.util.List;
 
 public interface InvoiceGateway extends Gateway{
 
-	void testRepairs(List<Long> workOrderIds);
-
 	long generateInvoiceNumber();
 
 	void createInvoice(long numberInvoice, Date dateInvoice, double vat, double total);

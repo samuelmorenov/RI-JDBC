@@ -12,11 +12,12 @@ import uo.ri.business.dto.InvoiceDto;
 import uo.ri.common.BusinessException;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.InvoiceGateway;
+import uo.ri.persistence.WorkOrderGateway;
 
 public class WorkOrderBilling {
 
 	List<Long> workOrderIds;
-	Connection connection;
+	Connection c;
 	InvoiceGateway ig;
 
 	public WorkOrderBilling(List<Long> workOrderIds) {
@@ -27,25 +28,24 @@ public class WorkOrderBilling {
 
 		InvoiceDto invoice = null;
 
-		try {
-			connection = Jdbc.getConnection();
-			connection.setAutoCommit(false);
+		try (Connection c = Jdbc.getConnection();) {
 
 			ig = PersistenceFactory.getInvoiceGateway(); // Factoria
-			ig.setConnection(connection);
+			ig.setConnection(c);
+			c.setAutoCommit(false);
 
-			ig.testRepairs(workOrderIds);
+			testRepairs(workOrderIds, c);
 
 			long numberInvoice = ig.generateInvoiceNumber();
 			Date dateInvoice = Dates.today();
 			double amount = calculateTotalInvoice(workOrderIds); // not vat included
-			double vat = vatPercentage(amount, dateInvoice);
+			double vat = vatPercentage(dateInvoice);
 			double total = amount * (1 + vat / 100); // vat included
 			total = Round.twoCents(total);
 
 			ig.createInvoice(numberInvoice, dateInvoice, vat, total);
 			long idInvoice = ig.getGeneratedKey(numberInvoice);
-			
+
 			ig.linkWorkorderInvoice(idInvoice, workOrderIds);
 			ig.updateWorkOrderStatus(workOrderIds, "INVOICED");
 
@@ -56,28 +56,17 @@ public class WorkOrderBilling {
 			invoice.vat = vat;
 			invoice.total = total;
 
-			connection.commit();
+			c.commit();
+
 		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException ex) {
-			}
-			throw new RuntimeException(e);
-		} catch (BusinessException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException ex) {
-			}
-			throw e;
-		} finally {
-			Jdbc.close(connection);
+			throw new RuntimeException("Error de conexion");
 		}
 
 		return invoice;
 
 	}
 
-	private double vatPercentage(double totalInvoice, Date dateInvoice) {
+	private double vatPercentage(Date dateInvoice) {
 		return Dates.fromString("1/7/2012").before(dateInvoice) ? 21.0 : 18.0;
 	}
 
@@ -94,6 +83,23 @@ public class WorkOrderBilling {
 			totalInvoice += workTotal;
 		}
 		return totalInvoice;
+	}
+	
+	private void testRepairs(List<Long> workOrderIds, Connection c) throws SQLException {
+		WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway(); // Factoria
+		wog.setConnection(c);
+		
+		for (Long workOrderID : workOrderIds) {
+			if(wog.findById(workOrderID)== null) {
+				throw new RuntimeException("Workorder " + workOrderID + " doesn't exist");
+			}
+			
+			if(!"FINISHED".equalsIgnoreCase(wog.getStatus(workOrderID))){
+				throw new RuntimeException("Workorder " + workOrderID + " is not finished yet");
+			}
+			
+		}
+		
 	}
 
 }

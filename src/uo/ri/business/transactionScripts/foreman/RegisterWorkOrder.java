@@ -24,11 +24,11 @@ public class RegisterWorkOrder {
 			c.setAutoCommit(false);
 			workOrderDto.date = new Date();
 			workOrderDto.status = "OPEN";
-			//TODO -> Añadir id al workOrderDto
 			wog.AddWorkOrder(workOrderDto);
+			workOrderDto.id = wog.getLastId();
 			c.commit();
 			return workOrderDto;
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}

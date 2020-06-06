@@ -58,6 +58,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			pst.setLong(2, vehicleTypeId);
 			rs = pst.executeQuery();
 			if (rs.next() == false) {
+				
 				return certificate;
 			}
 			certificate = new CertificateDto();
@@ -65,6 +66,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			certificate.mechanic = mechanicId;
 			certificate.vehicleType = vehicleTypeId;
 			certificate.obtainedAt = rs.getDate("date");
+			
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

@@ -16,4 +16,6 @@ public interface CourseGateway extends Gateway {
 	List<CourseDto> findAll();
 
 	void update(CourseDto dto);
+
+	int getEnrolledMechanics(Long CourseId);
 }

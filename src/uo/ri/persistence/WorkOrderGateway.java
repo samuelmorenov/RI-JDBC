@@ -20,5 +20,11 @@ public interface WorkOrderGateway extends Gateway {
 	boolean mechanicAbleToWorkOrder(Long mechanicId, Long woId);
 
 	void AssignMechanic(Long mechanicId, Long woId);
+
+	Long getLastId();
+
+	int numberOfInterventios(Long woId);
+
+	String getStatus(Long workOrderID);
 	
 }

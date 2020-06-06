@@ -17,7 +17,6 @@ public class DeleteCourse {
 	}
 
 	public void execute() throws BusinessException{
-		//TODO -> Eliminar un curso. Solo si no tiene mecánicos registrados.
 		try (Connection c = Jdbc.getConnection();) {
 
 			CourseGateway cg = PersistenceFactory.getCourseGateway(); 
@@ -26,6 +25,10 @@ public class DeleteCourse {
 			if (cg.findById(id) == null) {
 				c.rollback();
 				throw new BusinessException("No existe un curso con ese ID");
+			}
+			if (cg.getEnrolledMechanics(id) != 0) {
+				c.rollback();
+				throw new BusinessException("Ese curso aun tiene mecanicos registrados");
 			}
 			cg.delete(id);
 			c.commit();
