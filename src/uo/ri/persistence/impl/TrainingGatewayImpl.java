@@ -1,8 +1,8 @@
 package uo.ri.persistence.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,26 +17,26 @@ public class TrainingGatewayImpl extends GatewayImpl implements TrainingGateway 
 	public List<TrainingHoursRow> getTrainingHoursRowList() {
 		List<TrainingHoursRow> list = null;
 		TrainingHoursRow trainingHoursRow = null;
-		PreparedStatement pst = null;
+		Statement st = null;
 		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_TRAINING_HOURS_ROW");
 		try {
-			pst = c.prepareStatement(SQL);
-			rs = pst.executeQuery();
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
 			list = new ArrayList<TrainingHoursRow>();
 			while (rs.next()) {
 
 				trainingHoursRow = new TrainingHoursRow();
 				trainingHoursRow.mechanicFullName = rs.getString("M_NAME") + rs.getString("M_SURNAME");
 				trainingHoursRow.vehicleTypeName = rs.getString("VT_NAME");
-				trainingHoursRow.enrolledHours = (int)rs.getLong("HOURS_P");
+				trainingHoursRow.enrolledHours = (int) rs.getLong("HOURS_P");
 				list.add(trainingHoursRow);
 
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs, pst);
+			Jdbc.close(rs, st);
 		}
 		return list;
 	}

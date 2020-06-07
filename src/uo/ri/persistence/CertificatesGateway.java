@@ -13,4 +13,6 @@ public interface CertificatesGateway extends Gateway{
 	void addCertificate(CertificateDto certificado);
 
 	List<CertificateDto> getCertificatesByVehicleTypeId(Long id);
+
+	List<CertificateDto> findAll();
 }

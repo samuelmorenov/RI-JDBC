@@ -158,7 +158,7 @@ public class Printer {
 	public static void printCertifiedMechanic(CertificateDto c) {
 
 		Console.printf("%d \n",
-				c.mechanic
+				c.mechanicId
 			);
 	}
 	

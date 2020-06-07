@@ -19,7 +19,7 @@ public class FindAllVehicleTypes {
 		try (Connection c = Jdbc.getConnection();) {
 			VehicleTypesGateway vtg = PersistenceFactory.getVehicleTypesGateway();
 			vtg.setConnection(c);
-			return vtg.findAllVehicleTypes();
+			return vtg.findAll();
 		} catch (SQLException e) {
 			throw new RuntimeException("Error de conexion");
 		}

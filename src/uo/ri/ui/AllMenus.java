@@ -22,37 +22,43 @@ public class AllMenus extends BaseMenu {
 
 	public AllMenus() {
 		menuOptions = new Object[][] {
-			
-			{ "Manager", null },
-			{ "Manager > CRUD Mecanicos(*)", null},
-			{ "Add mechanic", 					AddMechanicAction.class }, 
-			{ "Update mechanic", 				UpdateMechanicAction.class }, 
-			{ "Delete mechanic", 				DeleteMechanicAction.class }, 
-			{ "List mechanics", 				ListMechanicsAction.class },
-			{ "", null },
-			{ "Manager > Training management", null },
-			{ "Generación de certificados (**)", 	GenerateCertificatesAction.class },
-			{ "", null },
-			{ "Manager > Training management > CRUD Cursos(**)", null},
-			{ "Add", 			AddCourseAction.class }, 
-			{ "Update", 		UpdateCourseAction.class }, 
-			{ "Remove", 		RemoveCourseAction.class }, 
-			{ "List all", 		ListCoursesAction.class },
-			{ "", null },
-			{ "Manager > Training management > Reports", null },
-			{ "Training by vehicle types", ListTrainingByVehicleTypeAction.class },
-			{ "", null },
-			{ "Foreman > CRUD de órdenes de trabajo (**)", null},
-			{ "Register a work order", 	 	RegisterWorkOrderAction.class }, 
-			{ "Update a work order", 	 	UpdateWorkOrderAction.class },
-			{ "Remove a work order", 	 	RemoveWorkOrderAction.class },
-			{ "Assign a work order",  	 	AssignWorkOrderAction.class },
-			{ "", null },
-			{ "List certified mechanics (**)",	ListCertifiedMechanicsAction.class }, 
-			{ "", null },
-			{ "Cashier", null },
-			{ "Generar Factura (*)", 		WorkOrderBillingAction.class },
-		};
+
+				{ "Admin", null },
+
+				{ "CRUD Mecanicos(*)", null }, 
+				{ "Add mechanic", AddMechanicAction.class },
+				{ "Update mechanic", UpdateMechanicAction.class }, 
+				{ "Delete mechanic", DeleteMechanicAction.class },
+				{ "List mechanics", ListMechanicsAction.class }, 
+				{ "", null },
+
+				{ "Generacion de certificados (**)", null }, 
+				{ "", GenerateCertificatesAction.class }, 
+				{ "", null },
+
+				{ "CRUD Cursos(**)", null }, 
+				{ "Add", AddCourseAction.class }, 
+				{ "Update", UpdateCourseAction.class },
+				{ "Remove", RemoveCourseAction.class }, 
+				{ "List all", ListCoursesAction.class }, 
+				{ "", null },
+
+				{ "Listado de mecánicos que han asistido a formación por tipo de vehículo (**)", null },
+				{ "", ListTrainingByVehicleTypeAction.class }, 
+				{ "", null },
+
+				{ "Foreman", null }, 
+				{ "CRUD de órdenes de trabajo (**)", null },
+				{ "Register a work order", RegisterWorkOrderAction.class },
+				{ "Update a work order", UpdateWorkOrderAction.class },
+				{ "Remove a work order", RemoveWorkOrderAction.class },
+				{ "List certified mechanics", ListCertifiedMechanicsAction.class },
+				{ "Assign a work order", AssignWorkOrderAction.class }, 
+				{ "", null },
+
+				{ "Cashier", null }, 
+				{ "Generar Factura (*)", null }, 
+				{ "", WorkOrderBillingAction.class }, };
 	}
 
 	public static void main(String[] args) {

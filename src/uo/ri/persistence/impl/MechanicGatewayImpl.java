@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		}  finally {
+		} finally {
 			Jdbc.close(pst);
 		}
 	}
@@ -36,7 +37,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 	public void delete(Long idMechanic) {
 		PreparedStatement pst = null;
 		String SQL = Conf.getInstance().getProperty("SQL_DELETE_MECHANIC");
-		
+
 		try {
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, idMechanic);
@@ -72,13 +73,13 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 	public List<MechanicDto> findAll() {
 		List<MechanicDto> mechanics = null;
 		MechanicDto mechanic = null;
-		PreparedStatement pst = null;
+		Statement st = null;
 		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_ALL_MECHANICS");
 
 		try {
-			pst = c.prepareStatement(SQL);
-			rs = pst.executeQuery();
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
 			mechanics = new ArrayList<MechanicDto>();
 			while (rs.next()) {
 				mechanic = new MechanicDto();
@@ -91,7 +92,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs, pst);
+			Jdbc.close(rs, st);
 		}
 		return mechanics;
 	}

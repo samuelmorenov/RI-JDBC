@@ -6,6 +6,6 @@ import uo.ri.business.dto.VehicleTypeDto;
 
 public interface VehicleTypesGateway extends Gateway {
 
-	List<VehicleTypeDto> findAllVehicleTypes();
+	List<VehicleTypeDto> findAll();
 
 }

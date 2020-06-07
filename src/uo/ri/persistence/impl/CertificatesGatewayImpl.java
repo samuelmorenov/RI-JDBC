@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			while (rs.next()) {
 
 				certificate = new CertificateDto();
-				certificate.mechanic = rs.getLong("M_ID");
-				certificate.vehicleType = rs.getLong("V_ID");
+				certificate.mechanicId = rs.getLong("M_ID");
+				certificate.vehicleTypeId = rs.getLong("V_ID");
 				list.add(certificate);
 
 			}
@@ -63,8 +64,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			}
 			certificate = new CertificateDto();
 			certificate.id = rs.getLong("id");
-			certificate.mechanic = mechanicId;
-			certificate.vehicleType = vehicleTypeId;
+			certificate.mechanicId = mechanicId;
+			certificate.vehicleTypeId = vehicleTypeId;
 			certificate.obtainedAt = rs.getDate("date");
 			
 
@@ -83,8 +84,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 		String SQL = Conf.getInstance().getProperty("SQL_INSERT_CERTIFICATE");
 		try {
 			pst = c.prepareStatement(SQL);
-			pst.setLong(1, certificado.mechanic);
-			pst.setLong(2, certificado.vehicleType);
+			pst.setLong(1, certificado.mechanicId);
+			pst.setLong(2, certificado.vehicleTypeId);
 			java.sql.Date sqlDate = new java.sql.Date(certificado.obtainedAt.getTime());
 			pst.setDate(3, sqlDate);
 			pst.executeUpdate();
@@ -113,8 +114,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 				certificate = new CertificateDto();
 				certificate.id = rs.getLong("ID");
 				certificate.obtainedAt = rs.getDate("DATE");
-				certificate.mechanic = rs.getLong("MECHANIC_ID");
-				certificate.vehicleType = rs.getLong("VEHICLETYPE_ID");
+				certificate.mechanicId = rs.getLong("MECHANIC_ID");
+				certificate.vehicleTypeId = rs.getLong("VEHICLETYPE_ID");
 				list.add(certificate);
 			}
 		} catch (SQLException e) {
@@ -126,4 +127,31 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 		return list;
 	}
 
+	@Override
+	public List<CertificateDto> findAll() {
+		List<CertificateDto> list = null;
+		CertificateDto dto = null;
+		Statement st = null;
+		ResultSet rs = null;
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_ALL_CERTIFICATES");
+
+		try {
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
+			list = new ArrayList<CertificateDto>();
+			while (rs.next()) {
+				dto = new CertificateDto();
+				dto.id = rs.getLong("ID");
+				dto.obtainedAt = rs.getDate("DATE");
+				dto.mechanicId = rs.getLong("MECHANIC_ID");
+				dto.vehicleTypeId = rs.getLong("VEHICLETYPE_ID");
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(rs, st);
+		}
+		return list;
+	}
 }

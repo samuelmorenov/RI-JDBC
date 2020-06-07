@@ -1,8 +1,8 @@
 package uo.ri.persistence.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +14,16 @@ import uo.ri.persistence.VehicleTypesGateway;
 public class VehicleTypesGatewayImpl extends GatewayImpl implements VehicleTypesGateway {
 
 	@Override
-	public List<VehicleTypeDto> findAllVehicleTypes() {
+	public List<VehicleTypeDto> findAll() {
 		List<VehicleTypeDto> vehicleTypes = null;
 		VehicleTypeDto vehicleType = null;
-		PreparedStatement pst = null;
+		Statement st = null;
 		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_ALL_VEHICLETYPE");
 
 		try {
-			pst = c.prepareStatement(SQL);
-			rs = pst.executeQuery();
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
 			vehicleTypes = new ArrayList<VehicleTypeDto>();
 			while (rs.next()) {
 				vehicleType = new VehicleTypeDto();
@@ -36,7 +36,7 @@ public class VehicleTypesGatewayImpl extends GatewayImpl implements VehicleTypes
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs, pst);
+			Jdbc.close(rs, st);
 		}
 		return vehicleTypes;
 	}

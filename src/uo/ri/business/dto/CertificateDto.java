@@ -6,8 +6,8 @@ public class CertificateDto {
 
 	public Long id;
 
-	public long mechanic;
-	public long vehicleType;
+	public long mechanicId;
+	public long vehicleTypeId;
 	public Date obtainedAt;
 
 }

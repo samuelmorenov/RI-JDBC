@@ -39,7 +39,6 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 	@Override
 	public long findLastId() {
 		Statement st = null;
-		//TODO: Revisar Statement
 		ResultSet rs = null;
 
 		try {
@@ -115,13 +114,13 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 	public List<CourseDto> findAll() {
 		List<CourseDto> courses = null;
 		CourseDto course = null;
-		PreparedStatement pst = null;
+		Statement st = null;
 		ResultSet rs = null;
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_ALL_COURSES");
 
 		try {
-			pst = c.prepareStatement(SQL);
-			rs = pst.executeQuery();
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
 			courses = new ArrayList<CourseDto>();
 			while (rs.next()) {
 				course = new CourseDto();
@@ -137,7 +136,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs, pst);
+			Jdbc.close(rs, st);
 		}
 		return courses;
 	}
@@ -175,7 +174,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			pst.setLong(1, CourseId);
 			rs = pst.executeQuery();
 			return rs.getInt(1);
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

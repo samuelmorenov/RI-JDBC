@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 import alb.util.jdbc.Jdbc;
@@ -193,13 +194,13 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 	@Override
 	public Long getLastId() {
-		PreparedStatement pst = null;
+		Statement st = null;
 		ResultSet rs = null;
 
 		try {
 			String SQL = Conf.getInstance().getProperty("SQL_LAST_ID_WORKORDER");
-			pst = c.prepareStatement(SQL);
-			rs = pst.executeQuery();
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
 			rs.next();
 
 			return rs.getLong(1);
@@ -207,7 +208,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs, pst);
+			Jdbc.close(rs, st);
 		}
 	}
 
@@ -238,7 +239,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, workOrderID);
 			rs = pst.executeQuery();
-			return rs.getString(1);
+			rs.next();
+			return rs.getString("STATUS");
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

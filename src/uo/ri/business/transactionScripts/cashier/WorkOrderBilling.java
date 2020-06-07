@@ -84,22 +84,26 @@ public class WorkOrderBilling {
 		}
 		return totalInvoice;
 	}
-	
-	private void testRepairs(List<Long> workOrderIds, Connection c) throws SQLException {
-		WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway(); // Factoria
-		wog.setConnection(c);
-		
-		for (Long workOrderID : workOrderIds) {
-			if(wog.findById(workOrderID)== null) {
-				throw new RuntimeException("Workorder " + workOrderID + " doesn't exist");
+
+	private void testRepairs(List<Long> workOrderIds, Connection c) throws BusinessException {
+
+		try {
+			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway(); // Factoria
+			wog.setConnection(c);
+			for (Long workOrderID : workOrderIds) {
+				if (wog.findById(workOrderID) == null) {
+					throw new BusinessException("Workorder " + workOrderID + " doesn't exist");
+				}
+
+				if (!"FINISHED".equalsIgnoreCase(wog.getStatus(workOrderID))) {
+					throw new BusinessException("Workorder " + workOrderID + " is not finished yet");
+				}
+
 			}
-			
-			if(!"FINISHED".equalsIgnoreCase(wog.getStatus(workOrderID))){
-				throw new RuntimeException("Workorder " + workOrderID + " is not finished yet");
-			}
-			
+		} catch (SQLException e) {
+			throw new RuntimeException("Error de conexion");
 		}
-		
+
 	}
 
 }

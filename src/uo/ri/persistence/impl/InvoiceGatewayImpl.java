@@ -3,6 +3,7 @@ package uo.ri.persistence.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 
@@ -100,13 +101,13 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 
 	@Override
 	public long generateInvoiceNumber() {
-		PreparedStatement pst = null;
+		Statement st = null;
 		ResultSet rs = null;
 
 		try {
 			String SQL = Conf.getInstance().getProperty("SQL_LAST_INVOICE_NUMBER");
-			pst = c.prepareStatement(SQL);
-			rs = pst.executeQuery();
+			st = c.createStatement();
+			rs = st.executeQuery(SQL);
 
 			if (rs.next()) {
 				return rs.getLong(1) + 1; // +1, next
@@ -116,7 +117,7 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			Jdbc.close(rs, pst);
+			Jdbc.close(rs, st);
 		}
 	}
 
