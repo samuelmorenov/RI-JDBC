@@ -30,8 +30,8 @@ public class EnrollmentGatewayImpl extends GatewayImpl implements EnrollmentGate
 				dto.id = rs.getLong("ID");
 				dto.attendance = rs.getInt("ATTENDANCE");
 				dto.passed = rs.getBoolean("PASSED");
-				dto.courseId = rs.getString("COURSE_ID");
-				dto.mechanicId = rs.getString("MECHANIC_ID");
+				dto.courseId = rs.getLong("COURSE_ID");
+				dto.mechanicId = rs.getLong("MECHANIC_ID");
 				list.add(dto);
 			}
 		} catch (SQLException e) {

@@ -15,4 +15,6 @@ public interface CertificatesGateway extends Gateway{
 	List<CertificateDto> getCertificatesByVehicleTypeId(Long id);
 
 	List<CertificateDto> findAll();
+
+	int insertCertificates(List<CertificateDto> certificatesToGenerate);
 }

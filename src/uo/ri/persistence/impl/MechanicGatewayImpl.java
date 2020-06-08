@@ -1,6 +1,5 @@
 package uo.ri.persistence.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -102,14 +101,12 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 
 		MechanicDto mechanic = null;
 
-		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_MECHANIC_BY_DNI");
 
 		try {
-			c = Jdbc.getConnection();
 			pst = c.prepareStatement(SQL);
 			pst.setString(1, dni);
 			rs = pst.executeQuery();
@@ -136,14 +133,12 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 	public MechanicDto findById(Long idMechanic) {
 		MechanicDto mechanic = null;
 
-		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_MECHANIC_BY_ID");
 
 		try {
-			c = Jdbc.getConnection();
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, idMechanic);
 			rs = pst.executeQuery();

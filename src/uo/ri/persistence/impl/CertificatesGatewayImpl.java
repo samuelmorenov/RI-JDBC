@@ -1,6 +1,5 @@
 package uo.ri.persistence.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,20 +45,19 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 	public CertificateDto findCertificate(Long mechanicId, Long vehicleTypeId) {
 		CertificateDto certificate = null;
 
-		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_CERTIFICATE");
 
 		try {
-			c = Jdbc.getConnection();
+
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, mechanicId);
 			pst.setLong(2, vehicleTypeId);
 			rs = pst.executeQuery();
 			if (rs.next() == false) {
-				
+
 				return certificate;
 			}
 			certificate = new CertificateDto();
@@ -67,7 +65,6 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			certificate.mechanicId = mechanicId;
 			certificate.vehicleTypeId = vehicleTypeId;
 			certificate.obtainedAt = rs.getDate("date");
-			
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -75,25 +72,6 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			Jdbc.close(rs, pst);
 		}
 		return certificate;
-	}
-
-	@Override
-	public void addCertificate(CertificateDto certificado) {
-		// Process
-		PreparedStatement pst = null;
-		String SQL = Conf.getInstance().getProperty("SQL_INSERT_CERTIFICATE");
-		try {
-			pst = c.prepareStatement(SQL);
-			pst.setLong(1, certificado.mechanicId);
-			pst.setLong(2, certificado.vehicleTypeId);
-			java.sql.Date sqlDate = new java.sql.Date(certificado.obtainedAt.getTime());
-			pst.setDate(3, sqlDate);
-			pst.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			Jdbc.close(pst);
-		}
 	}
 
 	@Override
@@ -105,7 +83,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_CERTIFICATESSELECT_BY_VEHICLETYPE");
 
 		try {
-			c = Jdbc.getConnection();
+
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, id);
 			rs = pst.executeQuery();
@@ -153,5 +131,48 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			Jdbc.close(rs, st);
 		}
 		return list;
+	}
+
+	@Override
+	public void addCertificate(CertificateDto certificado) {
+		// Process
+		PreparedStatement pst = null;
+		String SQL = Conf.getInstance().getProperty("SQL_INSERT_CERTIFICATE");
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, certificado.mechanicId);
+			pst.setLong(2, certificado.vehicleTypeId);
+			java.sql.Date sqlDate = new java.sql.Date(certificado.obtainedAt.getTime());
+			pst.setDate(3, sqlDate);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
+	}
+
+	@Override
+	public int insertCertificates(List<CertificateDto> certificateList) {
+		PreparedStatement pst = null;
+		String SQL = Conf.getInstance().getProperty("SQL_INSERT_CERTIFICATE");
+		try {
+        	pst = c.prepareStatement(SQL);
+            int[] count;
+            for (CertificateDto certificado : certificateList) {
+    			pst.setLong(1, certificado.mechanicId);
+    			pst.setLong(2, certificado.vehicleTypeId);
+    			java.sql.Date sqlDate = new java.sql.Date(certificado.obtainedAt.getTime());
+    			pst.setDate(3, sqlDate);
+                pst.addBatch();
+            }
+            count = pst.executeBatch();
+            return count.length;
+            
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
 	}
 }

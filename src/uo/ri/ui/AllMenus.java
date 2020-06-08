@@ -22,7 +22,7 @@ public class AllMenus extends BaseMenu {
 
 	public AllMenus() {
 		menuOptions = new Object[][] {
-
+				{ "========================================================================", null },
 				{ "Admin", null },
 
 				{ "CRUD Mecanicos(*)", null }, 
@@ -58,7 +58,9 @@ public class AllMenus extends BaseMenu {
 
 				{ "Cashier", null }, 
 				{ "Generar Factura (*)", null }, 
-				{ "", WorkOrderBillingAction.class }, };
+				{ "", WorkOrderBillingAction.class }, 
+				{ "========================================================================", null },
+				};
 	}
 
 	public static void main(String[] args) {

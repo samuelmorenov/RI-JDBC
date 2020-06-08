@@ -1,6 +1,5 @@
 package uo.ri.persistence.impl;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,15 +18,10 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 	@Override
 	public Optional<VehicleDto> findVehicleByPlate(String plate) {
 		VehicleDto vehicle = null;
-
-		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_VEHICLE_BY_PLATE");
-
 		try {
-			c = Jdbc.getConnection();
 			pst = c.prepareStatement(SQL);
 			pst.setString(1, plate);
 			rs = pst.executeQuery();
@@ -42,7 +36,6 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			vehicle.plate = rs.getString("PLATENUMBER");
 			vehicle.clientId = rs.getLong("CLIENT_ID");
 			vehicle.vehicleTypeId = rs.getLong("VEHICLETYPE_ID");
-
 			return Optional.of(vehicle);
 
 		} catch (SQLException e) {
@@ -55,10 +48,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 	@Override
 	public void AddWorkOrder(WorkOrderDto workOrderDto) {
-
 		PreparedStatement pst = null;
 		String SQL = Conf.getInstance().getProperty("SQL_INSERT_WORKORDER");
-
 		try {
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, workOrderDto.vehicleId);
@@ -79,7 +70,6 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 	public void delete(Long id) {
 		PreparedStatement pst = null;
 		String SQL = Conf.getInstance().getProperty("SQL_DELETE_WORKORDER");
-
 		try {
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, id);
@@ -94,15 +84,10 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 	@Override
 	public WorkOrderDto findById(Long id) {
 		WorkOrderDto workOrder = null;
-
-		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_WORKORDER_BY_ID");
-
 		try {
-			c = Jdbc.getConnection();
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, id);
 			rs = pst.executeQuery();
@@ -147,15 +132,12 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 	@Override
 	public boolean mechanicAbleToWorkOrder(Long mechanicId, Long woId) {
-
-		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
 		String SQL = Conf.getInstance().getProperty("SQL_MECHANIC_CERTIFICATE_IN_VEHICLETYPE");
 
 		try {
-			c = Jdbc.getConnection();
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, woId);
 			pst.setLong(2, mechanicId);
@@ -172,13 +154,9 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 	@Override
 	public void AssignMechanic(Long mechanicId, Long woId) {
-		Connection c = null;
 		PreparedStatement pst = null;
-
 		String SQL = Conf.getInstance().getProperty("SQL_ASSIGN_MECHANIC");
-
 		try {
-			c = Jdbc.getConnection();
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, mechanicId);
 			pst.setLong(2, woId);
@@ -196,9 +174,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 	public Long getLastId() {
 		Statement st = null;
 		ResultSet rs = null;
-
+		String SQL = Conf.getInstance().getProperty("SQL_LAST_ID_WORKORDER");
 		try {
-			String SQL = Conf.getInstance().getProperty("SQL_LAST_ID_WORKORDER");
 			st = c.createStatement();
 			rs = st.executeQuery(SQL);
 			rs.next();
@@ -234,8 +211,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 	public String getStatus(Long workOrderID) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		String SQL = Conf.getInstance().getProperty("SQL_CHECK_WORKORDER_STATUS");
 		try {
-			String SQL = Conf.getInstance().getProperty("SQL_CHECK_WORKORDER_STATUS");
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, workOrderID);
 			rs = pst.executeQuery();

@@ -1,6 +1,5 @@
 package uo.ri.persistence.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -77,14 +76,13 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 	public CourseDto findById(Long cId) {
 		CourseDto course = null;
 
-		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_COURSE_BY_ID");
 
 		try {
-			c = Jdbc.getConnection();
+
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, cId);
 			rs = pst.executeQuery();
