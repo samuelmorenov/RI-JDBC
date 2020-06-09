@@ -173,6 +173,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, CourseId);
 			rs = pst.executeQuery();
+			rs.next();
 			return rs.getInt(1);
 
 		} catch (SQLException e) {

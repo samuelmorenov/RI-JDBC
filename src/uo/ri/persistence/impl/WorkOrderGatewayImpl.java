@@ -118,16 +118,17 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 	@Override
 	public WorkOrderDto SearchWorkOrder(Long vehicleId, java.util.Date date) {
 		WorkOrderDto workOrder = null;
-	
+
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-	
+
 		String SQL = Conf.getInstance().getProperty("SQL_FIND_WORKORDER_BY_VEHICLE_AND_DATE");
-	
+
 		try {
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, vehicleId);
-			pst.setDate(2, (java.sql.Date) date);
+			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+			pst.setDate(2, sqlDate);
 			rs = pst.executeQuery();
 
 			if (rs.next() == false) {
@@ -238,6 +239,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, woId);
 			rs = pst.executeQuery();
+			rs.next();
 			return rs.getInt(1);
 
 		} catch (SQLException e) {

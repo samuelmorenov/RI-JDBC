@@ -1,6 +1,6 @@
 package uo.ri.persistence;
 
-public interface VehiclesGateway {
+public interface VehiclesGateway extends Gateway{
 
 	boolean existId(Long vehicleId);
 

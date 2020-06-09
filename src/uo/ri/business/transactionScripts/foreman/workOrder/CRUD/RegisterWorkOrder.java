@@ -33,10 +33,13 @@ public class RegisterWorkOrder {
 			VehiclesGateway vg = PersistenceFactory.getVehiclesGateway();
 
 			wog.setConnection(c);
+			vg.setConnection(c);
+			
 			c.setAutoCommit(false);
 			workOrderDto.date = new Date();
 			workOrderDto.status = "OPEN";
 
+			System.out.println();
 			if (!vg.existId(workOrderDto.vehicleId)) {
 				throw new BusinessException("No existe un vehiculo con ese id");
 			}

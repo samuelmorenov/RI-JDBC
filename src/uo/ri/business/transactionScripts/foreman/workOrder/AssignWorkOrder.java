@@ -33,6 +33,7 @@ public class AssignWorkOrder {
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
 			wog.setConnection(c);
+			mg.setConnection(c);
 			c.setAutoCommit(false);
 
 			if (mg.findById(mechanicId) == null) {

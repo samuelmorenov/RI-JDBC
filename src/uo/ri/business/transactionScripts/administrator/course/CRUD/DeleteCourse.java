@@ -27,8 +27,11 @@ public class DeleteCourse {
 		try (Connection c = Jdbc.getConnection();) {
 
 			CourseGateway cg = PersistenceFactory.getCourseGateway();
+
 			c.setAutoCommit(false);
+
 			cg.setConnection(c);
+
 			if (cg.findById(id) == null) {
 				c.rollback();
 				throw new BusinessException("No existe un curso con ese ID");

@@ -37,6 +37,7 @@ public class RemoveWorkOrder {
 				throw new BusinessException("La orden de trabajo no existe");
 			}
 			if (wog.numberOfInterventios(id) != 0) {
+				
 				c.rollback();
 				throw new BusinessException("La orden de trabajo aun tiene intercenciones");
 			}
