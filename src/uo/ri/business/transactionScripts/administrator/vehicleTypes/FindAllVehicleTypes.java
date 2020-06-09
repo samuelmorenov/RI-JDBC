@@ -6,6 +6,7 @@ import java.util.List;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.VehicleTypeDto;
+import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.VehicleTypesGateway;
 
@@ -21,7 +22,8 @@ public class FindAllVehicleTypes {
 			vtg.setConnection(c);
 			return vtg.findAll();
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
+			return null;
 		}
 	}
 

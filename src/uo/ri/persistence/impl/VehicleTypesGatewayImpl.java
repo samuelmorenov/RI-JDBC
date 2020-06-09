@@ -9,6 +9,7 @@ import java.util.List;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.VehicleTypeDto;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.VehicleTypesGateway;
 
 public class VehicleTypesGatewayImpl extends GatewayImpl implements VehicleTypesGateway {
@@ -34,7 +35,7 @@ public class VehicleTypesGatewayImpl extends GatewayImpl implements VehicleTypes
 				vehicleTypes.add(vehicleType);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, st);
 		}

@@ -10,6 +10,7 @@ import java.util.List;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.MechanicGateway;
 
 public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway {
@@ -26,7 +27,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			pst.setString(3, mechanic.surname);
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -42,7 +43,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			pst.setLong(1, idMechanic);
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -61,7 +62,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -89,7 +90,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 				mechanics.add(mechanic);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, st);
 		}
@@ -122,7 +123,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			mechanic.surname = rs.getString("surname");
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -154,7 +155,7 @@ public class MechanicGatewayImpl extends GatewayImpl implements MechanicGateway 
 			mechanic.surname = rs.getString("surname");
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}

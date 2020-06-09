@@ -17,6 +17,6 @@ public interface VehicleCrudService {
 	 * 
 	 * @throws BusinessException, DOES NOT 
 	 */
-	Optional<VehicleDto> findVehicleByPlate(String plate) throws BusinessException;
+	Optional<VehicleDto> findVehicleByPlate(String plate);
 	
 }

@@ -10,6 +10,7 @@ import alb.util.jdbc.Jdbc;
 import alb.util.math.Round;
 import uo.ri.business.dto.InvoiceDto;
 import uo.ri.common.BusinessException;
+import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.InvoiceGateway;
 import uo.ri.persistence.WorkOrderGateway;
@@ -59,7 +60,7 @@ public class WorkOrderBilling {
 			c.commit();
 
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
 		}
 
 		return invoice;
@@ -101,7 +102,7 @@ public class WorkOrderBilling {
 
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
 		}
 
 	}

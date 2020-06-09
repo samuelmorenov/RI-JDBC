@@ -13,7 +13,7 @@ import uo.ri.business.dto.DedicationDto;
 import uo.ri.business.dto.EnrollmentDto;
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.dto.VehicleTypeDto;
-import uo.ri.common.BusinessException;
+import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.CertificatesGateway;
 import uo.ri.persistence.CourseGateway;
@@ -24,7 +24,7 @@ import uo.ri.persistence.VehicleTypesGateway;
 
 public class GenerateCertificates {
 
-	public Integer execute() throws BusinessException {
+	public Integer execute() {
 		int generated = 0;
 
 		try (Connection c = Jdbc.getConnection();) {
@@ -60,7 +60,7 @@ public class GenerateCertificates {
 			c.commit();
 
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
 		}
 		return generated;
 	}

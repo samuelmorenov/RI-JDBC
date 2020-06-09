@@ -9,6 +9,7 @@ import java.util.List;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.DedicationDto;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.DedicationsGateway;
 
 public class DedicationsGatewayImpl extends GatewayImpl implements DedicationsGateway {
@@ -34,7 +35,7 @@ public class DedicationsGatewayImpl extends GatewayImpl implements DedicationsGa
 				list.add(dto);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, st);
 		}

@@ -1,9 +1,5 @@
 package uo.ri.business.serviceLayer;
 
-import uo.ri.common.BusinessException;
-
-//TO-DO: Copiado de additional classes
-
 /**
  * This service is intended to be used by the Manager
  * It follows the ISP principle (@see SOLID principles from RC Martin)
@@ -23,6 +19,6 @@ public interface CertificateService {
 	 * @return the number of new certificates generated
 	 * DOES NOT @throws BusinessException
 	 */
-	int generateCertificates() throws BusinessException;
+	int generateCertificates();
 
 }

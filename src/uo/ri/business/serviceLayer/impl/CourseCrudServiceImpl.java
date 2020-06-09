@@ -6,11 +6,11 @@ import java.util.Optional;
 import uo.ri.business.dto.CourseDto;
 import uo.ri.business.dto.VehicleTypeDto;
 import uo.ri.business.serviceLayer.CourseCrudService;
-import uo.ri.business.transactionScripts.administrator.course.AddCourse;
-import uo.ri.business.transactionScripts.administrator.course.DeleteCourse;
-import uo.ri.business.transactionScripts.administrator.course.FindAllCourses;
-import uo.ri.business.transactionScripts.administrator.course.FindCourseById;
-import uo.ri.business.transactionScripts.administrator.course.UpdateCourse;
+import uo.ri.business.transactionScripts.administrator.course.CRUD.AddCourse;
+import uo.ri.business.transactionScripts.administrator.course.CRUD.DeleteCourse;
+import uo.ri.business.transactionScripts.administrator.course.CRUD.FindAllCourses;
+import uo.ri.business.transactionScripts.administrator.course.CRUD.FindCourseById;
+import uo.ri.business.transactionScripts.administrator.course.CRUD.UpdateCourse;
 import uo.ri.business.transactionScripts.administrator.vehicleTypes.FindAllVehicleTypes;
 import uo.ri.common.BusinessException;
 
@@ -35,19 +35,19 @@ public class CourseCrudServiceImpl implements CourseCrudService {
 	}
 
 	@Override
-	public List<CourseDto> findAllCourses() throws BusinessException {
+	public List<CourseDto> findAllCourses(){
 		FindAllCourses fac = new FindAllCourses();
 		return fac.execute();
 	}
 
 	@Override
-	public List<VehicleTypeDto> findAllVehicleTypes() throws BusinessException {
+	public List<VehicleTypeDto> findAllVehicleTypes() {
 		FindAllVehicleTypes favt = new FindAllVehicleTypes();
 		return favt.execute();
 	}
 
 	@Override
-	public Optional<CourseDto> findCourseById(Long cId) throws BusinessException {
+	public Optional<CourseDto> findCourseById(Long cId) {
 		FindCourseById fcbi = new FindCourseById(cId);
 		return fcbi.execute();
 	}

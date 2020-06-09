@@ -76,7 +76,7 @@ public interface CourseCrudService {
 	 *
 	 * DOES NOT @throws BusinessException
 	 */
-	List<CourseDto> findAllCourses() throws BusinessException;
+	List<CourseDto> findAllCourses();
 
 	/**
 	 * @return a list of VehicleTypeDto.
@@ -84,7 +84,7 @@ public interface CourseCrudService {
 	 *
 	 * DOES NOT @throws BusinessException
 	 */
-	List<VehicleTypeDto> findAllVehicleTypes() throws BusinessException;
+	List<VehicleTypeDto> findAllVehicleTypes();
 
 	/**
 	 * @param cId
@@ -92,5 +92,5 @@ public interface CourseCrudService {
 	 * DOES NOT @throws BusinessException
 	 * @throws BusinessException
 	 */
-	Optional<CourseDto> findCourseById(Long cId) throws BusinessException;
+	Optional<CourseDto> findCourseById(Long cId);
 }

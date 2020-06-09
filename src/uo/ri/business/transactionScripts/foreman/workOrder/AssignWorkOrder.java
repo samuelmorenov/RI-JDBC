@@ -1,4 +1,4 @@
-package uo.ri.business.transactionScripts.foreman;
+package uo.ri.business.transactionScripts.foreman.workOrder;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.WorkOrderDto;
 import uo.ri.common.BusinessException;
+import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.MechanicGateway;
 import uo.ri.persistence.WorkOrderGateway;
@@ -20,6 +21,11 @@ public class AssignWorkOrder {
 	}
 
 	public void execute() throws BusinessException {
+		/* TODO @throws BusinessException if:
+		 * 	- the mechanic does not exist, or
+		 *  - the work order does not exist, or
+		 *  - the work order is not in OPEN status
+		 */
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
@@ -27,11 +33,7 @@ public class AssignWorkOrder {
 			wog.setConnection(c);
 			c.setAutoCommit(false);
 
-			// @throws BusinessException if:
-			// - the mechanic does not exist, or
-			// - the work order does not exist, or
-			// - the work order is not in OPEN status
-			//
+
 			if (mg.findById(mechanicId) == null) {
 				c.rollback();
 				throw new BusinessException("El mecanico no existe");
@@ -58,7 +60,7 @@ public class AssignWorkOrder {
 			c.commit();
 
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
 		}
 
 	}

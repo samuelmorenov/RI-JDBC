@@ -11,6 +11,7 @@ import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.VehicleDto;
 import uo.ri.business.dto.WorkOrderDto;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.WorkOrderGateway;
 
 public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGateway {
@@ -39,7 +40,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			return Optional.of(vehicle);
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return null;
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -60,7 +62,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -75,7 +77,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst.setLong(1, id);
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -107,7 +109,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			workOrder.vehicleId = rs.getLong("VEHICLE_ID");
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -126,7 +128,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		}
 	}
 
@@ -145,7 +147,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			return rs.next();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return false;
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -163,7 +166,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -183,7 +186,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			return rs.getLong(1);
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return null;
 		} finally {
 			Jdbc.close(rs, st);
 		}
@@ -201,7 +205,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			return rs.getInt(1);
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -220,7 +225,8 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			return rs.getString("STATUS");
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return null;
 		} finally {
 			Jdbc.close(rs, pst);
 		}

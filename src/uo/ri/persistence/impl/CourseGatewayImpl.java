@@ -10,6 +10,7 @@ import java.util.List;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.CourseDto;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.CourseGateway;
 
 public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
@@ -29,7 +30,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			pst.setDate(6, new java.sql.Date((course.startDate).getTime()));
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -49,7 +50,8 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			return rs.getLong(1);
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(rs, st);
 		}
@@ -65,7 +67,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			pst.setLong(1, id);
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -101,7 +103,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			course.startDate = rs.getDate("startdate");
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -132,7 +134,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 				courses.add(course);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, st);
 		}
@@ -155,7 +157,7 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -174,7 +176,8 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 			return rs.getInt(1);
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(rs, pst);
 		}

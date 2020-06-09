@@ -1,10 +1,11 @@
-package uo.ri.business.transactionScripts.administrator.course;
+package uo.ri.business.transactionScripts.administrator.course.CRUD;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.common.BusinessException;
+import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.CourseGateway;
 
@@ -17,6 +18,10 @@ public class DeleteCourse {
 	}
 
 	public void execute() throws BusinessException{
+		/* TODO @throws BusinessException if:
+		 * 	- there is no course with the specified id, or
+		 * 	- the course already has enrollments registered.
+		 */
 		try (Connection c = Jdbc.getConnection();) {
 
 			CourseGateway cg = PersistenceFactory.getCourseGateway(); 
@@ -33,7 +38,7 @@ public class DeleteCourse {
 			cg.delete(id);
 			c.commit();
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
 		}
 	}
 

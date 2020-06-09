@@ -10,6 +10,7 @@ import java.util.List;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.CertificateDto;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.CertificatesGateway;
 
 public class CertificatesGatewayImpl extends GatewayImpl implements CertificatesGateway {
@@ -34,7 +35,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -67,7 +68,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			certificate.obtainedAt = rs.getDate("date");
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -97,8 +98,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 				list.add(certificate);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -126,7 +126,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 				list.add(dto);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, st);
 		}
@@ -146,7 +146,7 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
 			pst.setDate(3, sqlDate);
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -170,7 +170,8 @@ public class CertificatesGatewayImpl extends GatewayImpl implements Certificates
             return count.length;
             
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(pst);
 		}

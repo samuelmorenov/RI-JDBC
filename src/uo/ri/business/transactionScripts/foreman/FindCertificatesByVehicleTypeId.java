@@ -6,6 +6,7 @@ import java.util.List;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.CertificateDto;
+import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.CertificatesGateway;
 
@@ -23,7 +24,8 @@ public class FindCertificatesByVehicleTypeId {
 			cg.setConnection(c);
 			return cg.getCertificatesByVehicleTypeId(id); 
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
+			return null;
 		}
 	}
 

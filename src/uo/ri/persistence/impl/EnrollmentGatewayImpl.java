@@ -9,6 +9,7 @@ import java.util.List;
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.EnrollmentDto;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.EnrollmentGateway;
 
 public class EnrollmentGatewayImpl extends GatewayImpl implements EnrollmentGateway {
@@ -35,7 +36,7 @@ public class EnrollmentGatewayImpl extends GatewayImpl implements EnrollmentGate
 				list.add(dto);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(rs, st);
 		}

@@ -4,10 +4,10 @@ import java.util.List;
 
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.serviceLayer.MechanicCrudService;
-import uo.ri.business.transactionScripts.administrator.mechanic.AddMechanic;
-import uo.ri.business.transactionScripts.administrator.mechanic.DeleteMechanic;
-import uo.ri.business.transactionScripts.administrator.mechanic.ListMechanics;
-import uo.ri.business.transactionScripts.administrator.mechanic.UpdateMechanic;
+import uo.ri.business.transactionScripts.administrator.mechanic.CRUD.AddMechanic;
+import uo.ri.business.transactionScripts.administrator.mechanic.CRUD.DeleteMechanic;
+import uo.ri.business.transactionScripts.administrator.mechanic.CRUD.ListMechanics;
+import uo.ri.business.transactionScripts.administrator.mechanic.CRUD.UpdateMechanic;
 import uo.ri.common.BusinessException;
 
 public class MechanicCrudServiceImpl implements MechanicCrudService {
@@ -33,21 +33,9 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 	}
 
 	@Override
-	public MechanicDto findMechanicById(Long id) throws BusinessException {
-		// TO-DO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<MechanicDto> findAllMechanics() throws BusinessException {
+	public List<MechanicDto> findAllMechanics() {
 		ListMechanics lm = new ListMechanics();
 		return lm.execute();
-	}
-
-	@Override
-	public List<MechanicDto> findActiveMechanics() throws BusinessException {
-		// TO-DO Auto-generated method stub
-		return null;
 	}
 
 }

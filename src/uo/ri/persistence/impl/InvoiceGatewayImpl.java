@@ -9,6 +9,7 @@ import java.util.List;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.conf.Conf;
+import uo.ri.conf.Err;
 import uo.ri.persistence.InvoiceGateway;
 
 public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
@@ -27,7 +28,7 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 				pst.executeUpdate();
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -47,7 +48,7 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 				pst.executeUpdate();
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -69,7 +70,7 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 			pst.setString(5, "NOT_YET_PAID");
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -88,7 +89,8 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 			rs.next();
 			return rs.getLong(1);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -110,7 +112,8 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 				return 1L;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(rs, st);
 		}
@@ -127,7 +130,7 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 			pst.setLong(2, workOrderID);
 			pst.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
 		} finally {
 			Jdbc.close(pst);
 		}
@@ -151,7 +154,8 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 			return rs.getDouble(1);
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(rs, pst);
 		}
@@ -175,7 +179,8 @@ public class InvoiceGatewayImpl extends GatewayImpl implements InvoiceGateway {
 			return rs.getDouble(1);
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			Err.persistence(e);
+			return 0;
 		} finally {
 			Jdbc.close(rs, pst);
 		}

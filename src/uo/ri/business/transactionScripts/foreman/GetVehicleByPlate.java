@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.VehicleDto;
+import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.WorkOrderGateway;
 
@@ -25,7 +26,7 @@ public class GetVehicleByPlate {
 			vehicle = wog.findVehicleByPlate(plate);
 
 		} catch (SQLException e) {
-			throw new RuntimeException("Error de conexion");
+			Err.transactionScripts(e);
 		}
 		return vehicle;
 	}
