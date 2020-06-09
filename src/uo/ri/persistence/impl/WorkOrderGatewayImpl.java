@@ -1,6 +1,5 @@
 package uo.ri.persistence.impl;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,7 +55,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, workOrderDto.vehicleId);
 			pst.setString(2, workOrderDto.description);
-			java.sql.Date sqlDate = new Date(workOrderDto.date.getTime());
+			java.sql.Date sqlDate = new java.sql.Date(workOrderDto.date.getTime());
 			pst.setDate(3, sqlDate);
 			pst.setString(4, workOrderDto.status);
 			pst.executeUpdate();
@@ -92,6 +91,43 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 		try {
 			pst = c.prepareStatement(SQL);
 			pst.setLong(1, id);
+			rs = pst.executeQuery();
+
+			if (rs.next() == false) {
+				return workOrder;
+			}
+
+			workOrder = new WorkOrderDto();
+			workOrder.id = rs.getLong("id");
+			workOrder.total = rs.getDouble("AMOUNT");
+			workOrder.date = rs.getDate("DATE");
+			workOrder.description = rs.getString("DESCRIPTION");
+			workOrder.status = rs.getString("STATUS");
+			workOrder.invoiceId = rs.getLong("INVOICE_ID");
+			workOrder.mechanicId = rs.getLong("MECHANIC_ID");
+			workOrder.vehicleId = rs.getLong("VEHICLE_ID");
+
+		} catch (SQLException e) {
+			Err.persistence(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
+		return workOrder;
+	}
+
+	@Override
+	public WorkOrderDto SearchWorkOrder(Long vehicleId, java.util.Date date) {
+		WorkOrderDto workOrder = null;
+	
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+	
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_WORKORDER_BY_VEHICLE_AND_DATE");
+	
+		try {
+			pst = c.prepareStatement(SQL);
+			pst.setLong(1, vehicleId);
+			pst.setDate(2, (java.sql.Date) date);
 			rs = pst.executeQuery();
 
 			if (rs.next() == false) {

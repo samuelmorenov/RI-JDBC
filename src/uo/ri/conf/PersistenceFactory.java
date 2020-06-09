@@ -8,6 +8,7 @@ import uo.ri.persistence.EnrollmentGateway;
 import uo.ri.persistence.InvoiceGateway;
 import uo.ri.persistence.MechanicGateway;
 import uo.ri.persistence.TrainingGateway;
+import uo.ri.persistence.VehiclesGateway;
 import uo.ri.persistence.VehicleTypesGateway;
 import uo.ri.persistence.WorkOrderGateway;
 import uo.ri.persistence.impl.CertificatesGatewayImpl;
@@ -17,6 +18,7 @@ import uo.ri.persistence.impl.EnrollmentGatewayImpl;
 import uo.ri.persistence.impl.InvoiceGatewayImpl;
 import uo.ri.persistence.impl.MechanicGatewayImpl;
 import uo.ri.persistence.impl.TrainingGatewayImpl;
+import uo.ri.persistence.impl.VehiclesGatewayImpl;
 import uo.ri.persistence.impl.VehicleTypesGatewayImpl;
 import uo.ri.persistence.impl.WorkOrderGatewayImpl;
 
@@ -56,5 +58,9 @@ public class PersistenceFactory {
 
 	public static DedicationsGateway getDedicationsGateway() {
 		return new DedicationsGatewayImpl();
+	}
+
+	public static VehiclesGateway getVehiclesGateway() {
+		return new VehiclesGatewayImpl();
 	}
 }

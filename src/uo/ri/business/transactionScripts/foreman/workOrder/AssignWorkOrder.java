@@ -21,10 +21,10 @@ public class AssignWorkOrder {
 	}
 
 	/**
-	 * TODO @throws BusinessException if: <br>
-	 * - the mechanic does not exist, or <br>
-	 * - the work order does not exist, or <br>
-	 * - the work order is not in OPEN status
+	 * @throws BusinessException if: <br>
+	 *                           - the mechanic does not exist, or <br>
+	 *                           - the work order does not exist, or <br>
+	 *                           - the work order is not in OPEN status
 	 */
 	public void execute() throws BusinessException {
 

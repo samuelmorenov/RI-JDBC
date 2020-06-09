@@ -18,7 +18,7 @@ public class UpdateMechanic {
 	}
 
 	/**
-	 * TODO @throws BusinessException if: <br>
+	 * @throws BusinessException if: <br>
 	 * the mechanic does not exist
 	 */
 	public void execute() throws BusinessException {

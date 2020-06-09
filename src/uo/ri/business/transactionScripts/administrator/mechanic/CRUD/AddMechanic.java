@@ -19,8 +19,9 @@ public class AddMechanic {
 	}
 
 	/**
-	 * TODO @throws BusinessException if: <br>
-	 * there already exist another mechanic with the same dni
+	 * @throws BusinessException if: <br>
+	 *                           there already exist another mechanic with the same
+	 *                           dni
 	 */
 	public void execute() throws BusinessException {
 

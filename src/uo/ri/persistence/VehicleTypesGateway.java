@@ -8,4 +8,6 @@ public interface VehicleTypesGateway extends Gateway {
 
 	List<VehicleTypeDto> findAll();
 
+	VehicleTypeDto findById(Long key);
+
 }

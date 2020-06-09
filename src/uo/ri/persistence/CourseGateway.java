@@ -18,4 +18,6 @@ public interface CourseGateway extends Gateway {
 	void update(CourseDto dto);
 
 	int getEnrolledMechanics(Long CourseId);
+
+	CourseDto findByName(String name);
 }

@@ -1,5 +1,6 @@
 package uo.ri.persistence;
 
+import java.util.Date;
 import java.util.Optional;
 
 import uo.ri.business.dto.VehicleDto;
@@ -26,5 +27,7 @@ public interface WorkOrderGateway extends Gateway {
 	int numberOfInterventios(Long woId);
 
 	String getStatus(Long workOrderID);
+
+	WorkOrderDto SearchWorkOrder(Long vehicleId, Date date);
 	
 }

@@ -18,9 +18,9 @@ public class DeleteCourse {
 	}
 
 	/**
-	 * TODO @throws BusinessException if: <br>
-	 * - there is no course with the specified id, or <br>
-	 * - the course already has enrollments registered.
+	 * @throws BusinessException if: <br>
+	 *                           - there is no course with the specified id, or <br>
+	 *                           - the course already has enrollments registered.
 	 */
 	public void execute() throws BusinessException {
 

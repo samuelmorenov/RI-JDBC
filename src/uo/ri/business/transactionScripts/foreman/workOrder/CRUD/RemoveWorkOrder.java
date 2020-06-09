@@ -19,9 +19,9 @@ public class RemoveWorkOrder {
 	}
 
 	/**
-	 * TODO @throws BusinessException if: <br>
-	 * - the work order does not exist, or <br>
-	 * - there already is some intervention registered.
+	 * @throws BusinessException if: <br>
+	 *                           - the work order does not exist, or <br>
+	 *                           - there already is some intervention registered.
 	 */
 	public void execute() throws BusinessException {
 

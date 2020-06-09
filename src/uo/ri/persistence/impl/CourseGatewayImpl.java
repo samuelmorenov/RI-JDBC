@@ -183,4 +183,40 @@ public class CourseGatewayImpl extends GatewayImpl implements CourseGateway {
 		}
 	}
 
+	@Override
+	public CourseDto findByName(String name) {
+		CourseDto course = null;
+
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		String SQL = Conf.getInstance().getProperty("SQL_FIND_COURSE_BY_NAME");
+
+		try {
+
+			pst = c.prepareStatement(SQL);
+			pst.setString(1, name);
+			rs = pst.executeQuery();
+
+			if (rs.next() == false) {
+				return course;
+			}
+
+			course = new CourseDto();
+			course.id = rs.getLong("id");
+			course.code = rs.getString("code");
+			course.description = rs.getString("description");
+			course.endDate = rs.getDate("enddate");
+			course.hours = rs.getInt("hours");
+			course.name = rs.getString("name");
+			course.startDate = rs.getDate("startdate");
+
+		} catch (SQLException e) {
+			Err.persistence(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
+		return course;
+	}
+
 }

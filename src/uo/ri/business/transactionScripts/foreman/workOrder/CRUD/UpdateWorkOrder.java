@@ -12,14 +12,14 @@ import uo.ri.persistence.WorkOrderGateway;
 
 public class UpdateWorkOrder {
 
-	private WorkOrderDto workOrderDto;
+	private WorkOrderDto workOrderToUpdate;
 
 	public UpdateWorkOrder(WorkOrderDto dto) {
-		this.workOrderDto = dto;
+		this.workOrderToUpdate = dto;
 	}
 
 	/**
-	 * TODO @throws BusinessException if: <br>
+	 * @throws BusinessException if: <br>
 	 * - there is no work order with that id, or <br>
 	 * - there work order has not the specified version (optimistic lock), or <br>
 	 * - the work order is not in the OPEN or ASSIGNED status
@@ -31,16 +31,22 @@ public class UpdateWorkOrder {
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
 			c.setAutoCommit(false);
+			
+			WorkOrderDto workOrderOld = wog.findById(workOrderToUpdate.id);
 
-			if (wog.findById(workOrderDto.id) == null) {
+			if (workOrderOld == null) {
 				throw new BusinessException("No existe una workorder con ese ID");
 			}
 
-			if (!workOrderDto.status.equals("OPEN") && !workOrderDto.status.equals("ASSIGNED")) {
+			if (!workOrderToUpdate.status.equals("OPEN") && !workOrderToUpdate.status.equals("ASSIGNED")) {
 				throw new BusinessException("El estado de la work order impide su modificacion");
 			}
+			
+			if(workOrderToUpdate.description.equals(workOrderOld.description)) {
+				throw new BusinessException("La work order ya tiene esa descripcion");
+			}
 
-			wog.update(workOrderDto);
+			wog.update(workOrderToUpdate);
 			c.commit();
 
 		} catch (SQLException e) {
