@@ -17,14 +17,16 @@ public class DeleteCourse {
 		this.id = id;
 	}
 
-	public void execute() throws BusinessException{
-		/* TODO @throws BusinessException if:
-		 * 	- there is no course with the specified id, or
-		 * 	- the course already has enrollments registered.
-		 */
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * - there is no course with the specified id, or <br>
+	 * - the course already has enrollments registered.
+	 */
+	public void execute() throws BusinessException {
+
 		try (Connection c = Jdbc.getConnection();) {
 
-			CourseGateway cg = PersistenceFactory.getCourseGateway(); 
+			CourseGateway cg = PersistenceFactory.getCourseGateway();
 			c.setAutoCommit(false);
 			cg.setConnection(c);
 			if (cg.findById(id) == null) {

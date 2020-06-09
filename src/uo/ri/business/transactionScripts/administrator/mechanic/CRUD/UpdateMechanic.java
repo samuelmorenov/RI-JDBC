@@ -17,19 +17,22 @@ public class UpdateMechanic {
 		this.mechanic = mechanic;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * the mechanic does not exist
+	 */
 	public void execute() throws BusinessException {
-		
-		
+
 		try (Connection c = Jdbc.getConnection();) {
 
-			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); //Factoria
+			MechanicGateway mg = PersistenceFactory.getMechanicGateway(); // Factoria
 			c.setAutoCommit(false);
 			mg.setConnection(c);
 			if (mg.findById(mechanic.id) == null) { // Llamada al findById de la persistencia
 				c.rollback();
 				throw new BusinessException("No existe un mecanico con ese ID");
 			}
-			mg.update(mechanic); //Llamada al add mecanico de la persistencia
+			mg.update(mechanic); // Llamada al add mecanico de la persistencia
 			c.commit();
 		} catch (SQLException e) {
 			Err.transactionScripts(e);

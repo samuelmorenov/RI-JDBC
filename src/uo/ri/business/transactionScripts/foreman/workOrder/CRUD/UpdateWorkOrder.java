@@ -18,12 +18,14 @@ public class UpdateWorkOrder {
 		this.workOrderDto = dto;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * - there is no work order with that id, or <br>
+	 * - there work order has not the specified version (optimistic lock), or <br>
+	 * - the work order is not in the OPEN or ASSIGNED status
+	 */
 	public void execute() throws BusinessException {
-		/* TODO @throws BusinessException if:
-		 * 	- there is no work order with that id, or
-		 *  - there work order has not the specified version (optimistic lock), or
-		 *  - the work order is not in the OPEN or ASSIGNED status
-		 */
+
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();

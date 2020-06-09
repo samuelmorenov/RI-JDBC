@@ -1,6 +1,7 @@
 package uo.ri.ui.foreman;
 
 import alb.util.menu.BaseMenu;
+import alb.util.menu.NotYetImplementedAction;
 
 public class ForemanMain extends BaseMenu {
 
@@ -8,9 +9,9 @@ public class ForemanMain extends BaseMenu {
 		menuOptions = new Object[][] { 
 			{ "Foreman", null },
 			{ "Client reception ", 		ReceptionMenu.class }, 
-			//{ "Client management", 		NotYetImplementedAction.class },
-			//{ "Vehicle management", 	NotYetImplementedAction.class },
-			//{ "Client history review", 	NotYetImplementedAction.class }, 
+			{ "Client management", 		NotYetImplementedAction.class },
+			{ "Vehicle management", 	NotYetImplementedAction.class },
+			{ "Client history review", 	NotYetImplementedAction.class }, 
 		};
 	}
 

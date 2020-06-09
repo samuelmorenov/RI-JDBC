@@ -17,17 +17,18 @@ public class AddCourse {
 		this.course = dto;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * - any field other than id and version is null or empty, or <br>
+	 * - there already exists a course with the same name, or <br>
+	 * - there is percentage devoted to a non existing vehicle type, or <br>
+	 * - the initial and final dates are in the past or inverted, or <br>
+	 * - the number of hours are zero or negative, or <br>
+	 * - there are no dedications specified, or <br>
+	 * - the sum of devoted percentages does not equals 100%, or <br>
+	 * - the are any dedication with an invalid percentage (empty, zero, negative)
+	 */
 	public CourseDto execute() {
-		/*TODO @throws BusinessException, if:
-		 *  - any field other than id and version is null or empty, or
-		 * 	- there already exists a course with the same name, or
-		 * 	- there is percentage devoted to a non existing vehicle type, or
-		 * 	- the initial and final dates are in the past or inverted, or
-		 * 	- the number of hours are zero or negative, or
-		 *  - there are no dedications specified, or
-		 *  - the sum of devoted percentages does not equals 100%, or
-		 *  - the are any dedication with an invalid percentage (empty, zero, negative)
-		 */
 		try (Connection c = Jdbc.getConnection();) {
 			// Factoria
 			CourseGateway cg = PersistenceFactory.getCourseGateway();

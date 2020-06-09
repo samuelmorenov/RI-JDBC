@@ -18,11 +18,13 @@ public class RemoveWorkOrder {
 		this.id = id;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * - the work order does not exist, or <br>
+	 * - there already is some intervention registered.
+	 */
 	public void execute() throws BusinessException {
-		/* TODO @throws BusinessException if:
-		 * 	- the work order does not exist, or
-		 *  - there already is some intervention registered.
-		 */
+
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
@@ -34,7 +36,7 @@ public class RemoveWorkOrder {
 				c.rollback();
 				throw new BusinessException("La orden de trabajo no existe");
 			}
-			if(wog.numberOfInterventios(id) != 0) {
+			if (wog.numberOfInterventios(id) != 0) {
 				c.rollback();
 				throw new BusinessException("La orden de trabajo aun tiene intercenciones");
 			}

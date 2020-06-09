@@ -13,7 +13,6 @@ public class Conf {
 		try {
 			props.load(Conf.class.getClassLoader().getResourceAsStream(FILE_CONF));
 		} catch (IOException e) {
-			// TO-DO Auto-generated catch block
 			throw new RuntimeException("File properties cannot be loaded",e);
 		}
 		

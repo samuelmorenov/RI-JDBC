@@ -16,6 +16,10 @@ public class DeleteMechanic {
 		this.idMechanic = idMechanic;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * the mechanic does not exist
+	 */
 	public void execute() throws BusinessException {
 
 		try (Connection c = Jdbc.getConnection();) {
@@ -27,7 +31,7 @@ public class DeleteMechanic {
 				c.rollback();
 				throw new BusinessException("No existe un mecanico con ese ID");
 			}
-			//TODO: Comprobar que no tenga nada asignado???
+			// TODO: Comprobar que no tenga nada asignado???
 			mg.delete(idMechanic); // Llamada al add mecanico de la persistencia
 			c.commit();
 		} catch (SQLException e) {

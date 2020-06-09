@@ -18,15 +18,18 @@ public class UpdateCourse {
 		this.dto = dto;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * - it does not exist the course with the specified id, or <br>
+	 * - the current version of the course does not match the version of the dto, or
+	 * <br>
+	 * - the course has its start date in the past, or <br>
+	 * - the new data does not pass the validation specified <br>
+	 * in @see registerNew
+	 */
 	public void execute() throws BusinessException {
-		//Modificar datos de un curso. Mientras no haya sido, o esté siendo, impartido.
-		/* TODO @throws BusinessException if:
-		 * 	- it does not exist the course with the specified id, or
-		 *  - the current version of the course does not match the version of the dto, or
-		 *  - the course has its start date in the past, or
-		 * 	- the new data does not pass the validation specified
-		 * 	in @see registerNew 
-		 */
+		// Modificar datos de un curso. Mientras no haya sido, o esté siendo, impartido.
+
 		try (Connection c = Jdbc.getConnection();) {
 
 			CourseGateway cg = PersistenceFactory.getCourseGateway();
@@ -36,7 +39,7 @@ public class UpdateCourse {
 				c.rollback();
 				throw new BusinessException("No existe un mecanico con ese ID");
 			}
-			cg.update(dto); //Llamada al add mecanico de la persistencia
+			cg.update(dto); // Llamada al add mecanico de la persistencia
 			c.commit();
 		} catch (SQLException e) {
 			Err.transactionScripts(e);

@@ -20,19 +20,20 @@ public class AssignWorkOrder {
 		this.mechanicId = mechanicId;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * - the mechanic does not exist, or <br>
+	 * - the work order does not exist, or <br>
+	 * - the work order is not in OPEN status
+	 */
 	public void execute() throws BusinessException {
-		/* TODO @throws BusinessException if:
-		 * 	- the mechanic does not exist, or
-		 *  - the work order does not exist, or
-		 *  - the work order is not in OPEN status
-		 */
+
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
 			wog.setConnection(c);
 			c.setAutoCommit(false);
-
 
 			if (mg.findById(mechanicId) == null) {
 				c.rollback();

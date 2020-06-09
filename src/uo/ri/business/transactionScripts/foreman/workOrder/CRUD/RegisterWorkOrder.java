@@ -17,12 +17,14 @@ public class RegisterWorkOrder {
 		this.workOrderDto = dto;
 	}
 
+	/**
+	 * TODO @throws BusinessException if: <br>
+	 * - there is another work order for the same vehicle at the same date and time
+	 * (timestamp), or <br>
+	 * - the vehicle does not exist
+	 */
 	public WorkOrderDto execute() {
-		/* TODO @throws BusinessException if:
-		 * 	- there is another work order for the same vehicle at the same
-		 * 		date and time (timestamp), or
-		 *  - the vehicle does not exist
-		 */
+
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
