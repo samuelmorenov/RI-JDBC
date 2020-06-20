@@ -29,6 +29,11 @@ public class GenerateCertificates {
 
 	try (Connection c = Jdbc.getConnection();) {
 
+	    /////// Inicialización de listas
+
+	    c.setAutoCommit(false);
+
+	    // Obtencion de las Gateways que se van a usar
 	    CertificatesGateway cg =
 		    PersistenceFactory.getCertificatesGateway();
 	    VehicleTypesGateway vtg =
@@ -39,8 +44,7 @@ public class GenerateCertificates {
 		    PersistenceFactory.getDedicationsGateway();
 	    CourseGateway cog = PersistenceFactory.getCourseGateway();
 
-	    c.setAutoCommit(false);
-
+	    // Se establece la conexion de todas las gateways
 	    cg.setConnection(c);
 	    vtg.setConnection(c);
 	    mg.setConnection(c);
@@ -48,10 +52,50 @@ public class GenerateCertificates {
 	    dg.setConnection(c);
 	    cog.setConnection(c);
 
+	    // Se obtienen las listas de los datos que se van a usar
+	    List<CertificateDto> allCertificates = cg.findAll();
+	    List<VehicleTypeDto> allVehicleTypes = vtg.findAll();
+	    List<MechanicDto> allMechanics = mg.findAll();
+	    List<EnrollmentDto> allEnrollments = eg.findAll();
+	    List<DedicationDto> allDedications = dg.findAll();
+	    List<CourseDto> allCourses = cog.findAll();
 	    List<CertificateDto> CertificatesToGenerate =
-		    getAllPossibleCertificates(cg.findAll(), vtg.findAll(),
-			    mg.findAll(), eg.findAll(), dg.findAll(),
-			    cog.findAll());
+		    new ArrayList<CertificateDto>();
+
+	    /////// Calculo de certificados
+
+	    // Se recorren todos los mecanicos para cada tipo de vehiculo
+	    for (MechanicDto mechanic : allMechanics) {
+		for (VehicleTypeDto vehicleType : allVehicleTypes) {
+		    boolean existe = false;
+		    for (CertificateDto certificate : allCertificates) {
+			if (certificate.mechanicId == mechanic.id
+				&& certificate.vehicleTypeId
+					== vehicleType.id) {
+			    existe = true;
+			}
+		    }
+
+		    // Si el certificado no existe
+		    if (!existe) {
+			int trainingHours = TrainingHours.Calculate(
+				allEnrollments, allDedications, allCourses,
+				vehicleType, mechanic);
+
+			// Y si el numero de horas es suficiente
+			if (trainingHours >= vehicleType.minTrainigHours) {
+
+			    // Se genera el certificado
+			    CertificateDto newCertificate =
+				    new CertificateDto();
+			    newCertificate.mechanicId = mechanic.id;
+			    newCertificate.vehicleTypeId = vehicleType.id;
+			    newCertificate.obtainedAt = new Date();
+			    CertificatesToGenerate.add(newCertificate);
+			}
+		    }
+		}
+	    }
 
 	    if (CertificatesToGenerate.size() > 0) {
 		generated = cg.insertCertificates(CertificatesToGenerate);
@@ -65,62 +109,4 @@ public class GenerateCertificates {
 	return generated;
     }
 
-    private List<CertificateDto> getAllPossibleCertificates(
-	    List<CertificateDto> allCertificates,
-	    List<VehicleTypeDto> allVehicleTypes,
-	    List<MechanicDto> allMechanics,
-	    List<EnrollmentDto> allEnrollments,
-	    List<DedicationDto> allDedications, List<CourseDto> allCourses) {
-	List<CertificateDto> CertificatesToGenerate =
-		new ArrayList<CertificateDto>();
-
-	// Se recorren todos los mecanicos para cada tipo de vehiculo
-	for (MechanicDto mechanic : allMechanics) {
-	    for (VehicleTypeDto vehicleType : allVehicleTypes) {
-		boolean existe = false;
-		for (CertificateDto certificate : allCertificates) {
-		    if (certificate.mechanicId == mechanic.id
-			    && certificate.vehicleTypeId == vehicleType.id) {
-			existe = true;
-		    }
-		}
-		// Si el certificado no existe
-		if (!existe) {
-		    int trainingHours = 0;
-		    for (EnrollmentDto enrollment : allEnrollments) {
-			if (mechanic.id == enrollment.mechanicId) {
-			    // Solo si se ha pasado
-			    if (enrollment.passed) {
-				for (CourseDto course : allCourses) {
-				    if (course.id == enrollment.courseId) {
-					for (DedicationDto dedication : allDedications) {
-					    if (vehicleType.id
-						    == dedication.vehicleTyeId) {
-						trainingHours += course.hours
-							* (dedication.percentage
-								/ 100);
-						// TODO: Lo mismo que en jpa
-					    }
-					}
-				    }
-				}
-			    }
-			}
-		    }
-
-		    // Y si el numero de horas es suficiente
-		    if (trainingHours >= vehicleType.minTrainigHours) {
-
-			// Se genera el certificado
-			CertificateDto newCertificate = new CertificateDto();
-			newCertificate.mechanicId = mechanic.id;
-			newCertificate.vehicleTypeId = vehicleType.id;
-			newCertificate.obtainedAt = new Date();
-			CertificatesToGenerate.add(newCertificate);
-		    }
-		}
-	    }
-	}
-	return CertificatesToGenerate;
-    }
 }
