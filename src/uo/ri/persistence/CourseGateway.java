@@ -5,19 +5,19 @@ import java.util.List;
 import uo.ri.business.dto.CourseDto;
 
 public interface CourseGateway extends Gateway {
-	void add(CourseDto course);
+    void add(CourseDto course);
 
-	long findLastId();
+    long findLastId();
 
-	void delete(Long id);
+    void delete(Long id);
 
-	CourseDto findById(Long cId);
+    CourseDto findById(Long cId);
 
-	List<CourseDto> findAll();
+    List<CourseDto> findAll();
 
-	void update(CourseDto dto);
+    void update(CourseDto dto);
 
-	int getEnrolledMechanics(Long CourseId);
+    int getEnrolledMechanics(Long CourseId);
 
-	CourseDto findByName(String name);
+    CourseDto findByName(String name);
 }

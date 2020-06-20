@@ -4,17 +4,17 @@ import java.util.List;
 
 import uo.ri.business.dto.MechanicDto;
 
-public interface MechanicGateway extends Gateway{
+public interface MechanicGateway extends Gateway {
 
-	void add(MechanicDto mechanic);
+    void add(MechanicDto mechanic);
 
-	void delete(Long id);
+    void delete(Long id);
 
-	void update(MechanicDto mechanic);
+    void update(MechanicDto mechanic);
 
-	List<MechanicDto> findAll();
+    List<MechanicDto> findAll();
 
-	MechanicDto findByDNI(String dni);
+    MechanicDto findByDNI(String dni);
 
-	MechanicDto findById(Long idMechanic);
+    MechanicDto findById(Long idMechanic);
 }

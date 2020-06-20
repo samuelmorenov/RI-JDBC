@@ -10,6 +10,7 @@ import uo.ri.common.BusinessException;
  */
 public interface InvoiceService {
 
-	InvoiceDto createInvoiceFor(List<Long> workOrderIds) throws BusinessException;
+    InvoiceDto createInvoiceFor(List<Long> workOrderIds)
+	    throws BusinessException;
 
 }

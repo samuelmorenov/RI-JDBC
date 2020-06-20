@@ -9,30 +9,32 @@ import uo.ri.conf.Conf;
 import uo.ri.conf.Err;
 import uo.ri.persistence.VehiclesGateway;
 
-public class VehiclesGatewayImpl extends GatewayImpl implements VehiclesGateway{
+public class VehiclesGatewayImpl extends GatewayImpl
+	implements VehiclesGateway {
 
-	@Override
-	public boolean existId(Long vehicleId) {
+    @Override
+    public boolean existId(Long vehicleId) {
 
-		PreparedStatement pst = null;
-		ResultSet rs = null;
+	PreparedStatement pst = null;
+	ResultSet rs = null;
 
-		String SQL = Conf.getInstance().getProperty("SQL_ID_FROM_VEHICLE_BY_ID");
+	String SQL =
+		Conf.getInstance().getProperty("SQL_ID_FROM_VEHICLE_BY_ID");
 
-		try {
+	try {
 
-			pst = c.prepareStatement(SQL);
-			pst.setLong(1, vehicleId);
-			rs = pst.executeQuery();
+	    pst = c.prepareStatement(SQL);
+	    pst.setLong(1, vehicleId);
+	    rs = pst.executeQuery();
 
-			return rs.next();
+	    return rs.next();
 
-		} catch (SQLException e) {
-			Err.persistence(e);
-			return false;
-		} finally {
-			Jdbc.close(rs, pst);
-		}
+	} catch (SQLException e) {
+	    Err.persistence(e);
+	    return false;
+	} finally {
+	    Jdbc.close(rs, pst);
 	}
+    }
 
 }

@@ -7,11 +7,11 @@ import uo.ri.persistence.Gateway;
 
 public class GatewayImpl implements Gateway {
 
-	protected Connection c;
+    protected Connection c;
 
-	@Override
-	public void setConnection(Connection c) throws SQLException {
-		this.c = c;
-	}
+    @Override
+    public void setConnection(Connection c) throws SQLException {
+	this.c = c;
+    }
 
 }

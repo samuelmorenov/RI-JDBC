@@ -11,25 +11,23 @@ import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.CertificatesGateway;
 
 public class FindCertificatesByVehicleTypeId {
-	
-	private Long id;
 
-	public FindCertificatesByVehicleTypeId(Long id) {
-		this.id = id;
+    private Long id;
+
+    public FindCertificatesByVehicleTypeId(Long id) {
+	this.id = id;
+    }
+
+    public List<CertificateDto> execute() {
+	try (Connection c = Jdbc.getConnection();) {
+	    CertificatesGateway cg =
+		    PersistenceFactory.getCertificatesGateway();
+	    cg.setConnection(c);
+	    return cg.getCertificatesByVehicleTypeId(id);
+	} catch (SQLException e) {
+	    Err.transactionScripts(e);
+	    return null;
 	}
-
-	public List<CertificateDto> execute() {
-		try (Connection c = Jdbc.getConnection();) {
-			CertificatesGateway cg = PersistenceFactory.getCertificatesGateway();
-			cg.setConnection(c);
-			return cg.getCertificatesByVehicleTypeId(id); 
-		} catch (SQLException e) {
-			Err.transactionScripts(e);
-			return null;
-		}
-	}
-
-
-	
+    }
 
 }

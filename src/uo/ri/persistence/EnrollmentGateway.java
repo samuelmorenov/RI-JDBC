@@ -4,8 +4,8 @@ import java.util.List;
 
 import uo.ri.business.dto.EnrollmentDto;
 
-public interface EnrollmentGateway extends Gateway{
+public interface EnrollmentGateway extends Gateway {
 
-	List<EnrollmentDto> findAll();
+    List<EnrollmentDto> findAll();
 
 }

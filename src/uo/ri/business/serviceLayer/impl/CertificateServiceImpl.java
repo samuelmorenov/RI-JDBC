@@ -5,10 +5,10 @@ import uo.ri.business.transactionScripts.administrator.certificates.GenerateCert
 
 public class CertificateServiceImpl implements CertificateService {
 
-	@Override
-	public int generateCertificates() {
-		GenerateCertificates gc = new GenerateCertificates();
-		return gc.execute();
-	}
+    @Override
+    public int generateCertificates() {
+	GenerateCertificates gc = new GenerateCertificates();
+	return gc.execute();
+    }
 
 }

@@ -6,6 +6,6 @@ import uo.ri.business.dto.TrainingHoursRow;
 
 public interface TrainingGateway extends Gateway {
 
-	List<TrainingHoursRow> getTrainingHoursRowList();
+    List<TrainingHoursRow> getTrainingHoursRowList();
 
 }

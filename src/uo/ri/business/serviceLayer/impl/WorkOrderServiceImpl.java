@@ -16,40 +16,44 @@ import uo.ri.common.BusinessException;
 
 public class WorkOrderServiceImpl implements WorkOrderService {
 
-	@Override
-	public WorkOrderDto registerNew(WorkOrderDto dto) throws BusinessException {
-		RegisterWorkOrder rwo = new RegisterWorkOrder(dto);
-		return rwo.execute();
-	}
+    @Override
+    public WorkOrderDto registerNew(WorkOrderDto dto)
+	    throws BusinessException {
+	RegisterWorkOrder rwo = new RegisterWorkOrder(dto);
+	return rwo.execute();
+    }
 
-	@Override
-	public void updateWorkOrder(WorkOrderDto dto) throws BusinessException {
-		UpdateWorkOrder rwo = new UpdateWorkOrder(dto);
-		rwo.execute();
-	}
+    @Override
+    public void updateWorkOrder(WorkOrderDto dto) throws BusinessException {
+	UpdateWorkOrder rwo = new UpdateWorkOrder(dto);
+	rwo.execute();
+    }
 
-	@Override
-	public void deleteWorkOrder(Long id) throws BusinessException {
-		RemoveWorkOrder rwo = new RemoveWorkOrder(id);
-		rwo.execute();
-	}
+    @Override
+    public void deleteWorkOrder(Long id) throws BusinessException {
+	RemoveWorkOrder rwo = new RemoveWorkOrder(id);
+	rwo.execute();
+    }
 
-	@Override
-	public Optional<WorkOrderDto> findWorkOrderById(Long woId) throws BusinessException {
-		FindWorkOrderById fwo = new FindWorkOrderById(woId);
-		return fwo.execute();
-	}
+    @Override
+    public Optional<WorkOrderDto> findWorkOrderById(Long woId)
+	    throws BusinessException {
+	FindWorkOrderById fwo = new FindWorkOrderById(woId);
+	return fwo.execute();
+    }
 
-	@Override
-	public List<CertificateDto> findCertificatesByVehicleTypeId(Long id) {
-		FindCertificatesByVehicleTypeId fcbvti = new FindCertificatesByVehicleTypeId(id);
-		return fcbvti.execute();
-	}
+    @Override
+    public List<CertificateDto> findCertificatesByVehicleTypeId(Long id) {
+	FindCertificatesByVehicleTypeId fcbvti =
+		new FindCertificatesByVehicleTypeId(id);
+	return fcbvti.execute();
+    }
 
-	@Override
-	public void assignWorkOrderToMechanic(Long woId, Long mechanicId) throws BusinessException {
-		AssignWorkOrder awo = new AssignWorkOrder(woId, mechanicId);
-		awo.execute();
-	}
+    @Override
+    public void assignWorkOrderToMechanic(Long woId, Long mechanicId)
+	    throws BusinessException {
+	AssignWorkOrder awo = new AssignWorkOrder(woId, mechanicId);
+	awo.execute();
+    }
 
 }

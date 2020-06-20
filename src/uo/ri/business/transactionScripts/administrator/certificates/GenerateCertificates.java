@@ -49,13 +49,9 @@ public class GenerateCertificates {
 	    cog.setConnection(c);
 
 	    List<CertificateDto> CertificatesToGenerate =
-		    getAllPossibleCertificates(cg.findAll(), 
-			    vtg.findAll(),
-			    mg.findAll(), 
-			    eg.findAll(), 
-			    dg.findAll(),
-			    cog.findAll()
-			    );
+		    getAllPossibleCertificates(cg.findAll(), vtg.findAll(),
+			    mg.findAll(), eg.findAll(), dg.findAll(),
+			    cog.findAll());
 
 	    if (CertificatesToGenerate.size() > 0) {
 		generated = cg.insertCertificates(CertificatesToGenerate);
@@ -101,7 +97,8 @@ public class GenerateCertificates {
 					    if (vehicleType.id
 						    == dedication.vehicleTyeId) {
 						trainingHours += course.hours
-							* (dedication.percentage / 100);
+							* (dedication.percentage
+								/ 100);
 						// TODO: Lo mismo que en jpa
 					    }
 					}

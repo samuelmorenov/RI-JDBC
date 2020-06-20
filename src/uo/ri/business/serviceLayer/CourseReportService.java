@@ -11,14 +11,14 @@ import uo.ri.common.BusinessException;
  */
 public interface CourseReportService {
 
-	/**
-	 * Returns a list of rows, one for each vehicle type and mechanic that had
-	 * attended to a course.
-	 *
-	 * @return the list, that might be empty if no mechanic has been trained for any
-	 *         vehicle type.
-	 * @throws BusinessException, DOES NOT
-	 */
-	List<TrainingHoursRow> findTrainingByVehicleTypeAndMechanic();
+    /**
+     * Returns a list of rows, one for each vehicle type and mechanic that had
+     * attended to a course.
+     *
+     * @return the list, that might be empty if no mechanic has been trained for any
+     *         vehicle type.
+     * @throws BusinessException, DOES NOT
+     */
+    List<TrainingHoursRow> findTrainingByVehicleTypeAndMechanic();
 
 }

@@ -12,19 +12,19 @@ import uo.ri.persistence.CourseGateway;
 
 public class FindAllCourses {
 
-	public FindAllCourses() {
+    public FindAllCourses() {
 
-	}
+    }
 
-	public List<CourseDto> execute() {
-		try (Connection c = Jdbc.getConnection();) {
-			CourseGateway cg = PersistenceFactory.getCourseGateway();
-			cg.setConnection(c);
-			return cg.findAll();
-		} catch (SQLException e) {
-			Err.transactionScripts(e);
-			return null;
-		}
+    public List<CourseDto> execute() {
+	try (Connection c = Jdbc.getConnection();) {
+	    CourseGateway cg = PersistenceFactory.getCourseGateway();
+	    cg.setConnection(c);
+	    return cg.findAll();
+	} catch (SQLException e) {
+	    Err.transactionScripts(e);
+	    return null;
 	}
+    }
 
 }

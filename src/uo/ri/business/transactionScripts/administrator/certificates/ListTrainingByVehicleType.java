@@ -12,19 +12,19 @@ import uo.ri.persistence.TrainingGateway;
 
 public class ListTrainingByVehicleType {
 
-	public ListTrainingByVehicleType() {
+    public ListTrainingByVehicleType() {
 
-	}
+    }
 
-	public List<TrainingHoursRow> execute() {
-	    //TODO: Aqui estaria mal? no se no se
-		try (Connection c = Jdbc.getConnection();) {
-			TrainingGateway tg = PersistenceFactory.getTrainingGateway();
-			tg.setConnection(c);
-			return tg.getTrainingHoursRowList();
-		} catch (SQLException e) {
-			Err.transactionScripts(e);
-			return null;
-		}
+    public List<TrainingHoursRow> execute() {
+	// TODO: Aqui estaria mal? no se no se
+	try (Connection c = Jdbc.getConnection();) {
+	    TrainingGateway tg = PersistenceFactory.getTrainingGateway();
+	    tg.setConnection(c);
+	    return tg.getTrainingHoursRowList();
+	} catch (SQLException e) {
+	    Err.transactionScripts(e);
+	    return null;
 	}
+    }
 }

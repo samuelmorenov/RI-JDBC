@@ -8,10 +8,10 @@ import uo.ri.business.transactionScripts.administrator.certificates.ListTraining
 
 public class CourseReportServiceImpl implements CourseReportService {
 
-	@Override
-	public List<TrainingHoursRow> findTrainingByVehicleTypeAndMechanic() {
-		ListTrainingByVehicleType ltbvt = new ListTrainingByVehicleType();
-		return ltbvt.execute();
-	}
+    @Override
+    public List<TrainingHoursRow> findTrainingByVehicleTypeAndMechanic() {
+	ListTrainingByVehicleType ltbvt = new ListTrainingByVehicleType();
+	return ltbvt.execute();
+    }
 
 }

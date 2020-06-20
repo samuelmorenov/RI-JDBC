@@ -8,9 +8,10 @@ import uo.ri.common.BusinessException;
 
 public class InvoiceServiceImpl implements InvoiceService {
 
-	@Override
-	public InvoiceDto createInvoiceFor(List<Long> workOrderIds) throws BusinessException {
-		WorkOrderBilling wob = new WorkOrderBilling(workOrderIds);
-		return wob.execute();
-	}
+    @Override
+    public InvoiceDto createInvoiceFor(List<Long> workOrderIds)
+	    throws BusinessException {
+	WorkOrderBilling wob = new WorkOrderBilling(workOrderIds);
+	return wob.execute();
+    }
 }

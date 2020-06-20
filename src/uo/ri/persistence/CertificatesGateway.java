@@ -4,17 +4,17 @@ import java.util.List;
 
 import uo.ri.business.dto.CertificateDto;
 
-public interface CertificatesGateway extends Gateway{
+public interface CertificatesGateway extends Gateway {
 
-	List<CertificateDto> getAllPossibleCertificates();
+    List<CertificateDto> getAllPossibleCertificates();
 
-	CertificateDto findCertificate(Long mechanicId, Long vehicleTypeId);
+    CertificateDto findCertificate(Long mechanicId, Long vehicleTypeId);
 
-	void addCertificate(CertificateDto certificado);
+    void addCertificate(CertificateDto certificado);
 
-	List<CertificateDto> getCertificatesByVehicleTypeId(Long id);
+    List<CertificateDto> getCertificatesByVehicleTypeId(Long id);
 
-	List<CertificateDto> findAll();
+    List<CertificateDto> findAll();
 
-	int insertCertificates(List<CertificateDto> certificatesToGenerate);
+    int insertCertificates(List<CertificateDto> certificatesToGenerate);
 }

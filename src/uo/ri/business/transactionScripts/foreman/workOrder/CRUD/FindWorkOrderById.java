@@ -12,29 +12,30 @@ import uo.ri.persistence.WorkOrderGateway;
 
 public class FindWorkOrderById {
 
-	Long id;
+    Long id;
 
-	public FindWorkOrderById(Long woId) {
-		id = woId;
+    public FindWorkOrderById(Long woId) {
+	id = woId;
+    }
+
+    public Optional<WorkOrderDto> execute() {
+
+	WorkOrderDto workOrder;
+
+	try (Connection c = Jdbc.getConnection();) {
+
+	    WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
+	    wog.setConnection(c);
+
+	    workOrder = wog.findById(id);
+
+	    return (workOrder != null) ? Optional.of(workOrder)
+		    : Optional.empty();
+
+	} catch (SQLException e) {
+	    Err.transactionScripts(e);
+	    return null;
 	}
-
-	public Optional<WorkOrderDto> execute() {
-
-		WorkOrderDto workOrder;
-
-		try (Connection c = Jdbc.getConnection();) {
-
-			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
-			wog.setConnection(c);
-
-			workOrder = wog.findById(id);
-
-			return (workOrder != null) ? Optional.of(workOrder) : Optional.empty();
-
-		} catch (SQLException e) {
-			Err.transactionScripts(e);
-			return null;
-		}
-	}
+    }
 
 }

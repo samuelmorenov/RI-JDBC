@@ -12,41 +12,41 @@ import uo.ri.persistence.MechanicGateway;
 
 public class AddMechanic {
 
-	private MechanicDto mechanic;
+    private MechanicDto mechanic;
 
-	public AddMechanic(MechanicDto mechanic) {
-		this.mechanic = mechanic;
+    public AddMechanic(MechanicDto mechanic) {
+	this.mechanic = mechanic;
+    }
+
+    /**
+     * @throws BusinessException if: <br>
+     *                           there already exist another mechanic with the same
+     *                           dni
+     */
+    public void execute() throws BusinessException {
+
+	try (Connection c = Jdbc.getConnection();) {
+
+	    // Factoria
+	    MechanicGateway mg = PersistenceFactory.getMechanicGateway();
+	    c.setAutoCommit(false);
+	    mg.setConnection(c);
+	    // Llamada al findByDNI de la persistencia
+	    if (mg.findByDNI(mechanic.dni) != null) {
+		c.rollback();
+		throw new BusinessException(
+			"Ya existe un mecanico con ese DNI");
+	    }
+	    // Llamada al add mecanico de la persistencia
+	    mg.add(mechanic);
+	    c.commit();
+
+	    // TODO: Hay que cerrar la conexion?
+	    Jdbc.close(c);
+
+	} catch (SQLException e) {
+	    Err.transactionScripts(e);
 	}
 
-	/**
-	 * @throws BusinessException if: <br>
-	 *                           there already exist another mechanic with the same
-	 *                           dni
-	 */
-	public void execute() throws BusinessException {
-
-		try (Connection c = Jdbc.getConnection();) {
-
-			// Factoria
-			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
-			c.setAutoCommit(false);
-			mg.setConnection(c);
-			// Llamada al findByDNI de la persistencia
-			if (mg.findByDNI(mechanic.dni) != null) {
-				c.rollback();
-				throw new BusinessException("Ya existe un mecanico con ese DNI");
-			}
-			// Llamada al add mecanico de la persistencia
-			mg.add(mechanic);
-			c.commit();
-			
-			//TODO: Hay que cerrar la conexion?
-			Jdbc.close(c);
-			
-			
-		} catch (SQLException e) {
-			Err.transactionScripts(e);
-		}
-
-	}
+    }
 }

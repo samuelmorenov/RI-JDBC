@@ -12,18 +12,18 @@ import uo.ri.persistence.MechanicGateway;
 
 public class ListMechanics {
 
-	public ListMechanics() {
-	}
+    public ListMechanics() {
+    }
 
-	public List<MechanicDto> execute() {
+    public List<MechanicDto> execute() {
 
-		try (Connection c = Jdbc.getConnection();) {
-			MechanicGateway mg = PersistenceFactory.getMechanicGateway();
-			mg.setConnection(c);
-			return mg.findAll();
-		} catch (SQLException e) {
-			Err.transactionScripts(e);
-			return null;
-		}
+	try (Connection c = Jdbc.getConnection();) {
+	    MechanicGateway mg = PersistenceFactory.getMechanicGateway();
+	    mg.setConnection(c);
+	    return mg.findAll();
+	} catch (SQLException e) {
+	    Err.transactionScripts(e);
+	    return null;
 	}
+    }
 }

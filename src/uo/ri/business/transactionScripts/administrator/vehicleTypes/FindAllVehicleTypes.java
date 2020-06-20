@@ -11,20 +11,21 @@ import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.VehicleTypesGateway;
 
 public class FindAllVehicleTypes {
-	
-	public FindAllVehicleTypes() {
-		
-	}
 
-	public List<VehicleTypeDto> execute() {
-		try (Connection c = Jdbc.getConnection();) {
-			VehicleTypesGateway vtg = PersistenceFactory.getVehicleTypesGateway();
-			vtg.setConnection(c);
-			return vtg.findAll();
-		} catch (SQLException e) {
-			Err.transactionScripts(e);
-			return null;
-		}
+    public FindAllVehicleTypes() {
+
+    }
+
+    public List<VehicleTypeDto> execute() {
+	try (Connection c = Jdbc.getConnection();) {
+	    VehicleTypesGateway vtg =
+		    PersistenceFactory.getVehicleTypesGateway();
+	    vtg.setConnection(c);
+	    return vtg.findAll();
+	} catch (SQLException e) {
+	    Err.transactionScripts(e);
+	    return null;
 	}
+    }
 
 }

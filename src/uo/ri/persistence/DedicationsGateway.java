@@ -4,8 +4,8 @@ import java.util.List;
 
 import uo.ri.business.dto.DedicationDto;
 
-public interface DedicationsGateway extends Gateway{
+public interface DedicationsGateway extends Gateway {
 
-		List<DedicationDto> findAll();
+    List<DedicationDto> findAll();
 
 }
