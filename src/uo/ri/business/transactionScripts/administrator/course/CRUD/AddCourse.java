@@ -69,7 +69,8 @@ public class AddCourse {
 	 */
 	public static void validateCourse(CourseDto course) throws BusinessException {
 		// any field other than id and version is null
-		if (course.code == null || course.name == null || course.description == null || course.startDate == null || course.endDate == null) {
+		if (course.code == null || course.name == null || course.description == null || course.startDate == null
+				|| course.endDate == null) {
 			throw new BusinessException("No puede haber campos vacios en un curso");
 		}
 
@@ -132,9 +133,8 @@ public class AddCourse {
 			// the are any dedication with an invalid percentage (zero, negative)
 			int dedication = dedications.get(key);
 			if (dedication <= 0) {
-				if (dedications.get(key) == null) {
-					throw new BusinessException("Hay procentajes mal definidos (cero o negativo)");
-				}
+				throw new BusinessException("Hay procentajes mal definidos (cero o negativo)");
+
 			}
 
 			suma += dedications.get(key);

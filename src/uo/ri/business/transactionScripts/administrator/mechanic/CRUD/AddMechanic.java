@@ -39,6 +39,11 @@ public class AddMechanic {
 			// Llamada al add mecanico de la persistencia
 			mg.add(mechanic);
 			c.commit();
+			
+			//TODO: Hay que cerrar la conexion?
+			Jdbc.close(c);
+			
+			
 		} catch (SQLException e) {
 			Err.transactionScripts(e);
 		}

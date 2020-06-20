@@ -18,17 +18,19 @@ public class GetVehicleByPlate {
 	}
 
 	public Optional<VehicleDto> execute() {
-		Optional<VehicleDto> vehicle = null;
+		VehicleDto vehicle = null;
 		try (Connection c = Jdbc.getConnection();) {
 
 			WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 			wog.setConnection(c);
 			vehicle = wog.findVehicleByPlate(plate);
+			
+			return (vehicle != null) ? Optional.of(vehicle) : Optional.empty();
 
 		} catch (SQLException e) {
 			Err.transactionScripts(e);
+			return null;
 		}
-		return vehicle;
 	}
 
 }

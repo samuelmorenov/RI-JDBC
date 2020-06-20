@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Optional;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.VehicleDto;
@@ -16,7 +15,7 @@ import uo.ri.persistence.WorkOrderGateway;
 public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGateway {
 
 	@Override
-	public Optional<VehicleDto> findVehicleByPlate(String plate) {
+	public VehicleDto findVehicleByPlate(String plate) {
 		VehicleDto vehicle = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -26,9 +25,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			pst.setString(1, plate);
 			rs = pst.executeQuery();
 
-			if (rs.next() == false) {
-				return Optional.empty();
-			}
+
 			vehicle = new VehicleDto();
 			vehicle.id = rs.getLong("ID");
 			vehicle.make = rs.getString("MAKE");
@@ -36,7 +33,7 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			vehicle.plate = rs.getString("PLATENUMBER");
 			vehicle.clientId = rs.getLong("CLIENT_ID");
 			vehicle.vehicleTypeId = rs.getLong("VEHICLETYPE_ID");
-			return Optional.of(vehicle);
+			return vehicle;
 
 		} catch (SQLException e) {
 			Err.persistence(e);
@@ -130,10 +127,6 @@ public class WorkOrderGatewayImpl extends GatewayImpl implements WorkOrderGatewa
 			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 			pst.setDate(2, sqlDate);
 			rs = pst.executeQuery();
-
-			if (rs.next() == false) {
-				return workOrder;
-			}
 
 			workOrder = new WorkOrderDto();
 			workOrder.id = rs.getLong("id");

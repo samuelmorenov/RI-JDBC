@@ -17,6 +17,7 @@ public class ListTrainingByVehicleType {
 	}
 
 	public List<TrainingHoursRow> execute() {
+	    //TODO: Aqui estaria mal? no se no se
 		try (Connection c = Jdbc.getConnection();) {
 			TrainingGateway tg = PersistenceFactory.getTrainingGateway();
 			tg.setConnection(c);
