@@ -51,6 +51,7 @@ public class UpdateWorkOrder {
 
 	    if (workOrderToUpdate.description.equals(
 		    workOrderOld.description)) {
+		c.rollback();
 		throw new BusinessException(
 			"La work order ya tiene esa descripcion");
 	    }

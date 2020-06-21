@@ -56,7 +56,6 @@ public class AssignWorkOrder {
 
 	    if (!wog.mechanicAbleToWorkOrder(mechanicId, woId)) {
 		c.rollback();
-
 		throw new BusinessException(
 			"El mecanico no esta certificado para ese tipo de vehiculo");
 	    }

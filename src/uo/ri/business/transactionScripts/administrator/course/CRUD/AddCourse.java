@@ -32,15 +32,22 @@ public class AddCourse {
 	try (Connection c = Jdbc.getConnection();) {
 	    // Factoria
 	    CourseGateway cg = PersistenceFactory.getCourseGateway();
-	    DedicationsGateway dg = PersistenceFactory.getDedicationsGateway();
+	    DedicationsGateway dg =
+		    PersistenceFactory.getDedicationsGateway();
 	    c.setAutoCommit(false);
 	    cg.setConnection(c);
 	    dg.setConnection(c);
 
-	    validateCourse(course);
+	    try {
+		validateCourse(course);
+	    } catch (BusinessException e) {
+		c.rollback();
+		throw e;
+	    }
 
 	    // there already exists a course with the same name
 	    if (cg.findByName(course.name) != null) {
+		c.rollback();
 		throw new BusinessException(
 			"Ya existe un curso con ese nombre");
 	    }
@@ -49,9 +56,9 @@ public class AddCourse {
 	    cg.add(course);
 	    long lId = cg.findLastId();
 	    course.id = lId;
-	    
-	    //Añadir todas las dedications
-	    for(Long key : course.percentages.keySet()) {
+
+	    // Añadir todas las dedications
+	    for (Long key : course.percentages.keySet()) {
 		DedicationDto dedicationDto = new DedicationDto();
 		dedicationDto.vehicleTyeId = key;
 		dedicationDto.percentage = course.percentages.get(key);
@@ -122,7 +129,6 @@ public class AddCourse {
 	try (Connection c = Jdbc.getConnection();) {
 	    VehicleTypesGateway vtg =
 		    PersistenceFactory.getVehicleTypesGateway();
-	    c.setAutoCommit(false);
 	    vtg.setConnection(c);
 
 	    // there is percentage devoted to a non existing vehicle type

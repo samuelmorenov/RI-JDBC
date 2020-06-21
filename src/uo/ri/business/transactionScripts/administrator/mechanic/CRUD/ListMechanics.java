@@ -22,6 +22,7 @@ public class ListMechanics {
 	    c.setAutoCommit(false);
 	    mg.setConnection(c);
 	    List<MechanicDto> aux = mg.findAll();
+	    c.commit();
 	    return aux;
 	} catch (SQLException e) {
 	    Err.transactionScripts(e);

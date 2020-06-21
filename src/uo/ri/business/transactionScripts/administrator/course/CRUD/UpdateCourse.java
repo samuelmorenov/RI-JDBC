@@ -46,8 +46,8 @@ public class UpdateCourse {
 		throw new BusinessException(
 			"No existe un mecanico con ese ID");
 	    }
-	    
-	    if(CourseToUpdate.startDate.before(new Date())) {
+
+	    if (CourseToUpdate.startDate.before(new Date())) {
 		c.rollback();
 		throw new BusinessException("El curso ya ha empezado");
 	    }
@@ -64,7 +64,12 @@ public class UpdateCourse {
 		throw new BusinessException("El curso ya tiene esos datos");
 	    }
 
-	    AddCourse.validateCourse(CourseToUpdate);
+	    try {
+		AddCourse.validateCourse(CourseToUpdate);
+	    } catch (BusinessException e) {
+		c.rollback();
+		throw e;
+	    }
 
 	    cg.update(CourseToUpdate);
 	    c.commit();

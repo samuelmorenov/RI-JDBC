@@ -39,8 +39,8 @@ public class RegisterWorkOrder {
 	    workOrderDto.date = new Date();
 	    workOrderDto.status = "OPEN";
 
-	    System.out.println();
 	    if (!vg.existId(workOrderDto.vehicleId)) {
+		c.rollback();
 		throw new BusinessException(
 			"No existe un vehiculo con ese id");
 	    }
