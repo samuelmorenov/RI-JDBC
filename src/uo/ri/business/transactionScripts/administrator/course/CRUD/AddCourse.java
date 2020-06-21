@@ -2,7 +2,9 @@ package uo.ri.business.transactionScripts.administrator.course.CRUD;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import alb.util.jdbc.Jdbc;
@@ -51,20 +53,26 @@ public class AddCourse {
 		throw new BusinessException(
 			"Ya existe un curso con ese nombre");
 	    }
+	    
+
 
 	    // Llamada al add curso de la persistencia
 	    cg.add(course);
 	    long lId = cg.findLastId();
 	    course.id = lId;
-
+	    
 	    // Añadir todas las dedications
+	    List<DedicationDto> listD = new ArrayList<DedicationDto>();
 	    for (Long key : course.percentages.keySet()) {
 		DedicationDto dedicationDto = new DedicationDto();
 		dedicationDto.vehicleTyeId = key;
 		dedicationDto.percentage = course.percentages.get(key);
 		dedicationDto.courseId = course.id;
-		dg.add(dedicationDto);
+		listD.add(dedicationDto);
 	    }
+	    
+	    dg.insertDedication(listD);
+	    
 
 	    c.commit();
 	    return course;

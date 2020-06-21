@@ -20,6 +20,11 @@ public class UpdateCourse {
     }
 
     /**
+     * Updates the course specified by the id with the new data. A course an only be
+     * modified if it has not yet started. If the start date is wrong then remove
+     * the course and start again... The dedications of the course to the vehicle
+     * types are not modified by this operation.
+     * 
      * @throws BusinessException if: <br>
      *                           - it does not exist the course with the specified
      *                           id, or <br>

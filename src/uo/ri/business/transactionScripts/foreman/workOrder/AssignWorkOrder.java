@@ -21,6 +21,11 @@ public class AssignWorkOrder {
     }
 
     /**
+     * Assigns the work order to mechanic so the he/she can see what work has
+     * to today/next. Only work orders with OPEN status can be assigned. Work orders
+     * changes to ASSIGNED status when assigned.
+     * 
+     * 
      * @throws BusinessException if: <br>
      *                           - the mechanic does not exist, or <br>
      *                           - the work order does not exist, or <br>

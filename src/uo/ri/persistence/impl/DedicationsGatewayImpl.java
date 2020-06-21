@@ -62,4 +62,47 @@ public class DedicationsGatewayImpl extends GatewayImpl
 	}
     }
 
+    @Override
+    public int insertDedication(List<DedicationDto> dedicationList) {
+	PreparedStatement pst = null;
+	String SQL = Conf.getInstance().getProperty("SQL_INSERT_DEDICATIONS");
+	try {
+	    pst = c.prepareStatement(SQL);
+	    int[] count;
+	    for (DedicationDto dedicationDto : dedicationList) {
+		pst.setLong(1, dedicationDto.percentage);
+		pst.setLong(2, dedicationDto.courseId);
+		pst.setLong(3, dedicationDto.vehicleTyeId);
+		pst.addBatch();
+	    }
+	    count = pst.executeBatch();
+	    return count.length;
+
+	} catch (SQLException e) {
+	    Err.persistence(e);
+	    return 0;
+	} finally {
+	    Jdbc.close(pst);
+	}
+    }
+
+    @Override
+    public void deleteAllWithCourseId(Long id) {
+	PreparedStatement pst = null;
+	String SQL = Conf.getInstance().getProperty("SQL_DELETE_ALL_DEDICATIONS_WITH_COURSE_ID");
+
+	try {
+	    pst = c.prepareStatement(SQL);
+	    pst.setLong(1, id);
+	    pst.executeUpdate();
+	} catch (SQLException e) {
+	    Err.persistence(e);
+	} finally {
+	    Jdbc.close(pst);
+	}
+	
+    }
+
+
+
 }
