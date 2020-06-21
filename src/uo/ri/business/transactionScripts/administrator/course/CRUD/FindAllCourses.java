@@ -20,7 +20,10 @@ public class FindAllCourses {
 	try (Connection c = Jdbc.getConnection();) {
 	    CourseGateway cg = PersistenceFactory.getCourseGateway();
 	    cg.setConnection(c);
-	    return cg.findAll();
+	    c.setAutoCommit(false);
+	    List<CourseDto> aux = cg.findAll();
+	    c.commit();
+	    return aux;
 	} catch (SQLException e) {
 	    Err.transactionScripts(e);
 	    return null;

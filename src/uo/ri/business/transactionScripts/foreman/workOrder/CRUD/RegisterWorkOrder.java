@@ -47,6 +47,7 @@ public class RegisterWorkOrder {
 
 	    if (wog.SearchWorkOrder(workOrderDto.vehicleId, workOrderDto.date)
 		    != null) {
+		c.rollback();
 		throw new BusinessException(
 			"Ya existe una work order para ese vehiculo con esta fecha");
 	    }

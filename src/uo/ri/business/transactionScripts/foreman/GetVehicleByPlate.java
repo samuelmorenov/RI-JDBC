@@ -23,7 +23,9 @@ public class GetVehicleByPlate {
 
 	    WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 	    wog.setConnection(c);
+	    c.setAutoCommit(false);
 	    vehicle = wog.findVehicleByPlate(plate);
+	    c.commit();
 
 	    return (vehicle != null) ? Optional.of(vehicle)
 		    : Optional.empty();

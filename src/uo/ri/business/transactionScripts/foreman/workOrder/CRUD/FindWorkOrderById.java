@@ -26,8 +26,10 @@ public class FindWorkOrderById {
 
 	    WorkOrderGateway wog = PersistenceFactory.getWorkOrderGateway();
 	    wog.setConnection(c);
+	    c.setAutoCommit(false);
 
 	    workOrder = wog.findById(id);
+	    c.commit();
 
 	    return (workOrder != null) ? Optional.of(workOrder)
 		    : Optional.empty();

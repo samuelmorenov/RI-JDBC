@@ -23,7 +23,10 @@ public class FindCertificatesByVehicleTypeId {
 	    CertificatesGateway cg =
 		    PersistenceFactory.getCertificatesGateway();
 	    cg.setConnection(c);
-	    return cg.getCertificatesByVehicleTypeId(id);
+	    c.setAutoCommit(false);
+	    List<CertificateDto> aux = cg.getCertificatesByVehicleTypeId(id);
+	    c.commit();
+	    return aux;
 	} catch (SQLException e) {
 	    Err.transactionScripts(e);
 	    return null;

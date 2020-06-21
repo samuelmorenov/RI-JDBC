@@ -7,10 +7,12 @@ import java.util.Map;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.CourseDto;
+import uo.ri.business.dto.DedicationDto;
 import uo.ri.common.BusinessException;
 import uo.ri.conf.Err;
 import uo.ri.conf.PersistenceFactory;
 import uo.ri.persistence.CourseGateway;
+import uo.ri.persistence.DedicationsGateway;
 import uo.ri.persistence.VehicleTypesGateway;
 
 public class AddCourse {
@@ -30,8 +32,10 @@ public class AddCourse {
 	try (Connection c = Jdbc.getConnection();) {
 	    // Factoria
 	    CourseGateway cg = PersistenceFactory.getCourseGateway();
+	    DedicationsGateway dg = PersistenceFactory.getDedicationsGateway();
 	    c.setAutoCommit(false);
 	    cg.setConnection(c);
+	    dg.setConnection(c);
 
 	    validateCourse(course);
 
@@ -45,6 +49,16 @@ public class AddCourse {
 	    cg.add(course);
 	    long lId = cg.findLastId();
 	    course.id = lId;
+	    
+	    //Añadir todas las dedications
+	    for(Long key : course.percentages.keySet()) {
+		DedicationDto dedicationDto = new DedicationDto();
+		dedicationDto.vehicleTyeId = key;
+		dedicationDto.percentage = course.percentages.get(key);
+		dedicationDto.courseId = course.id;
+		dg.add(dedicationDto);
+	    }
+
 	    c.commit();
 	    return course;
 	} catch (SQLException e) {

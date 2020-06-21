@@ -98,12 +98,14 @@ public class WorkOrderBilling {
 	    wog.setConnection(c);
 	    for (Long workOrderID : workOrderIds) {
 		if (wog.findById(workOrderID) == null) {
+		    c.rollback();
 		    throw new BusinessException(
 			    "Workorder " + workOrderID + " doesn't exist");
 		}
 
 		if (!"FINISHED".equalsIgnoreCase(
 			wog.getStatus(workOrderID))) {
+		    c.rollback();
 		    throw new BusinessException("Workorder " + workOrderID
 			    + " is not finished yet");
 		}

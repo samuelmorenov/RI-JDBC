@@ -2,6 +2,7 @@ package uo.ri.business.transactionScripts.administrator.course.CRUD;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.business.dto.CourseDto;
@@ -45,6 +46,11 @@ public class UpdateCourse {
 		throw new BusinessException(
 			"No existe un mecanico con ese ID");
 	    }
+	    
+	    if(CourseToUpdate.startDate.before(new Date())) {
+		c.rollback();
+		throw new BusinessException("El curso ya ha empezado");
+	    }
 
 	    if (CourseToUpdate.code == CourseOld.code
 		    && CourseToUpdate.name.equals(CourseOld.name)
@@ -54,6 +60,7 @@ public class UpdateCourse {
 			    == CourseOld.startDate.getTime()
 		    && CourseToUpdate.endDate.getTime()
 			    == CourseOld.endDate.getTime()) {
+		c.rollback();
 		throw new BusinessException("El curso ya tiene esos datos");
 	    }
 

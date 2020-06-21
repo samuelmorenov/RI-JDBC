@@ -77,6 +77,7 @@ public class ListTrainingByVehicleType {
 		}
 	    }
 
+	    c.commit();
 	    return list;
 
 	} catch (SQLException e) {

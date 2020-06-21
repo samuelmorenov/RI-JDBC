@@ -25,9 +25,9 @@ public class FindCourseById {
 
 	    CourseGateway cg = PersistenceFactory.getCourseGateway();
 	    cg.setConnection(c);
-
+	    c.setAutoCommit(false);
 	    course = cg.findById(cId);
-
+	    c.commit();
 	    return (course != null) ? Optional.of(course) : Optional.empty();
 
 	} catch (SQLException e) {

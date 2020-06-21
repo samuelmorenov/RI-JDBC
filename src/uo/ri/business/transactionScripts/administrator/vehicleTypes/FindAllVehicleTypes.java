@@ -20,8 +20,11 @@ public class FindAllVehicleTypes {
 	try (Connection c = Jdbc.getConnection();) {
 	    VehicleTypesGateway vtg =
 		    PersistenceFactory.getVehicleTypesGateway();
+	    c.setAutoCommit(false);
 	    vtg.setConnection(c);
-	    return vtg.findAll();
+	    List<VehicleTypeDto> aux = vtg.findAll();
+	    c.commit();
+	    return aux;
 	} catch (SQLException e) {
 	    Err.transactionScripts(e);
 	    return null;

@@ -1,5 +1,6 @@
 package uo.ri.persistence.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,6 +43,23 @@ public class DedicationsGatewayImpl extends GatewayImpl
 	    Jdbc.close(rs, st);
 	}
 	return list;
+    }
+
+    @Override
+    public void add(DedicationDto dedicationDto) {
+	PreparedStatement pst = null;
+	String SQL = Conf.getInstance().getProperty("SQL_INSERT_DEDICATIONS");
+	try {
+	    pst = c.prepareStatement(SQL);
+	    pst.setLong(1, dedicationDto.percentage);
+	    pst.setLong(2, dedicationDto.courseId);
+	    pst.setLong(3, dedicationDto.vehicleTyeId);
+	    pst.executeUpdate();
+	} catch (SQLException e) {
+	    Err.persistence(e);
+	} finally {
+	    Jdbc.close(pst);
+	}
     }
 
 }

@@ -19,8 +19,10 @@ public class ListMechanics {
 
 	try (Connection c = Jdbc.getConnection();) {
 	    MechanicGateway mg = PersistenceFactory.getMechanicGateway();
+	    c.setAutoCommit(false);
 	    mg.setConnection(c);
-	    return mg.findAll();
+	    List<MechanicDto> aux = mg.findAll();
+	    return aux;
 	} catch (SQLException e) {
 	    Err.transactionScripts(e);
 	    return null;

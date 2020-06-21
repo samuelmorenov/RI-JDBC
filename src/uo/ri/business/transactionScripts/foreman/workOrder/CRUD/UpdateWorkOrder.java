@@ -37,12 +37,14 @@ public class UpdateWorkOrder {
 	    WorkOrderDto workOrderOld = wog.findById(workOrderToUpdate.id);
 
 	    if (workOrderOld == null) {
+		c.rollback();
 		throw new BusinessException(
 			"No existe una workorder con ese ID");
 	    }
 
 	    if (!workOrderToUpdate.status.equals("OPEN")
 		    && !workOrderToUpdate.status.equals("ASSIGNED")) {
+		c.rollback();
 		throw new BusinessException(
 			"El estado de la work order impide su modificacion");
 	    }
