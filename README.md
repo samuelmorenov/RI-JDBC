@@ -1,9 +1,12 @@
 # [RI]  Repositorios de Información
-3º Curso de Ingeniería Informática del Software
 
-Escuela de Ingeniería Informática (Oviedo)
+*Escuela de Ingeniería Informática - Uniovi*
 
-Universidad de Oviedo
+Proyecto realizado por:
+
+**Samuel Moreno Vincent**
+
+Entrega realizada en el año 2020
 
 # Proyecto De JDBC
 
